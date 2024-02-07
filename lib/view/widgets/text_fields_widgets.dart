@@ -1,11 +1,12 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldWidgets {
   Widget textFormField(
     Size size, {
-    controller,
-    label,
+    TextEditingController? controller,
+    String? label,
     TextInputFormatter? inputFormatter,
     TextInputType? keyboardType,
   }) {
@@ -16,10 +17,17 @@ class TextFieldWidgets {
           keyboardType: keyboardType ?? TextInputType.text,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return " Please enter $label";
-            } else {
-              return null;
+              return "Please enter $label";
+            } else if (label == "Email") {
+              if (!EmailValidator.validate(value)) {
+                return "Please enter a valid email address";
+              }
+            } else if (label == 'Password') {
+              if (value.length <= 6) {
+                return 'Password should be at least 6 characters';
+              }
             }
+            return null;
           },
           controller: controller,
           decoration: InputDecoration(
@@ -31,7 +39,7 @@ class TextFieldWidgets {
           ),
         ),
         SizedBox(
-          height: size.width * .05,
+          height: size.width * 0.05,
         )
       ],
     );

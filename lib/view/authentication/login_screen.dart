@@ -1,11 +1,13 @@
-import 'package:ecommerce_app/view/authentification/singup_screen.dart';
-import 'package:ecommerce_app/view/authentification/widgets/login_widget.dart';
+import 'package:ecommerce_app/controller/user/user_provider.dart';
+import 'package:ecommerce_app/view/authentication/singup_screen.dart';
+import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -13,7 +15,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // final getProvider = Provider.of<UserProvider>(context, listen: false);
+    final getProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -53,16 +55,12 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        TextFieldWidgets().textFormField(
-                          size,
-                          label: 'Email',
-                          // controller: getProvider.emailController
-                        ),
-                        TextFieldWidgets().textFormField(
-                          size,
-                          label: 'Password',
-                          // controller: getProvider.passwordController
-                        ),
+                        TextFieldWidgets().textFormField(size,
+                            label: 'Email',
+                            controller: getProvider.emailController),
+                        TextFieldWidgets().textFormField(size,
+                            label: 'Password',
+                            controller: getProvider.passwordController),
                         SizedBox(
                           height: size.width * .1,
                         ),
@@ -71,20 +69,24 @@ class LoginPage extends StatelessWidget {
                           label: 'Log in',
                           onPressed: () {
                             NavigatorWidget().push(context, HomeTab());
-                            if (formKey.currentState!.validate()) {
-                              // userLogin(context, getProvider);
-                            }
+                            if (formKey.currentState!.validate()) {}
                           },
                         ),
                         SizedBox(
                           height: size.width * .05,
                         ),
-                        StyleWidgets().lineDivider('or'),
+                        StyleWidgets().lineDivider(text: 'or'),
                         LoginPageWidget().loginIcons(context),
-                        ButtonWidgets().textButtonWidget(size, context,
-                            label: 'SIGN UP', onPressed: () {
-                          NavigatorWidget().push(context, SignUpPage());
-                        }),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Create a account?'),
+                            ButtonWidgets().textButtonWidget(size, context,
+                                label: 'SIGN UP', onPressed: () {
+                              NavigatorWidget().push(context, SignUpPage());
+                            }),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -96,20 +98,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
-  // userLogin(context, UserProvider getProvider) {
-  //   final getAuth = Provider.of<AuthProvider>(context, listen: false);
-  //   getAuth.signIn(
-  //     getProvider.emailController.text.trim(),
-  //     getProvider.passwordController.text.trim(),
-  //   );
-  //   if (getAuth.user != null) {
-  //     Navigator.pushAndRemoveUntil(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const Home(),
-  //         ),
-  //         (route) => false);
-  //   }
-  // }
 }
