@@ -1,5 +1,6 @@
-import 'package:ecommerce_app/view/authentication/login_screen.dart';
+import 'package:ecommerce_app/authentication/auth.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
@@ -8,8 +9,6 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -49,12 +48,8 @@ class Welcome extends StatelessWidget {
                   size,
                   name: 'Get Started',
                   onPressed: () async {
-                    // await checkLogin(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ));
+                    NavigatorWidget()
+                        .pushReplacement(context, const AuthenticationPage());
                   },
                 ),
               ),
@@ -65,22 +60,3 @@ class Welcome extends StatelessWidget {
     );
   }
 }
-
-// checkLogin(context) async {
-//   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-//   if (authProvider.user == null) {
-//     Navigator.pushAndRemoveUntil(
-//         context,
-//         MaterialPageRoute(
-//           builder: (context) => LoginPage(),
-//         ),
-//         (route) => false);
-//   } else {
-//     Navigator.pushAndRemoveUntil(
-//         context,
-//         MaterialPageRoute(
-//           builder: (context) => Home(),
-//         ),
-//         (route) => false);
-//   }
-// }

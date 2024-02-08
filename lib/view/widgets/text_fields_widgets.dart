@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 class TextFieldWidgets {
   Widget textFormField(
     Size size, {
+    String? type,
     TextEditingController? controller,
+    String? cmfController,
     String? label,
     TextInputFormatter? inputFormatter,
     TextInputType? keyboardType,
@@ -18,17 +20,23 @@ class TextFieldWidgets {
           validator: (value) {
             if (value == null || value.isEmpty) {
               return "Please enter $label";
-            } else if (label == "Email") {
+            } else if (type == "Email") {
               if (!EmailValidator.validate(value)) {
                 return "Please enter a valid email address";
               }
-            } else if (label == 'Password') {
-              if (value.length <= 6) {
+            } else if (type == 'Password') {
+              if (value.length < 6) {
                 return 'Password should be at least 6 characters';
+              }
+            } else if (type == 'Confirm Password') {
+              if (value != cmfController) {
+                return 'Passwords do not match';
               }
             }
             return null;
           },
+          obscureText:
+              type == "Password" || type == "Confirm Password" ? true : false,
           controller: controller,
           decoration: InputDecoration(
             labelText: label,

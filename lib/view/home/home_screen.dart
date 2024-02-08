@@ -1,12 +1,19 @@
+import 'package:ecommerce_app/controller/authentication/email_password.dart';
+import 'package:ecommerce_app/controller/user/user_provider.dart';
 import 'package:ecommerce_app/view/home/widgets/widgets.dart';
+import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final getProvider =
+        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -18,7 +25,10 @@ class HomeTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      getProvider.signOutWithEmail();
+                      NavigatorWidget().pushRemoveUntil(context, Welcome());
+                    },
                     icon: const Icon(EneftyIcons.search_normal_2_outline),
                   ),
                   SizedBox(width: size.width * .6, child: TextFormField()),

@@ -1,24 +1,22 @@
 import 'package:ecommerce_app/controller/authentication/email_password.dart';
-import 'package:ecommerce_app/controller/user/user_provider.dart';
 import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
-import 'package:ecommerce_app/view/home/widgets/widgets.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/snackbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+  SignUpPage({Key? key});
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final getProvider = Provider.of<UserProvider>(context, listen: false);
+    final getProvider =
+        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -50,20 +48,23 @@ class SignUpPage extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        TextFieldWidgets().textFormField(
-                          size,
-                          label: 'Name',
-                          controller: getProvider.usernameController,
-                        ),
-                        TextFieldWidgets().textFormField(
-                          size,
-                          controller: getProvider.emailController,
-                          label: 'Email',
-                        ),
+                        TextFieldWidgets().textFormField(size,
+                            controller: getProvider.emailController,
+                            label: 'Email',
+                            type: "Email"),
                         TextFieldWidgets().textFormField(
                           size,
                           label: 'Password',
+                          type: "Password",
                           controller: getProvider.passwordController,
+                        ),
+                        TextFieldWidgets().textFormField(
+                          size,
+                          label: 'Confirm Password',
+                          type: "Confirm Password",
+                          cmfController:
+                              getProvider.passwordController.text.trim(),
+                          controller: getProvider.confirmPasswordController,
                         ),
                         SizedBox(height: size.width * 0.05),
                         ButtonWidgets().fullWidthElevatedButton(
@@ -71,7 +72,19 @@ class SignUpPage extends StatelessWidget {
                           label: 'Sign Up',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              await checkLogin(context);
+                              try {
+                                getProvider.signUpWithEmail(
+                                    getProvider.emailController.text,
+                                    getProvider.passwordController.text);
+                                NavigatorWidget()
+                                    .pushReplacement(context, HomeTab());
+                                SnackBarWidget().showSuccessSnackbar(
+                                    context, 'Account has been created');
+                                getProvider.clearControllers();
+                              } catch (e) {
+                                SnackBarWidget().showErrorSnackbar(
+                                    context, 'Account not created, try again');
+                              }
                             }
                           },
                         ),
@@ -101,23 +114,5 @@ class SignUpPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> checkLogin(BuildContext context) async {
-    await Provider.of<UserProvider>(context, listen: false)
-        .createUserWithEmail();
-    final getProvider =
-        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
-
-    if (getProvider.user == null) {
-      NavigatorWidget().push(context, HomeTab());
-      SnackBarWidget()
-          .showSuccessSnackbar(context, 'Account created successfully!');
-    } else {
-      SnackBarWidget().showErrorSnackbar(
-        context,
-        'The email address is already in use by another account or an error occurred.',
-      );
-    }
   }
 }

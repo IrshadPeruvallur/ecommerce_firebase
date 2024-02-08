@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => EmailPasswordAuthProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => UserProvider(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => UserProvider(),
+        // ),
       ],
       child: MaterialApp(
         theme: ThemeData(

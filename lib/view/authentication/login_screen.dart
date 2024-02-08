@@ -1,9 +1,11 @@
+import 'package:ecommerce_app/controller/authentication/email_password.dart';
 import 'package:ecommerce_app/controller/user/user_provider.dart';
 import 'package:ecommerce_app/view/authentication/singup_screen.dart';
 import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:ecommerce_app/view/widgets/snackbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final getProvider = Provider.of<UserProvider>(context, listen: false);
+    final getProvider =
+        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -67,9 +70,21 @@ class LoginPage extends StatelessWidget {
                         ButtonWidgets().fullWidthElevatedButton(
                           size,
                           label: 'Log in',
-                          onPressed: () {
-                            NavigatorWidget().push(context, HomeTab());
-                            if (formKey.currentState!.validate()) {}
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              try {
+                                await getProvider.signInWithEmail(
+                                    getProvider.emailController.text,
+                                    getProvider.passwordController.text);
+                                SnackBarWidget().showSuccessSnackbar(
+                                    context, 'user logid in');
+                                NavigatorWidget()
+                                    .pushReplacement(context, HomeTab());
+                              } catch (e) {
+                                SnackBarWidget().showErrorSnackbar(
+                                    context, 'Username password incorrect');
+                              }
+                            }
                           },
                         ),
                         SizedBox(
