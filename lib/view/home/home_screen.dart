@@ -26,6 +26,7 @@ class HomeTab extends StatelessWidget {
                   IconButton(
                     onPressed: () async {
                       getProvider.signOutWithEmail();
+                      getProvider.googleSignOut();
                       NavigatorWidget().pushRemoveUntil(context, Welcome());
                     },
                     icon: const Icon(EneftyIcons.search_normal_2_outline),

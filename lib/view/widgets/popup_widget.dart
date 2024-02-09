@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SnackBarWidget {
+class PopupWidgets {
   void showSuccessSnackbar(BuildContext context, String message) {
     final snackbar = SnackBar(
       content: Text(message),
@@ -19,5 +19,18 @@ class SnackBarWidget {
       behavior: SnackBarBehavior.floating,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
+  Future<void> showLoadingIndicator(context) async {
+    showDialog(
+      context: context,
+      builder: (context) => Container(
+        color: Colors.white,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+    await Future.delayed(const Duration(seconds: 2));
   }
 }

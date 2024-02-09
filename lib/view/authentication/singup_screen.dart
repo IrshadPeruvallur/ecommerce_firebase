@@ -3,7 +3,7 @@ import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
-import 'package:ecommerce_app/view/widgets/snackbar_widget.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +62,7 @@ class SignUpPage extends StatelessWidget {
                           size,
                           label: 'Confirm Password',
                           type: "Confirm Password",
-                          cmfController:
-                              getProvider.passwordController.text.trim(),
+                          cmfController: getProvider.passwordController,
                           controller: getProvider.confirmPasswordController,
                         ),
                         SizedBox(height: size.width * 0.05),
@@ -78,18 +77,16 @@ class SignUpPage extends StatelessWidget {
                                     getProvider.passwordController.text);
                                 NavigatorWidget()
                                     .pushReplacement(context, HomeTab());
-                                SnackBarWidget().showSuccessSnackbar(
+                                PopupWidgets().showSuccessSnackbar(
                                     context, 'Account has been created');
                                 getProvider.clearControllers();
                               } catch (e) {
-                                SnackBarWidget().showErrorSnackbar(
+                                PopupWidgets().showErrorSnackbar(
                                     context, 'Account not created, try again');
                               }
                             }
                           },
                         ),
-                        StyleWidgets().lineDivider(text: 'or'),
-                        LoginPageWidget().loginIcons(context),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -99,6 +96,7 @@ class SignUpPage extends StatelessWidget {
                               context,
                               label: 'SIGN IN',
                               onPressed: () {
+                                getProvider.clearControllers();
                                 Navigator.pop(context);
                               },
                             ),

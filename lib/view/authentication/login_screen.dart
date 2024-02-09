@@ -4,7 +4,7 @@ import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
-import 'package:ecommerce_app/view/widgets/snackbar_widget.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:flutter/material.dart';
@@ -76,12 +76,12 @@ class LoginPage extends StatelessWidget {
                                 await getProvider.signInWithEmail(
                                     getProvider.emailController.text,
                                     getProvider.passwordController.text);
-                                SnackBarWidget().showSuccessSnackbar(
+                                PopupWidgets().showSuccessSnackbar(
                                     context, 'user logid in');
                                 NavigatorWidget()
                                     .pushReplacement(context, HomeTab());
                               } catch (e) {
-                                SnackBarWidget().showErrorSnackbar(
+                                PopupWidgets().showErrorSnackbar(
                                     context, 'Username password incorrect');
                               }
                             }
@@ -97,7 +97,8 @@ class LoginPage extends StatelessWidget {
                           children: [
                             const Text('Create a account?'),
                             ButtonWidgets().textButtonWidget(size, context,
-                                label: 'SIGN UP', onPressed: () {
+                                label: 'SIGN UP', onPressed: () async {
+                              await getProvider.clearControllers();
                               NavigatorWidget().push(context, SignUpPage());
                             }),
                           ],

@@ -1,4 +1,7 @@
 import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/view/home/home_screen.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +14,15 @@ class LoginPageWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {
-            getProvider.googleSignIn();
+          onTap: () async {
+            try {
+              await getProvider.googleSignIn();
+              await PopupWidgets().showLoadingIndicator(context);
+              NavigatorWidget().pushReplacement(context, HomeTab());
+              PopupWidgets().showSuccessSnackbar(context, 'You are logged In');
+            } catch (e) {
+              return;
+            }
           },
           child: SizedBox(
             width: size.width * .08,

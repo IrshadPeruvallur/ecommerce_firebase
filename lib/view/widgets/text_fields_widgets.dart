@@ -7,7 +7,7 @@ class TextFieldWidgets {
     Size size, {
     String? type,
     TextEditingController? controller,
-    String? cmfController,
+    TextEditingController? cmfController,
     String? label,
     TextInputFormatter? inputFormatter,
     TextInputType? keyboardType,
@@ -29,7 +29,7 @@ class TextFieldWidgets {
                 return 'Password should be at least 6 characters';
               }
             } else if (type == 'Confirm Password') {
-              if (value != cmfController) {
+              if (controller != cmfController) {
                 return 'Passwords do not match';
               }
             }

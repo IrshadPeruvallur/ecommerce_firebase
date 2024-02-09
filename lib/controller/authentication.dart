@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/service/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final EmailPasswordAuthService emailAuthService = EmailPasswordAuthService();
@@ -22,6 +23,12 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> googleSignIn() async {
     await emailAuthService.googleSignIn();
+    notifyListeners();
+  }
+
+  Future<void> googleSignOut() async {
+    await GoogleSignIn().signOut();
+    FirebaseAuth.instance.signOut();
     notifyListeners();
   }
 
