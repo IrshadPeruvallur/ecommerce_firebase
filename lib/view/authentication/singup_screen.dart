@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/authentication/email_password.dart';
+import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
@@ -16,7 +16,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final getProvider =
-        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
+        Provider.of<AuthenticationProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(

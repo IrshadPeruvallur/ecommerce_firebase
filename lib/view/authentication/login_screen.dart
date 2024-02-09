@@ -1,5 +1,4 @@
-import 'package:ecommerce_app/controller/authentication/email_password.dart';
-import 'package:ecommerce_app/controller/user/user_provider.dart';
+import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/authentication/singup_screen.dart';
 import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
@@ -18,7 +17,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final getProvider =
-        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
+        Provider.of<AuthenticationProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(

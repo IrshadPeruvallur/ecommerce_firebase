@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/authentication/email_password.dart';
+import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/home/widgets/widgets.dart';
 import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
@@ -12,7 +12,7 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final getProvider =
-        Provider.of<EmailPasswordAuthProvider>(context, listen: false);
+        Provider.of<AuthenticationProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(

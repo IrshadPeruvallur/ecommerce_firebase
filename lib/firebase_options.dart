@@ -44,39 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDwcdm-6YUI7JP7T7iBPS-3hdP-Q0cqJ4Y',
-    appId: '1:344204788213:web:986a4a7295a7ead33920bc',
-    messagingSenderId: '344204788213',
-    projectId: 'e-commerce-ee285',
-    authDomain: 'e-commerce-ee285.firebaseapp.com',
-    storageBucket: 'e-commerce-ee285.appspot.com',
+    apiKey: 'AIzaSyBRSr6RXcbzRTxZSVV6vHsslw0-SXficwI',
+    appId: '1:165199657749:web:37afb8b0a1b9834cbbc71c',
+    messagingSenderId: '165199657749',
+    projectId: 'e-commerce-5436c',
+    authDomain: 'e-commerce-5436c.firebaseapp.com',
+    storageBucket: 'e-commerce-5436c.appspot.com',
+    measurementId: 'G-GKGN5CS613',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCsSybul2M6RAE5ukNZsd2KD8Bd5x0idis',
-    appId: '1:344204788213:android:1d6ce1e269a76e593920bc',
-    messagingSenderId: '344204788213',
-    projectId: 'e-commerce-ee285',
-    storageBucket: 'e-commerce-ee285.appspot.com',
+    apiKey: 'AIzaSyCb5FlRTTneWVAm3mE2X3RdjUaBtQY-YEI',
+    appId: '1:165199657749:android:05c1959c8ef96f77bbc71c',
+    messagingSenderId: '165199657749',
+    projectId: 'e-commerce-5436c',
+    storageBucket: 'e-commerce-5436c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyASB0A_1PI0blBtCy9xBkqBCfVewcsCdvI',
-    appId: '1:344204788213:ios:312b377e55c5c8103920bc',
-    messagingSenderId: '344204788213',
-    projectId: 'e-commerce-ee285',
-    storageBucket: 'e-commerce-ee285.appspot.com',
-    iosClientId: '344204788213-fahf4e7qacr5ga6uatbq42cohgcde07b.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBN-kOP8tX0VHCoq_7_LWXifJaJeAQ8mRY',
+    appId: '1:165199657749:ios:26d8b6386552e306bbc71c',
+    messagingSenderId: '165199657749',
+    projectId: 'e-commerce-5436c',
+    storageBucket: 'e-commerce-5436c.appspot.com',
     iosBundleId: 'com.example.ecommerceApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyASB0A_1PI0blBtCy9xBkqBCfVewcsCdvI',
-    appId: '1:344204788213:ios:9618e41ea84d91703920bc',
-    messagingSenderId: '344204788213',
-    projectId: 'e-commerce-ee285',
-    storageBucket: 'e-commerce-ee285.appspot.com',
-    iosClientId: '344204788213-e0c5s123cc0u5q1r513iverqiajhoprp.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBN-kOP8tX0VHCoq_7_LWXifJaJeAQ8mRY',
+    appId: '1:165199657749:ios:5e2d048bf0cd9dc5bbc71c',
+    messagingSenderId: '165199657749',
+    projectId: 'e-commerce-5436c',
+    storageBucket: 'e-commerce-5436c.appspot.com',
     iosBundleId: 'com.example.ecommerceApp.RunnerTests',
   );
 }

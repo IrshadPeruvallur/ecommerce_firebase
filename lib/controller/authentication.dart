@@ -1,14 +1,13 @@
-import 'package:ecommerce_app/service/authentication/email_password.dart';
+import 'package:ecommerce_app/service/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class EmailPasswordAuthProvider extends ChangeNotifier {
+class AuthenticationProvider extends ChangeNotifier {
   final EmailPasswordAuthService emailAuthService = EmailPasswordAuthService();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  bool showLoginPage = true;
   Future<UserCredential> signUpWithEmail(String email, String password) async {
     return await emailAuthService.signUpWithEmail(email, password);
   }
@@ -19,6 +18,16 @@ class EmailPasswordAuthProvider extends ChangeNotifier {
 
   Future<void> signOutWithEmail() async {
     return await emailAuthService.signOutWithEmail();
+  }
+
+  Future<void> googleSignIn() async {
+    await emailAuthService.googleSignIn();
+    notifyListeners();
+  }
+
+  Future<void> gitHubSignIn() async {
+    await emailAuthService.gitHubSign();
+    notifyListeners();
   }
 
   clearControllers() {
