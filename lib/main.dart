@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/controller/authentication/email_password.dart';
-import 'package:ecommerce_app/controller/user/user_provider.dart';
+import 'package:ecommerce_app/controller/authentication/google_auth.dart';
 import 'package:ecommerce_app/service/firebase_options.dart';
 import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => EmailPasswordAuthProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => UserProvider(),
-        // ),
+        ChangeNotifierProvider(
+          create: (context) => GoogleAuthenticationProvider(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(

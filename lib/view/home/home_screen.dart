@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/controller/authentication/email_password.dart';
-import 'package:ecommerce_app/controller/user/user_provider.dart';
 import 'package:ecommerce_app/view/home/widgets/widgets.dart';
 import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';

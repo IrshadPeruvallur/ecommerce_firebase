@@ -1,15 +1,18 @@
+import 'package:ecommerce_app/controller/authentication/google_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPageWidget {
-
-
   loginIcons(context) {
-      Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Provider.of<GoogleAuthenticationProvider>(context, listen: false)
+                .googleSignIn();
+          },
           child: SizedBox(
             width: size.width * .08,
             height: size.width * .08,

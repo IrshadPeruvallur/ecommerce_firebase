@@ -63,6 +63,7 @@ class LoginPage extends StatelessWidget {
                             controller: getProvider.emailController),
                         TextFieldWidgets().textFormField(size,
                             label: 'Password',
+                            type: "Password",
                             controller: getProvider.passwordController),
                         SizedBox(
                           height: size.width * .1,

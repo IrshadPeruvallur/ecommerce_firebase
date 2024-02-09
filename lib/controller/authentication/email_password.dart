@@ -8,8 +8,6 @@ class EmailPasswordAuthProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  // User? user;
-  // bool isCreated = false;
   bool showLoginPage = true;
   Future<UserCredential> signUpWithEmail(String email, String password) async {
     return await emailAuthService.signUpWithEmail(email, password);
@@ -23,14 +21,11 @@ class EmailPasswordAuthProvider extends ChangeNotifier {
     return await emailAuthService.signOutWithEmail();
   }
 
-  void togglepages() {
-    showLoginPage = !showLoginPage;
-    notifyListeners();
-  }
-
   clearControllers() {
     usernameController.clear();
     emailController.clear();
     passwordController.clear();
+    confirmPasswordController.clear();
+    notifyListeners();
   }
 }
