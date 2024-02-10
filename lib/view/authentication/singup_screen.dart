@@ -62,7 +62,6 @@ class SignUpPage extends StatelessWidget {
                           size,
                           label: 'Confirm Password',
                           type: "Confirm Password",
-                          cmfController: getProvider.passwordController,
                           controller: getProvider.confirmPasswordController,
                         ),
                         SizedBox(height: size.width * 0.05),

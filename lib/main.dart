@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/controller/connectivity_provider.dart';
 import 'package:ecommerce_app/firebase_options.dart';
 import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthenticationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ConnectivityProvider(),
         ),
       ],
       child: MaterialApp(
