@@ -92,4 +92,6 @@ class EmailPasswordAuthService {
       rethrow;
     }
   }
+
+  void verfiyOTP() {}
 }

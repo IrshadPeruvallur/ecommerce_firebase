@@ -14,8 +14,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +30,25 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          textTheme: const TextTheme(
-            titleLarge:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            bodyMedium: TextStyle(color: Colors.black),
+          primaryColor: const Color.fromARGB(255, 37, 157, 192),
+          textTheme: TextTheme(
+            titleLarge: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            bodyMedium: TextStyle(
+              color: Colors.black,
+            ),
           ),
-          colorScheme: ColorScheme.light(),
           appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 37, 157, 192),
+            foregroundColor: Colors.white,
             elevation: 0,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 37, 157, 192),
+            ),
           ),
         ),
         debugShowCheckedModeBanner: false,

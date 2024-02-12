@@ -1,42 +1,85 @@
-import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/home/widgets/widgets.dart';
-import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
-import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:enefty_icons/enefty_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:ecommerce_app/view/home/widgets/widgets.dart';
 
 class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
+  HomeTab({Key? key}) : super(key: key);
+
+  final List<String> specialProduct = [
+    'assets/images/offer 1.jpg',
+    'assets/images/offer 2.jpg',
+    'assets/images/offer 3.jpg'
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final getProvider =
-        Provider.of<AuthenticationProvider>(context, listen: false);
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
+      appBar: AppBar(
+        leading: Container(
+          width: 40,
+          height: 40,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Image(
+              color: Colors.white,
+              image: AssetImage(
+                'assets/icons/sellx logo.png',
+              ),
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        title: SizedBox(
+          width: size.width * .6,
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: "Search",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.grey[200],
+              contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(EneftyIcons.search_normal_2_outline),
+            onPressed: () {},
+          ),
+        ],
+        // backgroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      getProvider.signOutWithEmail();
-                      getProvider.googleSignOut();
-                      NavigatorWidget().pushRemoveUntil(context, Welcome());
-                    },
-                    icon: const Icon(EneftyIcons.search_normal_2_outline),
+              SizedBox(
+                height: size.height * .01,
+              ),
+              TextWidgets().mainHeadingText(context, text: 'Sponsered  '),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    specialProduct.length,
+                    (index) => Padding(
+                      padding: EdgeInsets.only(
+                        right: 8,
+                      ),
+                      child: HomeWidgets().specialProduct(
+                        size,
+                        imagePath: specialProduct[index],
+                      ),
+                    ),
                   ),
-                  SizedBox(width: size.width * .6, child: TextFormField()),
-                  IconButton(
-                    onPressed: () async {},
-                    icon: const Icon(EneftyIcons.bag_2_outline),
-                  ),
-                ],
+                ),
               ),
               SizedBox(
                 height: size.height * .03,
@@ -44,46 +87,26 @@ class HomeTab extends StatelessWidget {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    HomeWidgets().topBarIcon(size,
-                        icon: EneftyIcons.star_outline, title: 'Popular'),
-                    HomeWidgets().topBarIcon(size,
-                        icon: EneftyIcons.path_outline, title: 'Bed'),
-                    HomeWidgets().topBarIcon(size,
-                        icon: EneftyIcons.star_outline, title: 'Sofa'),
-                    HomeWidgets().topBarIcon(size,
-                        icon: EneftyIcons.star_outline, title: 'Table'),
-                    HomeWidgets().topBarIcon(size,
-                        icon: EneftyIcons.star_outline, title: 'Chair'),
-                    HomeWidgets().topBarIcon(size,
-                        icon: EneftyIcons.star_outline, title: 'Bed'),
-                  ],
+                  children: List.generate(
+                    5,
+                    (index) => Padding(
+                      padding: EdgeInsets.only(
+                        right: 8,
+                      ),
+                      child: HomeWidgets().categoryItems(
+                        size,
+                        imagePath: 'assets/images/headset .jpg',
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
                 height: size.height * .03,
               ),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: size.width * .05,
-                    mainAxisSpacing: size.height * .06,
-                  ),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      child: HomeWidgets().prodectShow(
-                        size,
-                        context,
-                        title: 'Dummy Product',
-                        imagepath: const AssetImage('assets/images/dummy.jpg'),
-                        prize: '₹19999',
-                      ),
-                    );
-                  },
-                ),
+              TextWidgets().mainHeadingText(context, text: 'Products  '),
+              HomeWidgets().buildProductItem(
+                size,
               )
             ],
           ),

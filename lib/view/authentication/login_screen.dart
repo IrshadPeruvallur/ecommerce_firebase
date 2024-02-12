@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                                     .pushReplacement(context, HomeTab());
                               } catch (e) {
                                 PopupWidgets().showErrorSnackbar(
-                                    context, 'Username password incorrect');
+                                    context, 'User not found!');
                               }
                             }
                           },

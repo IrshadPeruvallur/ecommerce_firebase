@@ -20,7 +20,14 @@ class SignUpPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              getProvider.clearControllers();
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios)),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -62,6 +69,7 @@ class SignUpPage extends StatelessWidget {
                           size,
                           label: 'Confirm Password',
                           type: "Confirm Password",
+                          cnfController: getProvider.passwordController,
                           controller: getProvider.confirmPasswordController,
                         ),
                         SizedBox(height: size.width * 0.05),
