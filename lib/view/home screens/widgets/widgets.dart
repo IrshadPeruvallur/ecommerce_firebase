@@ -10,7 +10,7 @@ class HomeWidgets {
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage(imagePath), fit: BoxFit.cover),
         color: const Color.fromARGB(255, 30, 29, 29),
-        borderRadius: BorderRadius.all(Radius.circular(size.width * .07)),
+        borderRadius: BorderRadius.all(Radius.circular(size.width * .03)),
       ),
     );
   }
@@ -60,16 +60,15 @@ class HomeWidgets {
 
   Widget buildProductItem(Size size, {products}) {
     return SingleChildScrollView(
-      // Adding SingleChildScrollView here
       scrollDirection: Axis.vertical,
       child: GridView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 0.7,
+          mainAxisSpacing: size.width * 0.05,
+          crossAxisSpacing: size.width * 0.015,
+          childAspectRatio: size.width / (size.width * 1.5),
         ),
         itemBuilder: (context, index) {
           return Stack(
@@ -79,20 +78,21 @@ class HomeWidgets {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.withOpacity(0.3),
+                  //     spreadRadius: 1,
+                  //     blurRadius: 5,
+                  //     offset: const Offset(0, 3),
+                  //   ),
+                  // ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                        height: size.height * 0.2,
+                        height: size.width * 0.42,
+                        width: size.width * 0.42,
                         child: Image(
                             fit: BoxFit.cover,
                             image: AssetImage('assets/images/dummy.jpg'))),

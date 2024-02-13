@@ -17,7 +17,7 @@ class ButtonWidgets {
         onPressed: onPressed,
         child: Text(name,
             style: GoogleFonts.montserrat(
-                fontSize: size.width * .04,
+                fontSize: size.width * .035,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w400)),
       ),
@@ -25,38 +25,38 @@ class ButtonWidgets {
   }
 
   Widget textButtonWidget(size, context,
-    {required label, required VoidCallback? onPressed}) {
-  return TextButton(
-      style: const ButtonStyle(
-          overlayColor: MaterialStatePropertyAll(Colors.transparent)),
-      onPressed: () {
-        onPressed!();
-      },
-      child: Text(
-        label,
-        style: TextStyle(fontSize: size.width * .04, color: Colors.black),
-      ));
-}
-
-
-Widget fullWidthElevatedButton(size, {required label, VoidCallback? onPressed}) {
-  return SizedBox(
-    height: size.width * .14,
-    width: double.infinity,
-    child: ElevatedButton(
-        style: ButtonStyle(
-            elevation: MaterialStatePropertyAll(size.width * .07),
-            backgroundColor: const MaterialStatePropertyAll(Colors.black)),
+      {required label, required VoidCallback? onPressed}) {
+    return TextButton(
+        style: const ButtonStyle(
+            overlayColor: MaterialStatePropertyAll(Colors.transparent)),
         onPressed: () {
           onPressed!();
         },
         child: Text(
           label,
-          style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.w700,
-              fontSize: size.width * .045,
-              color: const Color.fromARGB(255, 255, 255, 255)),
-        )),
-  );
-}
+          style: TextStyle(fontSize: size.width * .04, color: Colors.black),
+        ));
+  }
+
+  Widget fullWidthElevatedButton(size,
+      {required label, VoidCallback? onPressed}) {
+    return SizedBox(
+      height: size.width * .14,
+      width: double.infinity,
+      child: ElevatedButton(
+          style: ButtonStyle(
+              elevation: MaterialStatePropertyAll(size.width * .07),
+              backgroundColor: const MaterialStatePropertyAll(Colors.black)),
+          onPressed: () {
+            onPressed!();
+          },
+          child: Text(
+            label,
+            style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w700,
+                fontSize: size.width * .045,
+                color: const Color.fromARGB(255, 255, 255, 255)),
+          )),
+    );
+  }
 }

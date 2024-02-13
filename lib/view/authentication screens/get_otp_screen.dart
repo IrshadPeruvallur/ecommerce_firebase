@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/authentication/verfiy_otp.dart';
-import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
+import 'package:ecommerce_app/view/authentication%20screens/verify_otp_screen.dart';
+import 'package:ecommerce_app/view/authentication%20screens/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class GetOTPPage extends StatelessWidget {
-  GetOTPPage({super.key});
+class GetOtpPage extends StatelessWidget {
+  GetOtpPage({super.key});
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -65,12 +65,15 @@ class GetOTPPage extends StatelessWidget {
                           label: 'Get Otp',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              try {
-                                await getProvider.phoneSignIn(
-                                    getProvider.phoneController.text);
-                                NavigatorWidget()
-                                    .pushReplacement(context, VerifyOtpPage());
-                              } catch (e) {}
+                              await getProvider
+                                  .getOTP(getProvider.phoneController.text);
+                              // if (getProvider.isVerified == true) {
+                              NavigatorWidget()
+                                  .pushReplacement(context, VerifyOtpPage());
+                              // } else {
+                              // PopupWidgets()
+                              //     .showErrorSnackbar(context, 'message');
+                              // }
                             }
                           },
                         ),

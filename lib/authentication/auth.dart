@@ -1,5 +1,5 @@
-import 'package:ecommerce_app/view/authentication/login_screen.dart';
-import 'package:ecommerce_app/view/home/home_screen.dart';
+import 'package:ecommerce_app/view/authentication%20screens/login_screen.dart';
+import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class AuthenticationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     User? currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
-      body: currentUser != null ? HomeTab() : LoginPage(),
+      body: currentUser != null ? BottomBarScreen() : LoginPage(),
     );
   }
 }

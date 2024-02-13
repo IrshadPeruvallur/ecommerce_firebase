@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/authentication/get_otp_screen.dart';
-import 'package:ecommerce_app/view/home/home_screen.dart';
+import 'package:ecommerce_app/view/authentication%20screens/get_otp_screen.dart';
+import 'package:ecommerce_app/view/home%20screens/home_tab.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class AuthPagesWidget {
         ),
         GestureDetector(
           onTap: () {
-            NavigatorWidget().push(context, GetOTPPage());
+            NavigatorWidget().push(context, GetOtpPage());
           },
           child: SizedBox(
             width: size.width * .08,

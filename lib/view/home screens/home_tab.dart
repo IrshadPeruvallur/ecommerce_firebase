@@ -1,10 +1,10 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/authentication/login_screen.dart';
+import 'package:ecommerce_app/view/pages/cart_page.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:enefty_icons/enefty_icons.dart';
-import 'package:ecommerce_app/view/home/widgets/widgets.dart';
+import 'package:ecommerce_app/view/home%20screens/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
@@ -23,6 +23,7 @@ class HomeTab extends StatelessWidget {
         Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: size.width * .2,
         leading: Container(
           width: 40,
           height: 40,
@@ -54,24 +55,37 @@ class HomeTab extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(EneftyIcons.logout_2_bold),
+            icon: const Icon(EneftyIcons.bag_2_outline),
             onPressed: () {
-              getAuthPrv.signOutWithEmail();
-              getAuthPrv.googleSignOut();
-              NavigatorWidget().pushRemoveUntil(context, LoginPage());
+              NavigatorWidget().push(context, CartPage());
             },
           ),
         ],
         // backgroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: size.height * .01,
+              TextWidgets().mainHeadingText(context, text: 'Category  '),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    5,
+                    (index) => Padding(
+                      padding: EdgeInsets.only(
+                        right: 8,
+                      ),
+                      child: HomeWidgets().categoryItems(
+                        size,
+                        imagePath: 'assets/images/headset .jpg',
+                      ),
+                    ),
+                  ),
+                ),
               ),
               TextWidgets().mainHeadingText(context, text: 'Sponsered  '),
               SingleChildScrollView(
@@ -90,29 +104,6 @@ class HomeTab extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: size.height * .03,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    5,
-                    (index) => Padding(
-                      padding: EdgeInsets.only(
-                        right: 8,
-                      ),
-                      child: HomeWidgets().categoryItems(
-                        size,
-                        imagePath: 'assets/images/headset .jpg',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: size.height * .03,
               ),
               TextWidgets().mainHeadingText(context, text: 'Products  '),
               HomeWidgets().buildProductItem(

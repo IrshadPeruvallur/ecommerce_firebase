@@ -52,4 +52,55 @@ class TextFieldWidgets {
       ],
     );
   }
+
+  Widget textFormFieldRound(
+    Size size, {
+    String? type,
+    TextEditingController? controller,
+    TextEditingController? cnfController,
+    String? label,
+    TextInputFormatter? inputFormatter,
+    TextInputType? keyboardType,
+  }) {
+    return Column(
+      children: [
+        TextFormField(
+          inputFormatters: inputFormatter != null ? [inputFormatter] : [],
+          keyboardType: keyboardType ?? TextInputType.text,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Please enter $label";
+            } else if (type == "Email") {
+              if (!EmailValidator.validate(value)) {
+                return "Please enter a valid email address";
+              }
+            } else if (type == 'Password') {
+              if (value.length < 6) {
+                return 'Password should be at least 6 characters';
+              }
+            } else if (type == 'Confirm Password') {
+              if (value != cnfController!.text) {
+                return 'Passwords do not match';
+              }
+            }
+            return null;
+          },
+          obscureText:
+              type == "Password" || type == "Confirm Password" ? true : false,
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(size.width * .03)),
+            labelText: label,
+            labelStyle: const TextStyle(color: Colors.black),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(size.width * .03)),
+          ),
+        ),
+        SizedBox(
+          height: size.width * 0.05,
+        )
+      ],
+    );
+  }
 }

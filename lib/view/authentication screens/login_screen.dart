@@ -1,7 +1,8 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/authentication/singup_screen.dart';
-import 'package:ecommerce_app/view/authentication/widgets/login_widget.dart';
-import 'package:ecommerce_app/view/home/home_screen.dart';
+import 'package:ecommerce_app/view/authentication%20screens/singup_screen.dart';
+import 'package:ecommerce_app/view/authentication%20screens/widgets/login_widget.dart';
+import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
+import 'package:ecommerce_app/view/home%20screens/home_tab.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
@@ -20,9 +21,9 @@ class LoginPage extends StatelessWidget {
         Provider.of<AuthenticationProvider>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      // ),
       body: Form(
         key: formKey,
         child: Padding(
@@ -78,8 +79,8 @@ class LoginPage extends StatelessWidget {
                                     getProvider.passwordController.text);
                                 PopupWidgets().showSuccessSnackbar(
                                     context, 'user logid in');
-                                NavigatorWidget()
-                                    .pushReplacement(context, HomeTab());
+                                NavigatorWidget().pushReplacement(
+                                    context, BottomBarScreen());
                               } catch (e) {
                                 PopupWidgets().showErrorSnackbar(
                                     context, 'User not found!');

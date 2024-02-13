@@ -5,7 +5,7 @@ import 'package:ecommerce_app/model/auth_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class EmailPasswordAuthService {
+class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   String collection = 'UserPost';
@@ -95,7 +95,7 @@ class EmailPasswordAuthService {
 
   String? _verificationId;
 
-  Future<void> phoneSignIn(String phoneNumber) async {
+  Future<void> getOTP(String phoneNumber) async {
     try {
       await firebaseAuth.verifyPhoneNumber(
           phoneNumber: phoneNumber,
@@ -107,6 +107,7 @@ class EmailPasswordAuthService {
           },
           codeSent: (String verificationId, int? forceResendingToken) {
             _verificationId = verificationId;
+            log(verificationId);
           },
           codeAutoRetrievalTimeout: (verificationId) {
             _verificationId = verificationId;
@@ -123,6 +124,7 @@ class EmailPasswordAuthService {
         verificationId: _verificationId!,
         smsCode: otp,
       );
+
       await firebaseAuth.signInWithCredential(credential);
     } catch (e) {
       log("verifyOTP error: $e");

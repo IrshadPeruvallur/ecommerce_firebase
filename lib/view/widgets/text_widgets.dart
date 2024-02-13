@@ -35,15 +35,18 @@ class TextWidgets {
 
   Widget mainHeadingText(BuildContext context,
       {required String text, Color? color}) {
-    return Text(
-      text,
-      textAlign: TextAlign.start,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-        color: color ?? Colors.black,
-        fontSize: MediaQuery.of(context).size.width * 0.06,
-        fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        text,
+        textAlign: TextAlign.start,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: color ?? Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.06,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/connectivity_provider.dart';
+import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/firebase_options.dart';
-import 'package:ecommerce_app/view/welcome/welcome_screen.dart';
+import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ConnectivityProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WidgetProviders(),
         ),
       ],
       child: MaterialApp(

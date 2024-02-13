@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
-  final EmailPasswordAuthService emailAuthService = EmailPasswordAuthService();
+  final AuthService emailAuthService = AuthService();
   TextEditingController otpController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
   Future<UserCredential> signUpWithEmail(String email, String password) async {
     return await emailAuthService.signUpWithEmail(email, password);
   }
@@ -38,13 +39,15 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> phoneSignIn(phoneNumber) async {
-    await emailAuthService.phoneSignIn(phoneNumber);
+  Future<void> getOTP(phoneNumber) async {
+    await emailAuthService.getOTP(phoneNumber);
+
     notifyListeners();
   }
 
   Future<void> verifyOTP(otp) async {
     await emailAuthService.verifyOTP(otp);
+
     notifyListeners();
   }
 

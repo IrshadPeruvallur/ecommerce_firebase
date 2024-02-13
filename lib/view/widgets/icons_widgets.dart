@@ -15,4 +15,11 @@ class IconsWidgets {
       onPressed: onPressed,
     );
   }
+
+  Widget IconWidget(Size size, {required IconData iconData, Color? color}) {
+    return Icon(
+      iconData,
+      size: size.width * 0.06,
+    );
+  }
 }
