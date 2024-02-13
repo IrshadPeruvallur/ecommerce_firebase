@@ -1,7 +1,11 @@
+import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/view/authentication/login_screen.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:ecommerce_app/view/home/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({Key? key}) : super(key: key);
@@ -15,6 +19,8 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final getAuthPrv =
+        Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         leading: Container(
@@ -48,8 +54,12 @@ class HomeTab extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(EneftyIcons.search_normal_2_outline),
-            onPressed: () {},
+            icon: const Icon(EneftyIcons.logout_2_bold),
+            onPressed: () {
+              getAuthPrv.signOutWithEmail();
+              getAuthPrv.googleSignOut();
+              NavigatorWidget().pushRemoveUntil(context, LoginPage());
+            },
           ),
         ],
         // backgroundColor: Colors.white,

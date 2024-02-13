@@ -93,5 +93,39 @@ class EmailPasswordAuthService {
     }
   }
 
-  void verfiyOTP() {}
+  String? _verificationId;
+
+  Future<void> phoneSignIn(String phoneNumber) async {
+    try {
+      await firebaseAuth.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) async {
+            await firebaseAuth.signInWithCredential(credential);
+          },
+          verificationFailed: (error) {
+            log("verificationFailed ${error.message}");
+          },
+          codeSent: (String verificationId, int? forceResendingToken) {
+            _verificationId = verificationId;
+          },
+          codeAutoRetrievalTimeout: (verificationId) {
+            _verificationId = verificationId;
+          },
+          timeout: Duration(seconds: 60));
+    } catch (e) {
+      log("phoneSignIn error: $e");
+    }
+  }
+
+  Future<void> verifyOTP(String otp) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId!,
+        smsCode: otp,
+      );
+      await firebaseAuth.signInWithCredential(credential);
+    } catch (e) {
+      log("verifyOTP error: $e");
+    }
+  }
 }

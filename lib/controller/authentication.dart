@@ -5,7 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final EmailPasswordAuthService emailAuthService = EmailPasswordAuthService();
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -37,8 +38,19 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> phoneSignIn(phoneNumber) async {
+    await emailAuthService.phoneSignIn(phoneNumber);
+    notifyListeners();
+  }
+
+  Future<void> verifyOTP(otp) async {
+    await emailAuthService.verifyOTP(otp);
+    notifyListeners();
+  }
+
   clearControllers() {
-    usernameController.clear();
+    otpController.clear();
+    phoneController.clear();
     emailController.clear();
     passwordController.clear();
     confirmPasswordController.clear();

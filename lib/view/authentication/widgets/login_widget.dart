@@ -1,11 +1,12 @@
 import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/view/authentication/get_otp_screen.dart';
 import 'package:ecommerce_app/view/home/home_screen.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPageWidget {
+class AuthPagesWidget {
   loginIcons(context) {
     Size size = MediaQuery.of(context).size;
     final getProvider =
@@ -29,8 +30,8 @@ class LoginPageWidget {
             height: size.width * .08,
             child: const Image(
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                  'https://freelogopng.com/images/all_img/1657955547black-google-icon.png',
+                image: AssetImage(
+                  'assets/icons/google.png',
                 )),
           ),
         ),
@@ -46,8 +47,8 @@ class LoginPageWidget {
             height: size.width * .08,
             child: const Image(
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/25/25231.png',
+                image: AssetImage(
+                  'assets/icons/github.png',
                 )),
           ),
         ),
@@ -55,14 +56,14 @@ class LoginPageWidget {
           width: size.width * .02,
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            NavigatorWidget().push(context, GetOTPPage());
+          },
           child: SizedBox(
             width: size.width * .08,
             height: size.width * .08,
             child: const Image(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://i.pinimg.com/736x/3e/f3/b2/3ef3b280bce4c1209e1e4376c7f452ed.jpg')),
+                fit: BoxFit.cover, image: AssetImage('assets/icons/phone.png')),
           ),
         ),
       ],

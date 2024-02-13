@@ -91,7 +91,7 @@ class LoginPage extends StatelessWidget {
                           height: size.width * .05,
                         ),
                         StyleWidgets().lineDivider(text: 'or'),
-                        LoginPageWidget().loginIcons(context),
+                        AuthPagesWidget().loginIcons(context),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
