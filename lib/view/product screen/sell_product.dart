@@ -1,8 +1,10 @@
 import 'package:ecommerce_app/controller/product_provider.dart';
+import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,8 +12,6 @@ class SellProductPage extends StatelessWidget {
   SellProductPage({Key? key}) : super(key: key);
 
   final formKey = GlobalKey<FormState>();
-
-  // Define a list of categories
   final List<String> categories = [
     'Mobile',
     'Laptop',
@@ -29,10 +29,10 @@ class SellProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final getProvider = Provider.of<ProductProvider>(context, listen: false);
+    final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBarWidgets().appBarWithAction(context, size,
+      appBar: AppBarWidgets().appBarWithAction(context,
           title: 'Sell Product', iconbutton: EneftyIcons.bag_2_outline),
       body: Form(
         key: formKey,
@@ -50,6 +50,14 @@ class SellProductPage extends StatelessWidget {
                       width: size.width * .5,
                       height: size.width * .5,
                       decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                           image: DecorationImage(
                               scale: size.width * .07,
                               image: AssetImage(
@@ -119,7 +127,9 @@ class SellProductPage extends StatelessWidget {
                           size,
                           label: 'Log in',
                           onPressed: () async {
-                            if (formKey.currentState!.validate()) {}
+                            if (formKey.currentState!.validate()) {
+                              addProduct(context);
+                            }
                           },
                         ),
                       ],
@@ -132,5 +142,20 @@ class SellProductPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void addProduct(context) async {
+    final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    final user = FirebaseAuth.instance.currentUser;
+    final product = ProductModel(
+      id: user!.email ?? user.phoneNumber,
+      title: getProvider.titleController.text,
+      subtitile: getProvider.subtitleController.text,
+      price: int.parse(getProvider.priceController.text),
+      image: 'image',
+      category: selectedCategory,
+      timeStamp: DateTime.now(),
+    );
+    await getProvider.addProduct(product);
   }
 }

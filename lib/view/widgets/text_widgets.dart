@@ -67,7 +67,7 @@ class TextWidgets {
       style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
         fontSize: MediaQuery.of(context).size.width * 0.035,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w500,
       ),
     );
   }

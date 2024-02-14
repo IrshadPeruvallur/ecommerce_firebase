@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/view/pages/cart_page.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
@@ -7,8 +8,20 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:ecommerce_app/view/home%20screens/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   HomeTab({Key? key}) : super(key: key);
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  @override
+  void initState() {
+    super.initState();
+    // Call getProducts when the widget is initialized
+    Provider.of<DatabaseProvider>(context, listen: false).getProducts();
+  }
 
   final List<String> specialProduct = [
     'assets/images/offer 1.jpg',
@@ -19,8 +32,7 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final getAuthPrv =
-        Provider.of<AuthenticationProvider>(context, listen: false);
+    final getAuthPrv = Provider.of<DatabaseProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: size.width * .2,
@@ -106,9 +118,13 @@ class HomeTab extends StatelessWidget {
                 ),
               ),
               TextWidgets().mainHeadingText(context, text: 'Products  '),
-              HomeWidgets().buildProductItem(
-                size,
-              )
+              Consumer<DatabaseProvider>(
+                builder: (context, provider, _) =>
+                    HomeWidgets().buildProductItem(
+                  size,
+                  products: provider.allProduct,
+                ),
+              ),
             ],
           ),
         ),

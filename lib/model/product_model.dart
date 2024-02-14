@@ -4,7 +4,7 @@ class ProductModel {
   String? id;
   String? title;
   String? subtitile;
-  String? catogory;
+  String? category;
   List<String>? wishList;
   List<String>? cart;
   DateTime? timeStamp;
@@ -12,7 +12,7 @@ class ProductModel {
   int? price;
   ProductModel(
       {this.cart,
-      this.catogory,
+      this.category,
       this.id,
       this.image,
       this.price,
@@ -27,11 +27,25 @@ class ProductModel {
             ? (json['timeStamp'] as Timestamp).toDate()
             : null,
         cart: List<String>.from(json["cart"] ?? []),
-        catogory: json['catogory'],
+        category: json['catogory'],
         image: json['image'],
         price: json['price'],
         subtitile: json['subtitile'],
         title: json['title'],
         wishList: List<String>.from(json['wishList'] ?? []));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'cart': cart,
+      'catogory': category,
+      'id': id,
+      'image': image,
+      'price': price,
+      'subtitile': subtitile,
+      'timeStamp': timeStamp,
+      'title': title,
+      'wishList': wishList,
+    };
   }
 }

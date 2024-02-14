@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class HomeWidgets {
     );
   }
 
-  Widget buildProductItem(Size size, {products}) {
+  Widget buildProductItem(Size size, {List<ProductModel>? products}) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: GridView.builder(
@@ -71,6 +72,7 @@ class HomeWidgets {
           childAspectRatio: size.width / (size.width * 1.5),
         ),
         itemBuilder: (context, index) {
+          final product = products![index];
           return Stack(
             children: [
               Container(
@@ -78,14 +80,6 @@ class HomeWidgets {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.withOpacity(0.3),
-                  //     spreadRadius: 1,
-                  //     blurRadius: 5,
-                  //     offset: const Offset(0, 3),
-                  //   ),
-                  // ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,12 +91,14 @@ class HomeWidgets {
                             fit: BoxFit.cover,
                             image: AssetImage('assets/images/dummy.jpg'))),
                     const SizedBox(height: 10),
-                    TextWidgets().HeadingText(context, text: 'Product Name'),
-                    TextWidgets().SubtitleText(context, text: 'SubTitle'),
+                    TextWidgets().HeadingText(context, text: product.title!),
+                    TextWidgets()
+                        .SubtitleText(context, text: product.subtitile!),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextWidgets().titleText2(context, text: '₹9999'),
+                        TextWidgets().titleText2(context,
+                            text: "₹${product.price.toString()}"),
                       ],
                     )
                   ],
@@ -120,7 +116,7 @@ class HomeWidgets {
             ],
           );
         },
-        itemCount: 10,
+        itemCount: products!.length,
       ),
     );
   }

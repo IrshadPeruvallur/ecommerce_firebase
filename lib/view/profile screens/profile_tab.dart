@@ -2,6 +2,7 @@
 import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/pages/cart_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
+import 'package:ecommerce_app/view/product%20screen/my_product.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class ProfileTab extends StatelessWidget {
   ProfileTab({super.key});
 
   final List listTitles = [
-    'my orders',
+    'my Products',
     'shipping adress',
     'Wishlist',
     'cart',
@@ -28,7 +29,7 @@ class ProfileTab extends StatelessWidget {
   ];
 
   final List<Widget> listTabs = [
-    const BlankPage(name: 'MY ORDERS'),
+    MyProductPage(),
     const BlankPage(
       name: 'SHIPPING ADRESS',
     ),

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthenticationProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ProductProvider(),
+          create: (context) => DatabaseProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => ConnectivityProvider(),
