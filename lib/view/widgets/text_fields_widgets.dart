@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TextFieldWidgets {
   Widget textFormField(
@@ -12,44 +13,40 @@ class TextFieldWidgets {
     TextInputFormatter? inputFormatter,
     TextInputType? keyboardType,
   }) {
-    return Column(
-      children: [
-        TextFormField(
-          inputFormatters: inputFormatter != null ? [inputFormatter] : [],
-          keyboardType: keyboardType ?? TextInputType.text,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return "Please enter $label";
-            } else if (type == "Email") {
-              if (!EmailValidator.validate(value)) {
-                return "Please enter a valid email address";
-              }
-            } else if (type == 'Password') {
-              if (value.length < 6) {
-                return 'Password should be at least 6 characters';
-              }
-            } else if (type == 'Confirm Password') {
-              if (value != cnfController!.text) {
-                return 'Passwords do not match';
-              }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 08),
+      child: TextFormField(
+        inputFormatters: inputFormatter != null ? [inputFormatter] : [],
+        keyboardType: keyboardType ?? TextInputType.text,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter $label";
+          } else if (type == "Email") {
+            if (!EmailValidator.validate(value)) {
+              return "Please enter a valid email address";
             }
-            return null;
-          },
-          obscureText:
-              type == "Password" || type == "Confirm Password" ? true : false,
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: label,
-            labelStyle: const TextStyle(color: Colors.black),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black),
-            ),
+          } else if (type == 'Password') {
+            if (value.length < 6) {
+              return 'Password should be at least 6 characters';
+            }
+          } else if (type == 'Confirm Password') {
+            if (value != cnfController!.text) {
+              return 'Passwords do not match';
+            }
+          }
+          return null;
+        },
+        obscureText:
+            type == "Password" || type == "Confirm Password" ? true : false,
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: GoogleFonts.montserrat(color: Colors.black),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
           ),
         ),
-        SizedBox(
-          height: size.width * 0.05,
-        )
-      ],
+      ),
     );
   }
 

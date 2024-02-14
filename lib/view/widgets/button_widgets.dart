@@ -40,23 +40,26 @@ class ButtonWidgets {
 
   Widget fullWidthElevatedButton(size,
       {required label, VoidCallback? onPressed}) {
-    return SizedBox(
-      height: size.width * .14,
-      width: double.infinity,
-      child: ElevatedButton(
-          style: ButtonStyle(
-              elevation: MaterialStatePropertyAll(size.width * .07),
-              backgroundColor: const MaterialStatePropertyAll(Colors.black)),
-          onPressed: () {
-            onPressed!();
-          },
-          child: Text(
-            label,
-            style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w700,
-                fontSize: size.width * .045,
-                color: const Color.fromARGB(255, 255, 255, 255)),
-          )),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: size.width * .14,
+        width: double.infinity,
+        child: ElevatedButton(
+            style: ButtonStyle(
+                elevation: MaterialStatePropertyAll(size.width * .07),
+                backgroundColor: const MaterialStatePropertyAll(Colors.black)),
+            onPressed: () {
+              onPressed!();
+            },
+            child: Text(
+              label,
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w700,
+                  fontSize: size.width * .045,
+                  color: const Color.fromARGB(255, 255, 255, 255)),
+            )),
+      ),
     );
   }
 }

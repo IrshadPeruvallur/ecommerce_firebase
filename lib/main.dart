@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/connectivity_provider.dart';
+import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/firebase_options.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthenticationProvider(),
         ),
         ChangeNotifierProvider(
+          create: (context) => ProductProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => ConnectivityProvider(),
         ),
         ChangeNotifierProvider(
@@ -36,11 +41,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: const Color.fromARGB(255, 37, 157, 192),
           textTheme: TextTheme(
-            titleLarge: TextStyle(
+            titleLarge: GoogleFonts.montserrat(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-            bodyMedium: TextStyle(
+            bodyMedium: GoogleFonts.montserrat(
               color: Colors.black,
             ),
           ),

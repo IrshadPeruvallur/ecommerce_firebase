@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TextWidgets {
   Widget TitleText(BuildContext context, {required String text, Color? color}) {
@@ -9,7 +10,7 @@ class TextWidgets {
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
+        style: GoogleFonts.montserrat(
           color: color ?? Colors.black,
           fontSize: MediaQuery.of(context).size.width * 0.06,
           fontWeight: FontWeight.bold,
@@ -25,7 +26,7 @@ class TextWidgets {
       textAlign: TextAlign.start,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(
+      style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
         fontSize: MediaQuery.of(context).size.width * 0.045,
         fontWeight: FontWeight.bold,
@@ -42,11 +43,16 @@ class TextWidgets {
         textAlign: TextAlign.start,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
+        style: GoogleFonts.montserrat(
           color: color ?? Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.06,
+          fontSize: MediaQuery.of(context).size.width * 0.055,
           fontWeight: FontWeight.bold,
         ),
+        // style: TextStyle(
+        //   color: color ?? Colors.black,
+        //   fontSize: MediaQuery.of(context).size.width * 0.06,
+        //   fontWeight: FontWeight.bold,
+        // ),
       ),
     );
   }
@@ -58,7 +64,7 @@ class TextWidgets {
       textAlign: TextAlign.center,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(
+      style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
         fontSize: MediaQuery.of(context).size.width * 0.035,
         fontWeight: FontWeight.normal,
@@ -72,7 +78,7 @@ class TextWidgets {
       textAlign: TextAlign.start,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(
+      style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
         fontSize: MediaQuery.of(context).size.width * 0.035,
         fontWeight: FontWeight.normal,
@@ -87,7 +93,7 @@ class TextWidgets {
       textAlign: TextAlign.start,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(
+      style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
         fontSize: MediaQuery.of(context).size.width * 0.04,
         fontWeight: FontWeight.bold,
@@ -101,7 +107,7 @@ class TextWidgets {
       text,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(
+      style: GoogleFonts.montserrat(
         color: color ?? Colors.white,
         fontSize: MediaQuery.of(context).size.width * 0.04,
         fontWeight: FontWeight.bold,
