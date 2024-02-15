@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:ecommerce_app/controller/product_provider.dart';
+import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
+import 'package:ecommerce_app/view/product%20screen/widgets/widgets.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
@@ -30,6 +34,7 @@ class SellProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    final widgetProvider = Provider.of<WidgetProviders>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarWidgets().appBarWithAction(context,
@@ -44,28 +49,39 @@ class SellProductPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: size.width * .5,
-                      height: size.width * .5,
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                          image: DecorationImage(
-                              scale: size.width * .07,
-                              image: AssetImage(
-                                'assets/icons/upload image.png',
-                              )),
-                          borderRadius: BorderRadius.circular(25),
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await ProductWidgets()
+                          .showImagePickerBottomSheet(context, widgetProvider);
+                    },
+                    child: Consumer<WidgetProviders>(
+                        builder: (context, value, child) {
+                      return Container(
+                        width: size.width * .5,
+                        height: size.width * .5,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                scale: size.width * .07,
+                                image: value.file == null
+                                    ? AssetImage(
+                                        'assets/icons/upload image.png',
+                                      )
+                                    : FileImage(
+                                        File(value.file!.path),
+                                      ) as ImageProvider),
+                            borderRadius: BorderRadius.circular(25),
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      );
+                    }),
                   ),
                 ),
                 Card(
@@ -146,13 +162,16 @@ class SellProductPage extends StatelessWidget {
 
   void addProduct(context) async {
     final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    final getwidgetProvider =
+        Provider.of<WidgetProviders>(context, listen: false);
+    await getProvider.uploadImage(File(getwidgetProvider.file!.path));
     final user = FirebaseAuth.instance.currentUser;
     final product = ProductModel(
       id: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,
       subtitile: getProvider.subtitleController.text,
       price: int.parse(getProvider.priceController.text),
-      image: 'image',
+      image: getProvider.downloadURL,
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );

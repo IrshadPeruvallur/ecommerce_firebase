@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/authentication%20screens/get_otp_screen.dart';
+import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
 import 'package:ecommerce_app/view/home%20screens/home_tab.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
@@ -19,7 +20,7 @@ class AuthPagesWidget {
             try {
               await getProvider.googleSignIn();
               await PopupWidgets().showLoadingIndicator(context);
-              NavigatorWidget().pushReplacement(context, HomeTab());
+              NavigatorWidget().pushReplacement(context, BottomBarScreen());
               PopupWidgets().showSuccessSnackbar(context, 'You are logged In');
             } catch (e) {
               return;

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 class WidgetProviders extends ChangeNotifier {
   //BottomBar
@@ -8,19 +11,18 @@ class WidgetProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  //DropDownButton
-  List<String> items = [
-    'Mobile',
-    'Laptop',
-    'T-shirt',
-    'Shirt',
-    'Headphones',
-    'Camera',
-    'Shoes',
-    'Watch',
-    'Backpack',
-    'Gaming Console'
-  ];
+  bottomBarFunction(index) {
+    currentIndex = index;
+    notifyListeners();
+  }
 
-  String? selectedItem = '';
+  // imagepicker
+  ImagePicker _imagePicker = ImagePicker();
+  File? file;
+
+  pickImage(ImageSource source) async {
+    final img = await _imagePicker.pickImage(source: source);
+    file = img != null ? File(img.path) : null;
+    notifyListeners();
+  }
 }

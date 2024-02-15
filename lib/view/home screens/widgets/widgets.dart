@@ -72,7 +72,7 @@ class HomeWidgets {
           childAspectRatio: size.width / (size.width * 1.5),
         ),
         itemBuilder: (context, index) {
-          final product = products![index];
+          final product = products[index];
           return Stack(
             children: [
               Container(
@@ -89,7 +89,7 @@ class HomeWidgets {
                         width: size.width * 0.42,
                         child: Image(
                             fit: BoxFit.cover,
-                            image: AssetImage('assets/images/dummy.jpg'))),
+                            image: NetworkImage(product.image.toString()))),
                     const SizedBox(height: 10),
                     TextWidgets().HeadingText(context, text: product.title!),
                     TextWidgets()

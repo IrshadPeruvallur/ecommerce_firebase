@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
+import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/pages/cart_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
 import 'package:ecommerce_app/view/product%20screen/my_product.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -143,8 +146,10 @@ class ProfileTab extends StatelessWidget {
   }
 
   Future<void> logOut(context) async {
-    // final getProvider = Provider.of<StoreProvider>(context, listen: false);
-    // getProvider.clearValues();
+    final getProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+    getProvider.googleSignOut();
+    getProvider.signOutWithEmail();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -165,10 +170,10 @@ class ProfileTab extends StatelessWidget {
         ),
         (route) => false);
 
-    // showSuccessSnackbar(context, 'Log out Successfully');
-    // Provider.of<BottomProvider>(
-    //   context,
-    //   listen: false,
-    // ).bottomFunction(0);
+    PopupWidgets().showSuccessSnackbar(context, 'Log out Successfully');
+    Provider.of<WidgetProviders>(
+      context,
+      listen: false,
+    ).bottomBarFunction(0);
   }
 }
