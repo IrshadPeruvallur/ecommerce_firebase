@@ -19,8 +19,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    // Call getProducts when the widget is initialized
-    Provider.of<DatabaseProvider>(context, listen: false).getProducts();
+    Provider.of<DatabaseProvider>(context, listen: false).getAllProducts();
   }
 
   final List<String> specialProduct = [
@@ -32,7 +31,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final getAuthPrv = Provider.of<DatabaseProvider>(context, listen: false);
+    // final getAuthPrv = Provider.of<DatabaseProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: size.width * .2,

@@ -2,6 +2,7 @@ import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeWidgets {
   Widget specialProduct(Size size, {required String imagePath}) {
@@ -89,7 +90,10 @@ class HomeWidgets {
                         width: size.width * 0.42,
                         child: Image(
                             fit: BoxFit.cover,
-                            image: NetworkImage(product.image.toString()))),
+                            image: product.image!.isNotEmpty
+                                ? NetworkImage(product.image.toString())
+                                : Lottie.asset('assets/lottie/sellX logo.json')
+                                    as ImageProvider)),
                     const SizedBox(height: 10),
                     TextWidgets().HeadingText(context, text: product.title!),
                     TextWidgets()

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:ecommerce_app/controller/product_provider.dart';
@@ -6,6 +7,7 @@ import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/product%20screen/widgets/widgets.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -105,8 +107,8 @@ class SellProductPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 08),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * .01),
                                 child: DropdownButtonFormField<String>(
                                   value: selectedCategory,
                                   decoration: InputDecoration(
@@ -141,10 +143,11 @@ class SellProductPage extends StatelessWidget {
                         SizedBox(height: size.width * 0.05),
                         ButtonWidgets().fullWidthElevatedButton(
                           size,
-                          label: 'Log in',
+                          label: 'Sell Product',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              addProduct(context);
+                              await addProduct(context);
+                              Navigator.pop(context);
                             }
                           },
                         ),
@@ -160,10 +163,11 @@ class SellProductPage extends StatelessWidget {
     );
   }
 
-  void addProduct(context) async {
+  addProduct(context) async {
     final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
     final getwidgetProvider =
         Provider.of<WidgetProviders>(context, listen: false);
+    PopupWidgets().showLoadingIndicator(context);
     await getProvider.uploadImage(File(getwidgetProvider.file!.path));
     final user = FirebaseAuth.instance.currentUser;
     final product = ProductModel(
@@ -175,6 +179,8 @@ class SellProductPage extends StatelessWidget {
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );
-    await getProvider.addProduct(product);
+    log('homeScreen');
+    getProvider.addProduct(product);
+    Navigator.pop(context);
   }
 }

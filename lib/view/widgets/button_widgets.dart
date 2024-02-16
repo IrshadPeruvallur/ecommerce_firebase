@@ -6,7 +6,7 @@ class ButtonWidgets {
       {required String name, required VoidCallback? onPressed}) {
     return SizedBox(
       height: size.height * .08,
-      width: size.width * .2,
+      width: size.width * .3,
       child: ElevatedButton(
         style: ButtonStyle(
           shape: const MaterialStatePropertyAll(BeveledRectangleBorder()),
@@ -17,7 +17,7 @@ class ButtonWidgets {
         onPressed: onPressed,
         child: Text(name,
             style: GoogleFonts.montserrat(
-                fontSize: size.width * .035,
+                fontSize: size.width * .045,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w400)),
       ),

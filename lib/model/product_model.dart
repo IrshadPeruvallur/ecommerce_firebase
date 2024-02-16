@@ -22,7 +22,7 @@ class ProductModel {
       this.wishList});
   factory ProductModel.fromJson(String id, Map<String, dynamic> json) {
     return ProductModel(
-        id: id,
+        id: json['id'],
         timeStamp: json['timeStamp'] != null
             ? (json['timeStamp'] as Timestamp).toDate()
             : null,

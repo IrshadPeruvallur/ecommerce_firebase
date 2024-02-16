@@ -2,6 +2,7 @@ import 'package:ecommerce_app/authentication/auth.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -42,8 +43,8 @@ class Welcome extends StatelessWidget {
               ),
               Positioned(
                 bottom: 150,
-                left: 100,
-                right: 100,
+                left: 5,
+                right: 5,
                 child: ButtonWidgets().rectangleButton(
                   size,
                   name: 'Get Started',

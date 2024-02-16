@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/model/product_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService {
@@ -9,6 +10,7 @@ class DatabaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference<ProductModel> collectionReference;
   Reference storage = FirebaseStorage.instance.ref();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   DatabaseService() {
     collectionReference =
@@ -23,8 +25,10 @@ class DatabaseService {
   }
 
   Future<void> addProduct(ProductModel data) async {
+    log('service with out try');
     try {
       await collectionReference.add(data);
+      log('service');
     } catch (e) {
       print('Error adding post :$e');
     }
@@ -35,6 +39,23 @@ class DatabaseService {
         await collectionReference.orderBy('timeStamp', descending: true).get();
 
     return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<List<ProductModel>> getMyProduct(String userId) async {
+    try {
+      final snapshot = await firestore
+          .collection(collection)
+          .where('id', isEqualTo: userId)
+          .orderBy('timeStamp', descending: true)
+          .get();
+
+      return snapshot.docs
+          .map((doc) => ProductModel.fromJson(doc.id, doc.data()))
+          .toList();
+    } catch (e) {
+      log('Error fetching products: $e');
+      return [];
+    }
   }
 
   Future<String> uploadImage(imageName, imageFile) async {
