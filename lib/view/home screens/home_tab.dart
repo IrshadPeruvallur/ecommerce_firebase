@@ -6,6 +6,7 @@ import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:ecommerce_app/view/home%20screens/widgets/widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
@@ -119,10 +120,24 @@ class _HomeTabState extends State<HomeTab> {
               TextWidgets().mainHeadingText(context, text: 'Products  '),
               Consumer<DatabaseProvider>(
                 builder: (context, provider, _) =>
-                    HomeWidgets().buildProductItem(
-                  size,
-                  products: provider.allProduct,
-                ),
+                    provider.allProduct.isNotEmpty
+                        ? HomeWidgets().buildProductItem(
+                            size,
+                            products: provider.allProduct,
+                          )
+                        : Column(
+                            children: [
+                              SizedBox(
+                                height: size.width * .2,
+                              ),
+                              Center(
+                                child: Lottie.asset(
+                                    width: size.width * .20,
+                                    height: size.width * .20,
+                                    'assets/lottie/sellX logo.json'),
+                              ),
+                            ],
+                          ),
               ),
             ],
           ),

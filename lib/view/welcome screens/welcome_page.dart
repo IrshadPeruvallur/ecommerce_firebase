@@ -28,7 +28,7 @@ class Welcome extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: size.height * .4,
+                    height: size.height * .3,
                   ),
                   const Text(
                     'MAKE YOUR',
@@ -42,9 +42,9 @@ class Welcome extends StatelessWidget {
                 ],
               ),
               Positioned(
-                bottom: 150,
-                left: 5,
-                right: 5,
+                bottom: 50,
+                left: 20,
+                right: 20,
                 child: ButtonWidgets().rectangleButton(
                   size,
                   name: 'Get Started',

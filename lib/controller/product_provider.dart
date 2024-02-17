@@ -12,7 +12,6 @@ class DatabaseProvider extends ChangeNotifier {
   final DatabaseService databaseService = DatabaseService();
   final WidgetProviders widgetProviders = WidgetProviders();
   List<ProductModel> allProduct = [];
-  List<ProductModel> myProduct = [];
   String downloadURL = '';
   String imageName = DateTime.now().millisecondsSinceEpoch.toString();
 
@@ -20,8 +19,6 @@ class DatabaseProvider extends ChangeNotifier {
     await databaseService.addProduct(data);
     clearControllers();
     getAllProducts();
-    getMyProducts();
-    log('provider');
   }
 
   Future<void> getAllProducts() async {
@@ -29,22 +26,9 @@ class DatabaseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getMyProducts() async {
-    final currentUser = databaseService.firebaseAuth.currentUser;
-
-    if (currentUser == null) {
-      return; // Return early if user is not logged in
-    }
-
-    final userEmail = currentUser.email ?? currentUser.phoneNumber;
-    log("$userEmail");
-
-    try {
-      myProduct = await databaseService.getMyProduct(userEmail.toString());
-      notifyListeners();
-    } catch (e) {
-      log('Error fetching products: $e');
-    }
+  Future<void> deleteMyProduct(productId) async {
+    await databaseService.deleteMyProduct(productId);
+    getAllProducts();
   }
 
   uploadImage(image) async {

@@ -171,7 +171,7 @@ class SellProductPage extends StatelessWidget {
     await getProvider.uploadImage(File(getwidgetProvider.file!.path));
     final user = FirebaseAuth.instance.currentUser;
     final product = ProductModel(
-      id: user!.email ?? user.phoneNumber,
+      user: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,
       subtitile: getProvider.subtitleController.text,
       price: int.parse(getProvider.priceController.text),
@@ -179,7 +179,6 @@ class SellProductPage extends StatelessWidget {
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );
-    log('homeScreen');
     getProvider.addProduct(product);
     Navigator.pop(context);
   }

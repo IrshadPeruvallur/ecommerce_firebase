@@ -25,37 +25,17 @@ class DatabaseService {
   }
 
   Future<void> addProduct(ProductModel data) async {
-    log('service with out try');
     try {
       await collectionReference.add(data);
-      log('service');
     } catch (e) {
-      print('Error adding post :$e');
+      print('Error adding product: $e');
     }
   }
 
   Future<List<ProductModel>> getAllProducts() async {
     final snapshot =
         await collectionReference.orderBy('timeStamp', descending: true).get();
-
     return snapshot.docs.map((doc) => doc.data()).toList();
-  }
-
-  Future<List<ProductModel>> getMyProduct(String userId) async {
-    try {
-      final snapshot = await firestore
-          .collection(collection)
-          .where('id', isEqualTo: userId)
-          .orderBy('timeStamp', descending: true)
-          .get();
-
-      return snapshot.docs
-          .map((doc) => ProductModel.fromJson(doc.id, doc.data()))
-          .toList();
-    } catch (e) {
-      log('Error fetching products: $e');
-      return [];
-    }
   }
 
   Future<String> uploadImage(imageName, imageFile) async {
@@ -64,7 +44,16 @@ class DatabaseService {
 
     await uploadImage.putFile(imageFile);
     String downloadURL = await uploadImage.getDownloadURL();
-    log(downloadURL);
+    log('Image successfully uploaded to Firebase Storage.');
     return downloadURL;
+  }
+
+  deleteMyProduct(productId) async {
+    try {
+      await collectionReference.doc(productId).delete();
+      log("Product is deleted");
+    } catch (e) {
+      log('Product is not deleted: $e');
+    }
   }
 }
