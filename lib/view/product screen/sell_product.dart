@@ -12,6 +12,7 @@ import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SellProductPage extends StatelessWidget {
@@ -21,14 +22,33 @@ class SellProductPage extends StatelessWidget {
   final List<String> categories = [
     'Mobile',
     'Laptop',
-    'T-shirt',
-    'Shirt',
     'Headphones',
     'Camera',
-    'Shoes',
-    'Watch',
-    'Backpack',
-    'Gaming Console'
+    'Smartwatch',
+    'Tablet',
+    'Gaming Console',
+    'Desktop Computer',
+    'Bluetooth Speaker',
+    'Fitness Tracker',
+    'Drone',
+    'VR Headset',
+    'Wireless Earbuds',
+    'Phone Case',
+    'Laptop Bag',
+    'Camera Lens',
+    'External Hard Drive',
+    'Tripod',
+    'Power Bank',
+    'Microphone',
+    'USB Flash Drive',
+    'Smart Home Devices',
+    'E-book Reader',
+    'Portable Projector',
+    'Action Camera',
+    'Digital Drawing Tablet',
+    'Wireless Charger',
+    'Game Controller',
+    'Car Charger',
   ];
 
   String? selectedCategory;
@@ -44,7 +64,7 @@ class SellProductPage extends StatelessWidget {
       body: Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -103,51 +123,50 @@ class SellProductPage extends StatelessWidget {
                         TextFieldWidgets().textFormField(size,
                             label: "Subtitle",
                             controller: getProvider.subtitleController),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * .01),
-                                child: DropdownButtonFormField<String>(
-                                  value: selectedCategory,
-                                  decoration: InputDecoration(
-                                    labelText: 'Category',
-                                  ),
-                                  onChanged: (value) {
-                                    selectedCategory = value;
-                                  },
-                                  items: categories.map((category) {
-                                    return DropdownMenuItem(
-                                      value: category,
-                                      child: Text(category),
-                                    );
-                                  }).toList(),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select category';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .01),
+                          child: DropdownButtonFormField<String>(
+                            value: selectedCategory,
+                            decoration: InputDecoration(
+                              labelText: 'Category',
                             ),
-                            SizedBox(width: size.width * 0.03),
-                            Expanded(
-                              child: TextFieldWidgets().textFormField(size,
-                                  label: "Price",
-                                  controller: getProvider.priceController),
-                            ),
-                          ],
+                            onChanged: (value) {
+                              selectedCategory = value;
+                            },
+                            items: categories.map((category) {
+                              return DropdownMenuItem(
+                                value: category,
+                                child: Text(category),
+                              );
+                            }).toList(),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select category';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
+                        TextFieldWidgets().textFormField(size,
+                            label: "Price",
+                            keyboardType: TextInputType.number,
+                            inputFormatter:
+                                FilteringTextInputFormatter.digitsOnly,
+                            controller: getProvider.priceController),
                         SizedBox(height: size.width * 0.05),
                         ButtonWidgets().fullWidthElevatedButton(
                           size,
                           label: 'Sell Product',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              await addProduct(context);
-                              Navigator.pop(context);
+                              if (widgetProvider.file != null) {
+                                await addProduct(context);
+                                Navigator.pop(context);
+                              } else {
+                                PopupWidgets().showErrorSnackbar(
+                                    context, 'Please Select a image');
+                              }
                             }
                           },
                         ),
@@ -170,6 +189,7 @@ class SellProductPage extends StatelessWidget {
     PopupWidgets().showLoadingIndicator(context);
     await getProvider.uploadImage(File(getwidgetProvider.file!.path));
     final user = FirebaseAuth.instance.currentUser;
+    log(user.toString());
     final product = ProductModel(
       user: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,

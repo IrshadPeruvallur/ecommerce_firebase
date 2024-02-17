@@ -45,7 +45,7 @@ class TextWidgets {
         overflow: TextOverflow.ellipsis,
         style: GoogleFonts.montserrat(
           color: color ?? Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.055,
+          fontSize: MediaQuery.of(context).size.width * 0.05,
           fontWeight: FontWeight.bold,
         ),
         // style: TextStyle(
@@ -66,7 +66,7 @@ class TextWidgets {
       overflow: TextOverflow.ellipsis,
       style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
-        fontSize: MediaQuery.of(context).size.width * 0.035,
+        fontSize: MediaQuery.of(context).size.width * 0.03,
         fontWeight: FontWeight.w500,
       ),
     );

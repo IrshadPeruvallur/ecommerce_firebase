@@ -13,8 +13,11 @@ class AuthService {
 
   Future<UserCredential> signUpWithEmail(String email, String password) async {
     try {
-      UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       log('Account created');
       return userCredential;
     } on FirebaseAuthMultiFactorException catch (e) {

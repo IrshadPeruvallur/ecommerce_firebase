@@ -34,7 +34,7 @@ class ButtonWidgets {
         },
         child: Text(
           label,
-          style: TextStyle(fontSize: size.width * .04, color: Colors.black),
+          style: TextStyle(fontSize: size.width * .035, color: Colors.black),
         ));
   }
 

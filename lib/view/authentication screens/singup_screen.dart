@@ -7,6 +7,7 @@ import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
+import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,12 +23,15 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         leading: IconButton(
-            onPressed: () {
-              getProvider.clearControllers();
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios)),
+          onPressed: () {
+            getProvider.clearControllers();
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios),
+          color: Colors.black,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -39,7 +43,7 @@ class SignUpPage extends StatelessWidget {
               children: [
                 SizedBox(height: size.height * 0.02),
                 Text(
-                  "WELCOME",
+                  "Create You Account",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: size.width * 0.07,
@@ -98,7 +102,8 @@ class SignUpPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Already have an account?'),
+                            TextWidgets().SubtitleText(context,
+                                text: 'Already have an account?'),
                             ButtonWidgets().textButtonWidget(
                               size,
                               context,
