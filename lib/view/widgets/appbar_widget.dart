@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 
 class AppBarWidgets {
   appBarWithAction(context,
-      {required title, IconData? iconbutton, VoidCallback? onPressed}) {
+      {required title,
+      IconData? iconbutton,
+      Color? color,
+      VoidCallback? onPressed}) {
     Size size = MediaQuery.of(context).size;
     return AppBar(
+      backgroundColor: color,
       foregroundColor: Colors.white,
       centerTitle: true,
       title: TextWidgets()
@@ -20,10 +24,14 @@ class AppBarWidgets {
 
   appBar(
     context, {
+    Color? backgroundColor,
+    Color? foregroundColor,
     required title,
   }) {
     return AppBar(
       centerTitle: true,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
       title: TextWidgets()
           .mainHeadingText(context, text: title, color: Colors.white),
     );

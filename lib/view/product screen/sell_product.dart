@@ -157,6 +157,12 @@ class SellProductPage extends StatelessWidget {
                           },
                         ),
                       ),
+                      TextFieldWidgets().textFormField(
+                        size,
+                        label: "Description",
+                        // maxLines: 2,
+                        controller: getProvider.descriptionController,
+                      ),
                       TextFieldWidgets().textFormField(size,
                           label: "Price",
                           prefixText: '₹',
@@ -197,18 +203,21 @@ class SellProductPage extends StatelessWidget {
         Provider.of<WidgetProviders>(context, listen: false);
     PopupWidgets().showLoadingIndicator(context);
     await getProvider.uploadImage(File(getwidgetProvider.file!.path));
-    getwidgetProvider.file = null;
+
     final user = FirebaseAuth.instance.currentUser;
     final product = ProductModel(
       user: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,
       brand: getProvider.subtitleController.text,
+      description: getProvider.descriptionController.text,
       price: int.parse(getProvider.priceController.text),
       image: getProvider.downloadURL,
+      wishList: false,
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );
     getProvider.addProduct(product);
+    getwidgetProvider.file = null;
     Navigator.pop(context);
   }
 }

@@ -9,6 +9,7 @@ class DatabaseProvider extends ChangeNotifier {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController subtitleController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   final DatabaseService databaseService = DatabaseService();
   final WidgetProviders widgetProviders = WidgetProviders();
   List<ProductModel> allProduct = [];
@@ -18,6 +19,11 @@ class DatabaseProvider extends ChangeNotifier {
   addProduct(ProductModel data) async {
     await databaseService.addProduct(data);
     clearControllers();
+    getAllProducts();
+  }
+
+  IsWishLIstClick(id, bool wishListStatus) async {
+    await databaseService.IsWishListClick(id, wishListStatus);
     getAllProducts();
   }
 
@@ -50,6 +56,7 @@ class DatabaseProvider extends ChangeNotifier {
     titleController.clear();
     subtitleController.clear();
     priceController.clear();
+    descriptionController.clear();
     notifyListeners();
   }
 }

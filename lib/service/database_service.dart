@@ -38,6 +38,14 @@ class DatabaseService {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
+  Future<void> IsWishListClick(String id, bool wishListStatus) async {
+    try {
+      await collectionReference.doc(id).update({'wishList': wishListStatus});
+    } catch (e) {
+      log('Error updating wishlist status: $e');
+    }
+  }
+
   Future<String> uploadImage(imageName, imageFile) async {
     Reference imageFolder = storage.child('productImage');
     Reference? uploadImage = imageFolder.child('$imageName.jpg');

@@ -1,20 +1,26 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
+import 'package:ecommerce_app/controller/product_provider.dart';
+import 'package:ecommerce_app/model/product_model.dart';
+import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
+import 'package:ecommerce_app/view/widgets/button_widgets.dart';
+import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  final title;
-  final description;
-  final price;
-  final image;
-  const ProductDetailsPage(
-      {super.key, this.title, this.description, this.price, this.image});
+  final ProductModel? products;
+  const ProductDetailsPage({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBarWidgets().appBar(context,
+          title: '',
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black),
       body: SizedBox(
         height: size.height * 1,
         child: Padding(
@@ -28,44 +34,20 @@ class ProductDetailsPage extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: image ??
-                                  const AssetImage('assets/images/dummy.jpg'),
-                              fit: BoxFit.cover),
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50)),
-                          color: Colors.amber),
+                              image: NetworkImage(products!.image.toString()),
+                              fit: BoxFit.contain),
+                          // borderRadius: const BorderRadius.only(
+                          //     bottomLeft: Radius.circular(50),
+                          //     bottomRight: Radius.circular(50)),
+                          color: Colors.transparent),
                       width: double.infinity,
-                      height: size.height * .5,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30, left: 20),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color:
-                                    const Color.fromARGB(163, 255, 255, 255)),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back_ios_new,
-                                size: 20,
-                              ),
-                              onPressed: () async {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
+                      height: size.height * .4,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      title ?? 'Lorem Ipsum',
+                      products!.title ?? 'Lorem Ipsum',
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
                           fontSize: size.width * .06),
@@ -74,34 +56,31 @@ class ProductDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          price != null ? price.toString() : '₹19999',
+                          products!.price != null
+                              ? "₹${products!.price.toString()}"
+                              : '₹19999',
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w700,
                               fontSize: size.width * .06),
                         ),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  EneftyIcons.minus_square_outline,
-                                  size: size.width * .06,
-                                )),
-                            Text(
-                              "05",
-                              style: TextStyle(
-                                  fontSize: size.width * 0.05,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                EneftyIcons.add_square_outline,
-                                size: size.width * .06,
-                              ),
-                            ),
-                          ],
-                        )
+                        Consumer<DatabaseProvider>(
+                            builder: (context, value, child) {
+                          return IconsWidgets().IconButtonWidget(
+                            context,
+                            size,
+                            iconData: products!.wishList == false
+                                ? EneftyIcons.heart_outline
+                                : EneftyIcons.heart_bold,
+                            color: Colors.red,
+                            onPressed: () {
+                              if (products!.wishList == false) {
+                                value.IsWishLIstClick(products!.id, true);
+                              } else {
+                                value.IsWishLIstClick(products!.id, false);
+                              }
+                            },
+                          );
+                        })
                       ],
                     ),
                     Row(
@@ -135,7 +114,7 @@ class ProductDetailsPage extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      description ??
+                      products!.description ??
                           '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.''',
                       style: TextStyle(fontSize: size.width * .037),
                     ),
@@ -147,51 +126,9 @@ class ProductDetailsPage extends StatelessWidget {
                 right: 0,
                 left: 0,
                 child: Container(
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: size.height * .07,
-                        width: size.width * .2,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation:
-                                MaterialStateProperty.all(size.width * .07),
-                            foregroundColor: MaterialStateProperty.all(
-                                const Color.fromARGB(255, 0, 0, 0)),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color.fromARGB(255, 234, 234, 234)),
-                          ),
-                          onPressed: () {},
-                          child: Icon(
-                            EneftyIcons.heart_outline,
-                            size: size.height * .04,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * .07,
-                        width: size.width * .6,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation:
-                                MaterialStateProperty.all(size.width * .07),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            'Add To Cart',
-                            style: TextStyle(
-                              fontSize: size.width * .045,
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  color: Colors.transparent,
+                  child: ButtonWidgets()
+                      .fullWidthElevatedButton(size, label: 'Buy Product'),
                 ),
               )
             ],

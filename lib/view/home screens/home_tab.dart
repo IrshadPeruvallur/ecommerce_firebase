@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/view/pages/cart_page.dart';
+import 'package:ecommerce_app/view/pages/wishlist_page.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
@@ -86,9 +87,9 @@ class _HomeTabState extends State<HomeTab> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(EneftyIcons.bag_2_outline),
+            icon: const Icon(EneftyIcons.heart_outline),
             onPressed: () {
-              NavigatorWidget().push(context, CartPage());
+              NavigatorWidget().push(context, WishlistPage());
             },
           ),
         ],
@@ -141,6 +142,7 @@ class _HomeTabState extends State<HomeTab> {
                     provider.allProduct.isNotEmpty
                         ? HomeWidgets().buildProductItem(
                             size,
+                            provider,
                             products: provider.allProduct,
                           )
                         : Column(

@@ -1,9 +1,11 @@
+import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/pages/category_page.dart';
 import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -72,7 +74,8 @@ class HomeWidgets {
     );
   }
 
-  Widget buildProductItem(Size size, {List<ProductModel>? products}) {
+  Widget buildProductItem(Size size, DatabaseProvider provider,
+      {List<ProductModel>? products}) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: GridView.builder(
@@ -89,8 +92,11 @@ class HomeWidgets {
           return Stack(
             children: [
               GestureDetector(
-                onTap: () =>
-                    NavigatorWidget().push(context, ProductDetailsPage()),
+                onTap: () => NavigatorWidget().push(
+                    context,
+                    ProductDetailsPage(
+                      products: product,
+                    )),
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -133,8 +139,17 @@ class HomeWidgets {
                   child: IconsWidgets().IconButtonWidget(
                     context,
                     size,
-                    iconData: Icons.favorite_border,
-                    onPressed: () {},
+                    iconData: product.wishList == false
+                        ? EneftyIcons.heart_outline
+                        : EneftyIcons.heart_bold,
+                    color: Colors.red,
+                    onPressed: () {
+                      if (product.wishList == false) {
+                        provider.IsWishLIstClick(product.id, true);
+                      } else {
+                        provider.IsWishLIstClick(product.id, false);
+                      }
+                    },
                   ))
             ],
           );

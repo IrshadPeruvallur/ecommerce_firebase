@@ -6,9 +6,8 @@ class ProductModel {
   String? title;
   String? brand;
   String? description;
-
   String? category;
-  List<String>? wishList;
+  bool? wishList;
   List<String>? cart;
   DateTime? timeStamp;
   String? image;
@@ -39,7 +38,7 @@ class ProductModel {
         brand: json['brand'],
         description: json['description'],
         title: json['title'],
-        wishList: List<String>.from(json['wishList'] ?? []));
+        wishList: json['wishList']);
   }
 
   Map<String, dynamic> toJson() {
