@@ -8,6 +8,7 @@ import 'package:ecommerce_app/view/product%20screen/my_product.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,9 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final getProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+    final User user = getProvider.getCurrentUser();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -83,18 +87,24 @@ class ProfileTab extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Username',
-                      style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.bold,
-                        fontSize: size.width * .05,
+                    SizedBox(
+                      width: size.width * .5,
+                      child: Text(
+                        user.displayName ?? 'Uknown name',
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          fontSize: size.width * .05,
+                        ),
                       ),
                     ),
-                    Text(
-                      'email',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: size.width * .035,
+                    SizedBox(
+                      width: size.width * .5,
+                      child: Text(
+                        user.email ?? 'email not registerd',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: size.width * .035,
+                        ),
                       ),
                     )
                   ],

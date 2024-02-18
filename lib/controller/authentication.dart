@@ -45,6 +45,16 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  dynamic getCurrentUser() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      return [];
+    }
+    // final user = currentUser.email ?? currentUser.phoneNumber;
+    // notifyListeners();
+    return currentUser;
+  }
+
   Future<void> verifyOTP(otp) async {
     await emailAuthService.verifyOTP(otp);
 

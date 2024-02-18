@@ -150,7 +150,6 @@ class HomeWidgets {
                     color: Colors.red,
                     onPressed: () async {
                       final value = await wishListCheck(product);
-                      log(value.toString());
                       provider.IsWishLIstClick(product.id, value);
                     },
                   ))
@@ -165,7 +164,6 @@ class HomeWidgets {
   bool wishListCheck(ProductModel product) {
     final user = FirebaseAuth.instance.currentUser;
     final userEmail = user!.email ?? user.phoneNumber;
-    log(product.wishList.toString());
     if (product.wishList!.contains(userEmail)) {
       return false;
     } else {

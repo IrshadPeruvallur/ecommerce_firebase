@@ -49,20 +49,12 @@ class WishlistPage extends StatelessWidget {
                               motion: ScrollMotion(),
                               children: [
                                 SlidableAction(
-                                  // An action can be bigger than the others.
                                   flex: 2,
                                   onPressed: (context) {},
                                   backgroundColor: Color(0xFF7BC043),
                                   foregroundColor: Colors.white,
-                                  icon: Icons.archive,
-                                  label: 'Archive',
-                                ),
-                                SlidableAction(
-                                  onPressed: (context) {},
-                                  backgroundColor: Color(0xFF0392CF),
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.save,
-                                  label: 'Save',
+                                  icon: EneftyIcons.bag_2_outline,
+                                  label: 'Buy Now',
                                 ),
                               ],
                             ),
