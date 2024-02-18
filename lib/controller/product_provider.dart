@@ -35,7 +35,7 @@ class DatabaseProvider extends ChangeNotifier {
     try {
       if (image != null) {
         downloadURL = await databaseService.uploadImage(imageName, image);
-        image = null;
+
         notifyListeners();
       } else {
         log('image is null');

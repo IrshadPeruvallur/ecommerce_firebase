@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controller/widget_provider.dart';
+import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -25,7 +26,8 @@ class ProductWidgets {
                       onPressed: () async {
                         await value.pickImage(ImageSource.camera);
                       },
-                      child: Text("Camera"))
+                      child: TextWidgets().BodyText(context,
+                          text: 'Camera', color: Colors.white))
                 ],
               ),
               Column(
@@ -38,7 +40,8 @@ class ProductWidgets {
                       onPressed: () async {
                         await value.pickImage(ImageSource.gallery);
                       },
-                      child: Text("Gallery"))
+                      child: TextWidgets().BodyText(context,
+                          text: 'Gallery', color: Colors.white))
                 ],
               )
             ],

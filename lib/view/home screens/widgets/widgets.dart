@@ -1,5 +1,8 @@
 import 'package:ecommerce_app/model/product_model.dart';
+import 'package:ecommerce_app/view/pages/category_page.dart';
+import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -17,14 +20,23 @@ class HomeWidgets {
     );
   }
 
-  Widget categoryItems(Size size, {required String imagePath}) {
-    return Container(
-      width: size.width * .2,
-      height: size.width * .2,
-      decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(imagePath), fit: BoxFit.cover),
-        color: const Color.fromARGB(255, 30, 29, 29),
-        borderRadius: BorderRadius.all(Radius.circular(size.width * .05)),
+  Widget categoryItems(context, Size size,
+      {category, required String imagePath}) {
+    return GestureDetector(
+      onTap: () => NavigatorWidget().push(
+          context,
+          CategoryPage(
+            category: category,
+          )),
+      child: Container(
+        width: size.width * .2,
+        height: size.width * .2,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(imagePath), fit: BoxFit.cover),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(size.width * .05)),
+        ),
       ),
     );
   }
@@ -76,36 +88,43 @@ class HomeWidgets {
           final product = products[index];
           return Stack(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                        height: size.width * 0.42,
-                        width: size.width * 0.42,
-                        child: Image(
-                            fit: BoxFit.cover,
-                            image: product.image!.isNotEmpty
-                                ? NetworkImage(product.image.toString())
-                                : Lottie.asset('assets/lottie/sellX logo.json')
-                                    as ImageProvider)),
-                    const SizedBox(height: 10),
-                    TextWidgets().HeadingText(context, text: product.title!),
-                    TextWidgets()
-                        .SubtitleText(context, text: product.subtitile!),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextWidgets().titleText2(context,
-                            text: "₹${product.price.toString()}"),
-                      ],
-                    )
-                  ],
+              GestureDetector(
+                onTap: () =>
+                    NavigatorWidget().push(context, ProductDetailsPage()),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          height: size.width * 0.42,
+                          width: size.width * 0.42,
+                          child: Image(
+                              fit: BoxFit.contain,
+                              image: product.image!.isNotEmpty
+                                  ? NetworkImage(product.image.toString())
+                                  : Lottie.asset(
+                                          'assets/lottie/sellX logo.json')
+                                      as ImageProvider)),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                          height: size.width * .1,
+                          child: TextWidgets()
+                              .titleText2(context, text: product.title!)),
+                      TextWidgets().SubtitleText(context, text: product.brand!),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextWidgets().titleText2(context,
+                              text: "₹${product.price.toString()}"),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(

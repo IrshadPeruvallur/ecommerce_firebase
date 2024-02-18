@@ -15,9 +15,10 @@ class BottomBarScreen extends StatelessWidget {
 
   final List<SalomonBottomBarItem> bottomItems = [
     SalomonBottomBarItem(
-        icon: Icon(EneftyIcons.home_outline), title: Text('Home')),
+        icon: Icon(EneftyIcons.home_3_outline), title: Text('Home')),
     SalomonBottomBarItem(
-        icon: Icon(EneftyIcons.add_outline), title: Text('Sell')),
+        icon: Icon(EneftyIcons.forward_item_outline),
+        title: Text('My Product')),
     SalomonBottomBarItem(
         icon: Icon(EneftyIcons.profile_outline), title: Text('Profile')),
   ];

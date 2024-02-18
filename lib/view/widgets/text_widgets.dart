@@ -89,6 +89,7 @@ class TextWidgets {
   Widget titleText2(BuildContext context,
       {required String text, Color? color}) {
     return Text(
+      softWrap: true,
       text,
       textAlign: TextAlign.start,
       maxLines: 2,

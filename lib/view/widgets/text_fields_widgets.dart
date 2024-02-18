@@ -10,6 +10,7 @@ class TextFieldWidgets {
     TextEditingController? controller,
     TextEditingController? cnfController,
     String? label,
+    String? prefixText,
     TextInputFormatter? inputFormatter,
     TextInputType? keyboardType,
   }) {
@@ -41,6 +42,7 @@ class TextFieldWidgets {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
+          prefixText: prefixText,
           labelStyle: GoogleFonts.montserrat(color: Colors.black),
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black),

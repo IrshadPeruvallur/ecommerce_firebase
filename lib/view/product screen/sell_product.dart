@@ -26,9 +26,8 @@ class SellProductPage extends StatelessWidget {
     'Camera',
     'Smartwatch',
     'Tablet',
-    'Gaming Console',
-    'Desktop Computer',
-    'Bluetooth Speaker',
+    'Mouse and Keyboard',
+    'Speaker',
     'Fitness Tracker',
     'Drone',
     'VR Headset',
@@ -59,8 +58,10 @@ class SellProductPage extends StatelessWidget {
     final widgetProvider = Provider.of<WidgetProviders>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBarWidgets().appBarWithAction(context,
-          title: 'Sell Product', iconbutton: EneftyIcons.bag_2_outline),
+      appBar: AppBarWidgets().appBar(
+        context,
+        title: 'Sell Product',
+      ),
       body: Form(
         key: formKey,
         child: Padding(
@@ -76,102 +77,110 @@ class SellProductPage extends StatelessWidget {
                       await ProductWidgets()
                           .showImagePickerBottomSheet(context, widgetProvider);
                     },
-                    child: Consumer<WidgetProviders>(
-                        builder: (context, value, child) {
-                      return Container(
-                        width: size.width * .5,
-                        height: size.width * .5,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                scale: size.width * .07,
-                                image: value.file == null
-                                    ? AssetImage(
-                                        'assets/icons/upload image.png',
-                                      )
-                                    : FileImage(
-                                        File(value.file!.path),
-                                      ) as ImageProvider),
-                            borderRadius: BorderRadius.circular(25),
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      );
-                    }),
-                  ),
-                ),
-                Card(
-                  surfaceTintColor: Colors.white,
-                  color: Colors.white,
-                  elevation: size.width * .05,
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(size.width * .04))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
+                    child: Row(
                       children: [
-                        TextFieldWidgets().textFormField(size,
-                            label: "Title",
-                            controller: getProvider.titleController),
-                        TextFieldWidgets().textFormField(size,
-                            label: "Subtitle",
-                            controller: getProvider.subtitleController),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * .01),
-                          child: DropdownButtonFormField<String>(
-                            value: selectedCategory,
-                            decoration: InputDecoration(
-                              labelText: 'Category',
+                        Consumer<WidgetProviders>(
+                            builder: (context, value, child) {
+                          return Container(
+                            width: size.width * .3,
+                            height: size.width * .3,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                // BoxShadow(
+                                //   color: Colors.grey.withOpacity(0.3),
+                                //   spreadRadius: 1,
+                                //   blurRadius: 5,
+                                //   offset: const Offset(0, 3),
+                                // ),
+                              ],
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  scale: size.width * .07,
+                                  image: value.file == null
+                                      ? AssetImage(
+                                          'assets/icons/upload image.png',
+                                        )
+                                      : FileImage(
+                                          File(value.file!.path),
+                                        ) as ImageProvider),
+                              borderRadius: BorderRadius.circular(15),
+                              // color: Color.fromARGB(255, 255, 255, 255)
                             ),
-                            onChanged: (value) {
-                              selectedCategory = value;
-                            },
-                            items: categories.map((category) {
-                              return DropdownMenuItem(
-                                value: category,
-                                child: Text(category),
-                              );
-                            }).toList(),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please select category';
-                              }
-                              return null;
-                            },
+                          );
+                        }),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextFieldWidgets().textFormField(size,
+                                    label: "Title",
+                                    controller: getProvider.titleController),
+                                TextFieldWidgets().textFormField(size,
+                                    label: "Brand",
+                                    controller: getProvider.subtitleController),
+                              ],
+                            ),
                           ),
-                        ),
-                        TextFieldWidgets().textFormField(size,
-                            label: "Price",
-                            keyboardType: TextInputType.number,
-                            inputFormatter:
-                                FilteringTextInputFormatter.digitsOnly,
-                            controller: getProvider.priceController),
-                        SizedBox(height: size.width * 0.05),
-                        ButtonWidgets().fullWidthElevatedButton(
-                          size,
-                          label: 'Sell Product',
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              if (widgetProvider.file != null) {
-                                await addProduct(context);
-                                Navigator.pop(context);
-                              } else {
-                                PopupWidgets().showErrorSnackbar(
-                                    context, 'Please Select a image');
-                              }
-                            }
-                          },
-                        ),
+                        )
                       ],
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * .01),
+                        child: DropdownButtonFormField<String>(
+                          value: selectedCategory,
+                          decoration: InputDecoration(
+                            labelText: 'Category',
+                          ),
+                          onChanged: (value) {
+                            selectedCategory = value;
+                          },
+                          items: categories.map((category) {
+                            return DropdownMenuItem(
+                              value: category,
+                              child: Text(category),
+                            );
+                          }).toList(),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select category';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      TextFieldWidgets().textFormField(size,
+                          label: "Price",
+                          prefixText: '₹',
+                          keyboardType: TextInputType.number,
+                          inputFormatter:
+                              FilteringTextInputFormatter.digitsOnly,
+                          controller: getProvider.priceController),
+                      SizedBox(height: size.width * 0.05),
+                      ButtonWidgets().fullWidthElevatedButton(
+                        size,
+                        label: 'Sell Product',
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            if (widgetProvider.file != null) {
+                              await addProduct(context);
+                              Navigator.pop(context);
+                            } else {
+                              PopupWidgets().showErrorSnackbar(
+                                  context, 'Please Select a image');
+                            }
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -188,12 +197,12 @@ class SellProductPage extends StatelessWidget {
         Provider.of<WidgetProviders>(context, listen: false);
     PopupWidgets().showLoadingIndicator(context);
     await getProvider.uploadImage(File(getwidgetProvider.file!.path));
+    getwidgetProvider.file = null;
     final user = FirebaseAuth.instance.currentUser;
-    log(user.toString());
     final product = ProductModel(
       user: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,
-      subtitile: getProvider.subtitleController.text,
+      brand: getProvider.subtitleController.text,
       price: int.parse(getProvider.priceController.text),
       image: getProvider.downloadURL,
       category: selectedCategory,

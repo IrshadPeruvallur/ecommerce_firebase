@@ -115,11 +115,18 @@ class MyProductPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
+          elevation: 0,
+          backgroundColor: const Color.fromARGB(255, 37, 157, 192),
           onPressed: () {
+            // showModalBottomSheet(
+            //   context: context,
+            //   builder: (context) => SellProductPage(),
+            // );
             NavigatorWidget().push(context, SellProductPage());
           },
-          label: TextWidgets().titleText2(context, text: 'Sell Product')),
+          child: IconsWidgets().IconButtonWidget(context, size,
+              color: Colors.white, iconData: EneftyIcons.add_outline)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

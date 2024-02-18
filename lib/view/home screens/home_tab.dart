@@ -29,6 +29,25 @@ class _HomeTabState extends State<HomeTab> {
     'assets/images/offer 3.jpg'
   ];
 
+  final List<String> catorgoryName = [
+    'Mobile',
+    'Laptop',
+    'Smartwatch',
+    'Headphones',
+    'Camera',
+    'Mouse and Keyboard',
+    'Speaker',
+  ];
+  final List<String> catorgoryItems = [
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Tablets._CB574550011_.png',
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Gaming-laptops._CB574550011_.png',
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Wearables._CB574550011_.png',
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Headphones._CB574550011_.png',
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Cameras._CB574550011_.png',
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Computer-Accessories._CB574550011_.png',
+    'https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Soundbars._CB574550011_.png'
+  ];
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -86,15 +105,14 @@ class _HomeTabState extends State<HomeTab> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(
-                    5,
+                    catorgoryItems.length,
                     (index) => Padding(
                       padding: EdgeInsets.only(
                         right: 8,
                       ),
-                      child: HomeWidgets().categoryItems(
-                        size,
-                        imagePath: 'assets/images/headset .jpg',
-                      ),
+                      child: HomeWidgets().categoryItems(context, size,
+                          category: catorgoryName[index],
+                          imagePath: catorgoryItems[index]),
                     ),
                   ),
                 ),
