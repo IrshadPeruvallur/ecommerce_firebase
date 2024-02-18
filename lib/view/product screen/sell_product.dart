@@ -212,7 +212,7 @@ class SellProductPage extends StatelessWidget {
       description: getProvider.descriptionController.text,
       price: int.parse(getProvider.priceController.text),
       image: getProvider.downloadURL,
-      wishList: false,
+      wishList: [],
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );

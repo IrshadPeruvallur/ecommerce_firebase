@@ -124,19 +124,16 @@ class WishlistPage extends StatelessWidget {
     );
   }
 
-  filteringMyProduct(DatabaseProvider provider) {
-    final item = provider.allProduct.where((product) {
-      return product.wishList == true;
-    }).toList();
-
+  List<ProductModel> filteringMyProduct(DatabaseProvider provider) {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      return null;
+      return [];
     }
     final user = currentUser.email ?? currentUser.phoneNumber;
 
-    List<ProductModel> myProducts =
-        item.where((product) => product.user == user).toList();
+    List<ProductModel> myProducts = provider.allProduct
+        .where((product) => product.wishList!.contains(user))
+        .toList();
 
     return myProducts;
   }

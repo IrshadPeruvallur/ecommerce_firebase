@@ -7,7 +7,7 @@ class ProductModel {
   String? brand;
   String? description;
   String? category;
-  bool? wishList;
+  List<String>? wishList;
   List<String>? cart;
   DateTime? timeStamp;
   String? image;
@@ -26,26 +26,27 @@ class ProductModel {
       this.wishList});
   factory ProductModel.fromJson(String id, Map<String, dynamic> json) {
     return ProductModel(
-        user: json['user'],
-        id: id,
-        timeStamp: json['timeStamp'] != null
-            ? (json['timeStamp'] as Timestamp).toDate()
-            : null,
-        cart: List<String>.from(json["cart"] ?? []),
-        category: json['catogory'],
-        image: json['image'],
-        price: json['price'],
-        brand: json['brand'],
-        description: json['description'],
-        title: json['title'],
-        wishList: json['wishList']);
+      user: json['user'],
+      id: id,
+      timeStamp: json['timeStamp'] != null
+          ? (json['timeStamp'] as Timestamp).toDate()
+          : null,
+      cart: List<String>.from(json["cart"] ?? []),
+      category: json['category'],
+      image: json['image'],
+      price: json['price'],
+      brand: json['brand'],
+      description: json['description'],
+      title: json['title'],
+      wishList: List<String>.from(json["wishList"] ?? []),
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'cart': cart,
-      'catogory': category,
+      'category': category,
       'user': user,
       'image': image,
       'price': price,

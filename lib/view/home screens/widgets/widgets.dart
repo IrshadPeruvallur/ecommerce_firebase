@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/pages/category_page.dart';
@@ -6,6 +8,7 @@ import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -139,16 +142,16 @@ class HomeWidgets {
                   child: IconsWidgets().IconButtonWidget(
                     context,
                     size,
-                    iconData: product.wishList == false
+                    // iconData: EneftyIcons.heart_outline,
+                    // color: Colors.red,
+                    iconData: wishListCheck(product) == true
                         ? EneftyIcons.heart_outline
                         : EneftyIcons.heart_bold,
                     color: Colors.red,
-                    onPressed: () {
-                      if (product.wishList == false) {
-                        provider.IsWishLIstClick(product.id, true);
-                      } else {
-                        provider.IsWishLIstClick(product.id, false);
-                      }
+                    onPressed: () async {
+                      final value = await wishListCheck(product);
+                      log(value.toString());
+                      provider.IsWishLIstClick(product.id, value);
                     },
                   ))
             ],
@@ -157,5 +160,16 @@ class HomeWidgets {
         itemCount: products!.length,
       ),
     );
+  }
+
+  bool wishListCheck(ProductModel product) {
+    final user = FirebaseAuth.instance.currentUser;
+    final userEmail = user!.email ?? user.phoneNumber;
+    log(product.wishList.toString());
+    if (product.wishList!.contains(userEmail)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

@@ -40,7 +40,21 @@ class DatabaseService {
 
   Future<void> IsWishListClick(String id, bool wishListStatus) async {
     try {
-      await collectionReference.doc(id).update({'wishList': wishListStatus});
+      if (wishListStatus == true) {
+        await collectionReference.doc(id).update({
+          'wishList': FieldValue.arrayUnion([
+            firebaseAuth.currentUser!.email ??
+                firebaseAuth.currentUser!.phoneNumber
+          ])
+        });
+      } else {
+        await collectionReference.doc(id).update({
+          'wishList': FieldValue.arrayRemove([
+            firebaseAuth.currentUser!.email ??
+                firebaseAuth.currentUser!.phoneNumber
+          ])
+        });
+      }
     } catch (e) {
       log('Error updating wishlist status: $e');
     }
