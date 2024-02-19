@@ -52,7 +52,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // final getAuthPrv = Provider.of<DatabaseProvider>(context, listen: false);
+    final getAuthPrv = Provider.of<DatabaseProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: size.width * .2,
@@ -73,6 +73,9 @@ class _HomeTabState extends State<HomeTab> {
         title: SizedBox(
           width: size.width * .6,
           child: TextFormField(
+            onChanged: (value) {
+              getAuthPrv.searchFilter(value);
+            },
             decoration: InputDecoration(
               hintText: "Search",
               border: OutlineInputBorder(
@@ -96,73 +99,73 @@ class _HomeTabState extends State<HomeTab> {
         // backgroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextWidgets().mainHeadingText(context, text: 'Category  '),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    catorgoryItems.length,
-                    (index) => Padding(
-                      padding: EdgeInsets.only(
-                        right: 8,
-                      ),
-                      child: HomeWidgets().categoryItems(context, size,
-                          category: catorgoryName[index],
-                          imagePath: catorgoryItems[index]),
-                    ),
-                  ),
-                ),
-              ),
-              TextWidgets().mainHeadingText(context, text: 'Sponsered  '),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    specialProduct.length,
-                    (index) => Padding(
-                      padding: EdgeInsets.only(
-                        right: 8,
-                      ),
-                      child: HomeWidgets().specialProduct(
-                        size,
-                        imagePath: specialProduct[index],
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextWidgets().mainHeadingText(context, text: 'Category  '),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      catorgoryItems.length,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(
+                          right: 8,
+                        ),
+                        child: HomeWidgets().categoryItems(context, size,
+                            category: catorgoryName[index],
+                            imagePath: catorgoryItems[index]),
                       ),
                     ),
                   ),
                 ),
-              ),
-              TextWidgets().mainHeadingText(context, text: 'Products  '),
-              Consumer<DatabaseProvider>(
-                builder: (context, provider, _) =>
-                    provider.allProduct.isNotEmpty
-                        ? HomeWidgets().buildProductItem(
-                            size,
-                            provider,
-                            products: provider.allProduct,
-                          )
-                        : Column(
-                            children: [
-                              SizedBox(
-                                height: size.width * .2,
-                              ),
-                              Center(
-                                child: Lottie.asset(
-                                    width: size.width * .20,
-                                    height: size.width * .20,
-                                    'assets/lottie/sellX logo.json'),
-                              ),
-                            ],
-                          ),
-              ),
-            ],
-          ),
-        ),
-      ),
+                TextWidgets().mainHeadingText(context, text: 'Sponsered  '),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      specialProduct.length,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(
+                          right: 8,
+                        ),
+                        child: HomeWidgets().specialProduct(
+                          size,
+                          imagePath: specialProduct[index],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                TextWidgets().mainHeadingText(context, text: 'Products  '),
+                Consumer<DatabaseProvider>(builder: (context, provider, child) {
+                  return provider.allProduct.isNotEmpty
+                      ? HomeWidgets().buildProductItem(
+                          size,
+                          provider,
+                          products: provider.searchedList.isEmpty
+                              ? provider.allProduct
+                              : provider.searchedList,
+                        )
+                      : Column(
+                          children: [
+                            SizedBox(
+                              height: size.width * .2,
+                            ),
+                            Center(
+                              child: Lottie.asset(
+                                  width: size.width * .20,
+                                  height: size.width * .20,
+                                  'assets/lottie/sellX logo.json'),
+                            ),
+                          ],
+                        );
+                })
+              ],
+            ),
+          )),
     );
   }
 }

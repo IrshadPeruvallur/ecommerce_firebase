@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';

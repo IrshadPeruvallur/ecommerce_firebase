@@ -1,9 +1,6 @@
 import 'package:ecommerce_app/controller/widget_provider.dart';
-import 'package:ecommerce_app/view/authentication%20screens/verify_otp_screen.dart';
-import 'package:ecommerce_app/view/authentication%20screens/login_screen.dart';
 import 'package:ecommerce_app/view/home%20screens/home_tab.dart';
 import 'package:ecommerce_app/view/product%20screen/my_product.dart';
-import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/profile%20screens/profile_tab.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';

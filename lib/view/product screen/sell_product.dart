@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
@@ -9,12 +7,12 @@ import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class SellProductPage extends StatelessWidget {
   SellProductPage({Key? key}) : super(key: key);
 

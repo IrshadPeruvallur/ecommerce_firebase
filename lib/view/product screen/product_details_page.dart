@@ -5,6 +5,7 @@ import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -64,20 +65,19 @@ class ProductDetailsPage extends StatelessWidget {
                               fontSize: size.width * .06),
                         ),
                         Consumer<DatabaseProvider>(
-                            builder: (context, value, child) {
+                            builder: (context, provider, child) {
                           return IconsWidgets().IconButtonWidget(
                             context,
                             size,
-                            iconData: products!.wishList == false
+                            // iconData: EneftyIcons.heart_outline,
+                            // color: Colors.red,
+                            iconData: wishListCheck(products!) == true
                                 ? EneftyIcons.heart_outline
                                 : EneftyIcons.heart_bold,
                             color: Colors.red,
-                            onPressed: () {
-                              if (products!.wishList == false) {
-                                value.IsWishLIstClick(products!.id, true);
-                              } else {
-                                value.IsWishLIstClick(products!.id, false);
-                              }
+                            onPressed: () async {
+                              final value = await wishListCheck(products!);
+                              provider.IsWishLIstClick(products!.id, value);
                             },
                           );
                         })
@@ -136,5 +136,15 @@ class ProductDetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool wishListCheck(ProductModel product) {
+    final user = FirebaseAuth.instance.currentUser;
+    final userEmail = user!.email ?? user.phoneNumber;
+    if (product.wishList!.contains(userEmail)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

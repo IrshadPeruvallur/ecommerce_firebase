@@ -1,11 +1,8 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/authentication%20screens/widgets/login_widget.dart';
 import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
-import 'package:ecommerce_app/view/home%20screens/home_tab.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
-import 'package:ecommerce_app/view/widgets/style_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';

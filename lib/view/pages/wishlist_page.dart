@@ -1,7 +1,6 @@
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
-import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';

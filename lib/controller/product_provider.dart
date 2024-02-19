@@ -24,6 +24,7 @@ class DatabaseProvider extends ChangeNotifier {
 
   IsWishLIstClick(id, bool wishListStatus) async {
     await databaseService.IsWishListClick(id, wishListStatus);
+    notifyListeners();
     getAllProducts();
   }
 
@@ -34,7 +35,17 @@ class DatabaseProvider extends ChangeNotifier {
 
   Future<void> deleteMyProduct(productId) async {
     await databaseService.deleteMyProduct(productId);
+    notifyListeners();
     getAllProducts();
+  }
+
+  List<ProductModel> searchedList = [];
+  searchFilter(String value) {
+    searchedList = allProduct
+        .where((product) =>
+            product.title!.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    notifyListeners();
   }
 
   uploadImage(image) async {
