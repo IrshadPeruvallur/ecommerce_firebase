@@ -22,22 +22,23 @@ class DatabaseProvider extends ChangeNotifier {
 // add edit
   addProduct(ProductModel data) async {
     await databaseService.addProduct(data);
-    // clearControllers();
+    clearControllers();
     getAllProducts();
   }
 
   updateMyProduct(productId, ProductModel data) async {
     await databaseService.updateMyProudct(productId, data);
-    // clearControllers();
+    clearControllers();
     notifyListeners();
   }
 
-  loadDatasForEdit(ProductModel product) {
+  void loadDatasForEdit(ProductModel product) {
     titleController = TextEditingController(text: product.title);
     brandController = TextEditingController(text: product.brand);
     descriptionController = TextEditingController(text: product.description);
-    priceController =
-        TextEditingController(text: product.price.toString() ?? '');
+    priceController = TextEditingController(
+      text: product.price != null ? product.price.toString() : '',
+    );
   }
 
 // wishlist functions
@@ -54,7 +55,7 @@ class DatabaseProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     } else {
-      notifyListeners();
+      // notifyListeners();
       return true;
     }
   }

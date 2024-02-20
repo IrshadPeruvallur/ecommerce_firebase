@@ -242,7 +242,7 @@ class _SellProductPageState extends State<SellProductPage> {
       timeStamp: DateTime.now(),
     );
     getProvider.addProduct(product);
-    // getwidgetProvider.file = null;
+    getwidgetProvider.file = null;
     Navigator.pop(context);
     PopupWidgets()
         .showSuccessSnackbar(context, 'Product uploaded successfully');
@@ -250,11 +250,7 @@ class _SellProductPageState extends State<SellProductPage> {
 
   updateProduct(context, ProductModel product) async {
     final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
-    // final getwidgetProvider =
-    //     Provider.of<WidgetProviders>(context, listen: false);
     PopupWidgets().showLoadingIndicator(context);
-    // await getProvider.uploadImage(File(getwidgetProvider.file!.path));
-
     product.title = getProvider.titleController.text;
     product.brand = getProvider.brandController.text;
     product.description = getProvider.descriptionController.text;
@@ -263,7 +259,7 @@ class _SellProductPageState extends State<SellProductPage> {
     product.timeStamp = DateTime.now();
 
     await getProvider.updateMyProduct(product.id, product);
-    // getwidgetProvider.file = null;
+
     Navigator.pop(context);
     Navigator.pop(context);
     PopupWidgets().showSuccessSnackbar(context, 'Product updated successfully');

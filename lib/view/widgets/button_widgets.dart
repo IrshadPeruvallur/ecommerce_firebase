@@ -46,8 +46,9 @@ class ButtonWidgets {
         width: double.infinity,
         child: ElevatedButton(
             style: ButtonStyle(
-                elevation: MaterialStatePropertyAll(size.width * .07),
-                backgroundColor: const MaterialStatePropertyAll(Colors.black)),
+                // elevation: MaterialStatePropertyAll(size.width * .07),
+                backgroundColor: const MaterialStatePropertyAll(
+                    Color.fromARGB(255, 37, 157, 192))),
             onPressed: () {
               onPressed!();
             },

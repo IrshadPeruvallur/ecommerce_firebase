@@ -3,6 +3,7 @@ import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/pages/blank_page.dart';
+import 'package:ecommerce_app/view/product%20screen/buy_product_page.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
@@ -25,12 +26,13 @@ class ProductDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWidgets().appBar(context,
           title: '',
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.black),
+          backgroundColor: Color.fromARGB(255, 37, 157, 192),
+          foregroundColor: Colors.white),
       body: SizedBox(
         height: size.height * 1,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
           child: Stack(
             children: [
               SingleChildScrollView(
@@ -133,11 +135,8 @@ class ProductDetailsPage extends StatelessWidget {
                   child: ButtonWidgets().fullWidthElevatedButton(size,
                       onPressed: () {
                     if (products!.user != user) {
-                      NavigatorWidget().push(
-                          context,
-                          BlankPage(
-                            name: '',
-                          ));
+                      NavigatorWidget()
+                          .push(context, ProductBuyingPage(product: products!));
                     } else {
                       Provider.of<DatabaseProvider>(context, listen: false)
                           .isEdit = true;
