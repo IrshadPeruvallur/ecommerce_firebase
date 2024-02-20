@@ -63,7 +63,13 @@ class ProfileTab extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () async {
-                logOut(context);
+                PopupWidgets().showWarningDialog(context,
+                    label: 'Log out',
+                    onPressed: () => logOut(context),
+                    text:
+                        'Are you sure you want to log out? Any unsaved work may be lost.',
+                    title: 'Warning');
+                // logOut(context);
               },
               icon: const Icon(
                 EneftyIcons.logout_outline,
@@ -180,10 +186,10 @@ class ProfileTab extends StatelessWidget {
         ),
         (route) => false);
 
-    PopupWidgets().showSuccessSnackbar(context, 'Log out Successfully');
-    Provider.of<WidgetProviders>(
+    await Provider.of<WidgetProviders>(
       context,
       listen: false,
-    ).bottomBarFunction(0);
+    ).bottomBarFunction();
+    PopupWidgets().showSuccessSnackbar(context, 'Log out Successfully');
   }
 }

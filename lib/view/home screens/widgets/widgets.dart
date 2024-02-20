@@ -44,36 +44,36 @@ class HomeWidgets {
     );
   }
 
-  Widget topBarIcon(Size size,
-      {required IconData icon, required String title}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          height: size.width * .15,
-          width: size.width * .15,
-          margin: const EdgeInsets.only(right: 15),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Icon(
-            icon,
-            color: Colors.black,
-            size: size.width * 0.06,
-          ),
-        ),
-        SizedBox(
-          width: size.width * .15,
-          child: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
-        )
-      ],
-    );
-  }
+  // Widget topBarIcon(Size size,
+  //     {required IconData icon, required String title}) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     children: [
+  //       Container(
+  //         height: size.width * .15,
+  //         width: size.width * .15,
+  //         margin: const EdgeInsets.only(right: 15),
+  //         padding: const EdgeInsets.all(10),
+  //         decoration: BoxDecoration(
+  //           color: const Color.fromARGB(255, 223, 1, 1),
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: Icon(
+  //           icon,
+  //           color: Colors.black,
+  //           size: size.width * 0.06,
+  //         ),
+  //       ),
+  //       SizedBox(
+  //         width: size.width * .15,
+  //         child: Text(
+  //           title,
+  //           style: const TextStyle(fontWeight: FontWeight.w700),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget buildProductItem(Size size, DatabaseProvider provider,
       {List<ProductModel>? products}) {
@@ -159,11 +159,14 @@ class HomeWidgets {
 
   bool wishListCheck(ProductModel product) {
     final user = FirebaseAuth.instance.currentUser;
-    final userEmail = user!.email ?? user.phoneNumber;
-    if (product.wishList!.contains(userEmail)) {
-      return false;
-    } else {
-      return true;
+    if (user != null) {
+      final userEmail = user.email ?? user.phoneNumber;
+      if (product.wishList!.contains(userEmail)) {
+        return false;
+      } else {
+        return true;
+      }
     }
+    return true;
   }
 }

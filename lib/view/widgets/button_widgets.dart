@@ -25,16 +25,15 @@ class ButtonWidgets {
   }
 
   Widget textButtonWidget(size, context,
-      {required label, required VoidCallback? onPressed}) {
+      {required label, required VoidCallback? onPressed, Color? color}) {
     return TextButton(
         style: const ButtonStyle(
             overlayColor: MaterialStatePropertyAll(Colors.transparent)),
-        onPressed: () {
-          onPressed!();
-        },
+        onPressed: () => onPressed!(),
         child: Text(
           label,
-          style: TextStyle(fontSize: size.width * .035, color: Colors.black),
+          style: TextStyle(
+              fontSize: size.width * .035, color: color ?? Colors.black),
         ));
   }
 

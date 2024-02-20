@@ -4,6 +4,7 @@ import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -91,12 +92,31 @@ class MyProductPage extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  IconsWidgets().IconButtonWidget(context, size,
-                                      onPressed: () async {
-                                    await provider.deleteMyProduct(product.id);
-                                  },
-                                      iconData:
-                                          EneftyIcons.close_circle_outline),
+                                  IconsWidgets().IconButtonWidget(
+                                    context,
+                                    size,
+                                    onPressed: () async {
+                                      PopupWidgets().showWarningDialog(
+                                        context,
+                                        label: 'Delete',
+                                        onPressed: () async {
+                                          PopupWidgets()
+                                              .showLoadingIndicator(context);
+                                          await provider
+                                              .deleteMyProduct(product.id);
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                          PopupWidgets().showSuccessSnackbar(
+                                              context,
+                                              'Item Deleted successfully');
+                                        },
+                                        title: 'Delete',
+                                        text:
+                                            'Are you sure you want to delete this item?',
+                                      );
+                                    },
+                                    iconData: EneftyIcons.close_circle_outline,
+                                  )
                                 ],
                               ),
                             );

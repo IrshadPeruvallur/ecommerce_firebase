@@ -18,7 +18,7 @@ class DatabaseProvider extends ChangeNotifier {
 
   addProduct(ProductModel data) async {
     await databaseService.addProduct(data);
-    clearControllers();
+    // clearControllers();
     getAllProducts();
   }
 

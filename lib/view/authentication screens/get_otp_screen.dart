@@ -51,6 +51,7 @@ class GetOtpPage extends StatelessWidget {
                             // inputFormatter:
                             //     FilteringTextInputFormatter.digitsOnly,
                             label: 'Enter PhoneNumber',
+                            prefixText: '+91',
                             keyboardType: TextInputType.phone,
                             controller: getProvider.phoneController),
                         SizedBox(
@@ -61,8 +62,8 @@ class GetOtpPage extends StatelessWidget {
                           label: 'Get Otp',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              await getProvider
-                                  .getOTP(getProvider.phoneController.text);
+                              await getProvider.getOTP(
+                                  '+91${getProvider.phoneController.text}');
                               // if (getProvider.isVerified == true) {
                               NavigatorWidget()
                                   .pushReplacement(context, VerifyOtpPage());

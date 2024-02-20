@@ -11,8 +11,8 @@ class WidgetProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  bottomBarFunction(index) {
-    currentIndex = index;
+  Future bottomBarFunction() async {
+    currentIndex = 0;
     notifyListeners();
   }
 

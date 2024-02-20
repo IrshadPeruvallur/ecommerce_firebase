@@ -121,16 +121,16 @@ class AuthService {
     }
   }
 
-  Future<void> verifyOTP(String otp) async {
+  Future<PhoneAuthCredential?> verifyOTP(String otp) async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId!,
         smsCode: otp,
       );
-
-      await firebaseAuth.signInWithCredential(credential);
+      return credential;
     } catch (e) {
       log("verifyOTP error: $e");
+      return null;
     }
   }
 }

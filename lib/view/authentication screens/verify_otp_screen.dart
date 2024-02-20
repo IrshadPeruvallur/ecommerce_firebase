@@ -2,6 +2,7 @@ import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,10 +64,10 @@ class VerifyOtpPage extends StatelessWidget {
                           label: 'Verfy',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              await getProvider
-                                  .verifyOTP(getProvider.otpController.text);
-                              NavigatorWidget()
-                                  .pushReplacement(context, BottomBarScreen());
+                              await getProvider.verifyOTP(
+                                  context, getProvider.otpController.text);
+
+                              ;
                             }
                           },
                         ),
