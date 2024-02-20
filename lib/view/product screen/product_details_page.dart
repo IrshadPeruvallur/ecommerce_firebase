@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
+import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
+import 'package:ecommerce_app/view/pages/blank_page.dart';
+import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +16,11 @@ import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final ProductModel? products;
-  const ProductDetailsPage({super.key, required this.products});
-
+  ProductDetailsPage({super.key, required this.products});
+  String? user;
   @override
   Widget build(BuildContext context) {
+    getUser();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarWidgets().appBar(context,
@@ -37,9 +42,6 @@ class ProductDetailsPage extends StatelessWidget {
                           image: DecorationImage(
                               image: NetworkImage(products!.image.toString()),
                               fit: BoxFit.contain),
-                          // borderRadius: const BorderRadius.only(
-                          //     bottomLeft: Radius.circular(50),
-                          //     bottomRight: Radius.circular(50)),
                           color: Colors.transparent),
                       width: double.infinity,
                       height: size.height * .4,
@@ -65,22 +67,23 @@ class ProductDetailsPage extends StatelessWidget {
                               fontSize: size.width * .06),
                         ),
                         Consumer<DatabaseProvider>(
-                            builder: (context, provider, child) {
-                          return IconsWidgets().IconButtonWidget(
-                            context,
-                            size,
-                            // iconData: EneftyIcons.heart_outline,
-                            // color: Colors.red,
-                            iconData: wishListCheck(products!) == true
-                                ? EneftyIcons.heart_outline
-                                : EneftyIcons.heart_bold,
-                            color: Colors.red,
-                            onPressed: () async {
-                              final value = await wishListCheck(products!);
-                              provider.IsWishLIstClick(products!.id, value);
-                            },
-                          );
-                        })
+                          builder: (context, provider, child) {
+                            bool isFavorite = provider.wishListCheck(products!);
+                            return IconsWidgets().IconButtonWidget(
+                              context,
+                              size,
+                              iconData: isFavorite
+                                  ? EneftyIcons.heart_outline
+                                  : EneftyIcons.heart_bold,
+                              color: Colors.red,
+                              onPressed: () async {
+                                final value =
+                                    await provider.wishListCheck(products!);
+                                provider.IsWishLIstClick(products!.id, value);
+                              },
+                            );
+                          },
+                        )
                       ],
                     ),
                     Row(
@@ -127,8 +130,24 @@ class ProductDetailsPage extends StatelessWidget {
                 left: 0,
                 child: Container(
                   color: Colors.transparent,
-                  child: ButtonWidgets()
-                      .fullWidthElevatedButton(size, label: 'Buy Product'),
+                  child: ButtonWidgets().fullWidthElevatedButton(size,
+                      onPressed: () {
+                    if (products!.user != user) {
+                      NavigatorWidget().push(
+                          context,
+                          BlankPage(
+                            name: '',
+                          ));
+                    } else {
+                      Provider.of<DatabaseProvider>(context, listen: false)
+                          .isEdit = true;
+                      NavigatorWidget().push(
+                          context,
+                          SellProductPage(
+                            products: products,
+                          ));
+                    }
+                  }, label: products!.user != user ? 'Buy Product' : 'Update'),
                 ),
               )
             ],
@@ -138,13 +157,13 @@ class ProductDetailsPage extends StatelessWidget {
     );
   }
 
-  bool wishListCheck(ProductModel product) {
-    final user = FirebaseAuth.instance.currentUser;
-    final userEmail = user!.email ?? user.phoneNumber;
-    if (product.wishList!.contains(userEmail)) {
-      return false;
-    } else {
-      return true;
+  void getUser() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      return null;
     }
+
+    user = currentUser.email ?? currentUser.phoneNumber;
   }
 }

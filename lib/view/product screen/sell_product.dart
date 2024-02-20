@@ -13,10 +13,25 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class SellProductPage extends StatelessWidget {
-  SellProductPage({Key? key}) : super(key: key);
+class SellProductPage extends StatefulWidget {
+  ProductModel? products;
+  SellProductPage({Key? key, this.products}) : super(key: key);
+
+  @override
+  State<SellProductPage> createState() => _SellProductPageState();
+}
+
+class _SellProductPageState extends State<SellProductPage> {
+  @override
+  void initState() {
+    Provider.of<DatabaseProvider>(context, listen: false)
+        .loadDatasForEdit(widget.products!);
+    selectedCategory = widget.products!.category;
+    super.initState();
+  }
 
   final formKey = GlobalKey<FormState>();
+
   final List<String> categories = [
     'Mobile',
     'Laptop',
@@ -58,7 +73,7 @@ class SellProductPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWidgets().appBar(
         context,
-        title: 'Sell Product',
+        title: getProvider.isEdit! ? 'Update Product' : 'Sell Product',
       ),
       body: Form(
         key: formKey,
@@ -72,8 +87,11 @@ class SellProductPage extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: GestureDetector(
                     onTap: () async {
-                      await ProductWidgets()
-                          .showImagePickerBottomSheet(context, widgetProvider);
+                      getProvider.isEdit == false
+                          ? await ProductWidgets().showImagePickerBottomSheet(
+                              context, widgetProvider)
+                          : PopupWidgets().showErrorSnackbar(
+                              context, 'The image can never be edited');
                     },
                     child: Row(
                       children: [
@@ -117,7 +135,7 @@ class SellProductPage extends StatelessWidget {
                                     controller: getProvider.titleController),
                                 TextFieldWidgets().textFormField(size,
                                     label: "Brand",
-                                    controller: getProvider.subtitleController),
+                                    controller: getProvider.brandController),
                               ],
                             ),
                           ),
@@ -169,21 +187,29 @@ class SellProductPage extends StatelessWidget {
                               FilteringTextInputFormatter.digitsOnly,
                           controller: getProvider.priceController),
                       SizedBox(height: size.width * 0.05),
-                      ButtonWidgets().fullWidthElevatedButton(
-                        size,
-                        label: 'Sell Product',
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            if (widgetProvider.file != null) {
-                              await addProduct(context);
-                              Navigator.pop(context);
-                            } else {
-                              PopupWidgets().showErrorSnackbar(
-                                  context, 'Please Select a image');
+                      Consumer<DatabaseProvider>(
+                          builder: (context, value, child) {
+                        return ButtonWidgets().fullWidthElevatedButton(
+                          size,
+                          label:
+                              value.isEdit == false ? 'Sell Product' : 'Update',
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              if (value.isEdit == false) {
+                                if (widgetProvider.file != null) {
+                                  await addProduct(context);
+                                  Navigator.pop(context);
+                                } else {
+                                  PopupWidgets().showErrorSnackbar(
+                                      context, 'Please Select a image');
+                                }
+                              } else {
+                                await updateProduct(context, widget.products!);
+                              }
                             }
-                          }
-                        },
-                      ),
+                          },
+                        );
+                      }),
                     ],
                   ),
                 ),
@@ -206,11 +232,12 @@ class SellProductPage extends StatelessWidget {
     final product = ProductModel(
       user: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,
-      brand: getProvider.subtitleController.text,
+      brand: getProvider.brandController.text,
       description: getProvider.descriptionController.text,
       price: int.parse(getProvider.priceController.text),
       image: getProvider.downloadURL,
       wishList: [],
+      cart: [],
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );
@@ -219,5 +246,26 @@ class SellProductPage extends StatelessWidget {
     Navigator.pop(context);
     PopupWidgets()
         .showSuccessSnackbar(context, 'Product uploaded successfully');
+  }
+
+  updateProduct(context, ProductModel product) async {
+    final getProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    // final getwidgetProvider =
+    //     Provider.of<WidgetProviders>(context, listen: false);
+    PopupWidgets().showLoadingIndicator(context);
+    // await getProvider.uploadImage(File(getwidgetProvider.file!.path));
+
+    product.title = getProvider.titleController.text;
+    product.brand = getProvider.brandController.text;
+    product.description = getProvider.descriptionController.text;
+    product.price = int.parse(getProvider.priceController.text);
+    product.category = selectedCategory;
+    product.timeStamp = DateTime.now();
+
+    await getProvider.updateMyProduct(product.id, product);
+    // getwidgetProvider.file = null;
+    Navigator.pop(context);
+    Navigator.pop(context);
+    PopupWidgets().showSuccessSnackbar(context, 'Product updated successfully');
   }
 }

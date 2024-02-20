@@ -1,37 +1,69 @@
 import 'dart:developer';
 
 import 'package:ecommerce_app/controller/widget_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/service/database_service.dart';
 
 class DatabaseProvider extends ChangeNotifier {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController subtitleController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController brandController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   final DatabaseService databaseService = DatabaseService();
   final WidgetProviders widgetProviders = WidgetProviders();
   List<ProductModel> allProduct = [];
+  List<ProductModel> searchedList = [];
   String downloadURL = '';
+  bool? isEdit;
   String imageName = DateTime.now().millisecondsSinceEpoch.toString();
 
+// add edit
   addProduct(ProductModel data) async {
     await databaseService.addProduct(data);
     // clearControllers();
     getAllProducts();
   }
 
+  updateMyProduct(productId, ProductModel data) async {
+    await databaseService.updateMyProudct(productId, data);
+    // clearControllers();
+    notifyListeners();
+  }
+
+  loadDatasForEdit(ProductModel product) {
+    titleController = TextEditingController(text: product.title);
+    brandController = TextEditingController(text: product.brand);
+    descriptionController = TextEditingController(text: product.description);
+    priceController =
+        TextEditingController(text: product.price.toString() ?? '');
+  }
+
+// wishlist functions
   IsWishLIstClick(id, bool wishListStatus) async {
     await databaseService.IsWishListClick(id, wishListStatus);
     notifyListeners();
     getAllProducts();
   }
 
+  bool wishListCheck(ProductModel product) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final user = currentUser!.email ?? currentUser.phoneNumber;
+    if (product.wishList!.contains(user)) {
+      notifyListeners();
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
+  }
+
   Future<void> getAllProducts() async {
     allProduct = await databaseService.getAllProducts();
     notifyListeners();
   }
+// my product functions
 
   Future<void> deleteMyProduct(productId) async {
     await databaseService.deleteMyProduct(productId);
@@ -39,7 +71,7 @@ class DatabaseProvider extends ChangeNotifier {
     getAllProducts();
   }
 
-  List<ProductModel> searchedList = [];
+  // serach function
   searchFilter(String value) {
     searchedList = allProduct
         .where((product) =>
@@ -48,6 +80,7 @@ class DatabaseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+// image funtion
   uploadImage(image) async {
     try {
       if (image != null) {
@@ -65,7 +98,7 @@ class DatabaseProvider extends ChangeNotifier {
 
   clearControllers() {
     titleController.clear();
-    subtitleController.clear();
+    brandController.clear();
     priceController.clear();
     descriptionController.clear();
     notifyListeners();

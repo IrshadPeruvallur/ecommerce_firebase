@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
+import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
@@ -42,82 +43,88 @@ class MyProductPage extends StatelessWidget {
                             final product = myProducts[index];
                             return Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: size.width * .2,
-                                        width: size.width * .2,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    product.image.toString()),
-                                                fit: BoxFit.cover),
-                                            color: Colors.grey,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15))),
-                                      ),
-                                      SizedBox(
-                                        width: size.width * .02,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TextWidgets().titleText2(context,
-                                              text: product.title.toString()),
-                                          TextWidgets().SubtitleText(context,
-                                              text:
-                                                  product.category.toString()),
-                                          Row(
-                                            children: [
-                                              TextWidgets().titleText2(context,
-                                                  text:
-                                                      product.price.toString()),
-                                              SizedBox(
-                                                width: size.width * .04,
-                                              ),
-                                              TextWidgets().SubtitleText(
-                                                  context,
-                                                  text: '/Sold',
-                                                  color: Colors.green),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  IconsWidgets().IconButtonWidget(
-                                    context,
-                                    size,
-                                    onPressed: () async {
-                                      PopupWidgets().showWarningDialog(
-                                        context,
-                                        label: 'Delete',
-                                        onPressed: () async {
-                                          PopupWidgets()
-                                              .showLoadingIndicator(context);
-                                          await provider
-                                              .deleteMyProduct(product.id);
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                          PopupWidgets().showSuccessSnackbar(
-                                              context,
-                                              'Item Deleted successfully');
-                                        },
-                                        title: 'Delete',
-                                        text:
-                                            'Are you sure you want to delete this item?',
-                                      );
-                                    },
-                                    iconData: EneftyIcons.close_circle_outline,
-                                  )
-                                ],
+                              child: GestureDetector(
+                                onTap: () => NavigatorWidget().push(context,
+                                    ProductDetailsPage(products: product)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: size.width * .2,
+                                          width: size.width * .2,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      product.image.toString()),
+                                                  fit: BoxFit.cover),
+                                              color: Colors.grey,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * .02,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            TextWidgets().titleText2(context,
+                                                text: product.title.toString()),
+                                            TextWidgets().SubtitleText(context,
+                                                text: product.category
+                                                    .toString()),
+                                            Row(
+                                              children: [
+                                                TextWidgets().titleText2(
+                                                    context,
+                                                    text: product.price
+                                                        .toString()),
+                                                SizedBox(
+                                                  width: size.width * .04,
+                                                ),
+                                                TextWidgets().SubtitleText(
+                                                    context,
+                                                    text: '/Sold',
+                                                    color: Colors.green),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    IconsWidgets().IconButtonWidget(
+                                      context,
+                                      size,
+                                      onPressed: () async {
+                                        PopupWidgets().showWarningDialog(
+                                          context,
+                                          label: 'Delete',
+                                          onPressed: () async {
+                                            PopupWidgets()
+                                                .showLoadingIndicator(context);
+                                            await provider
+                                                .deleteMyProduct(product.id);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            PopupWidgets().showSuccessSnackbar(
+                                                context,
+                                                'Item Deleted successfully');
+                                          },
+                                          title: 'Delete',
+                                          text:
+                                              'Are you sure you want to delete this item?',
+                                        );
+                                      },
+                                      iconData:
+                                          EneftyIcons.close_circle_outline,
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -142,7 +149,14 @@ class MyProductPage extends StatelessWidget {
             //   context: context,
             //   builder: (context) => SellProductPage(),
             // );
-            NavigatorWidget().push(context, SellProductPage());
+
+            Provider.of<DatabaseProvider>(context, listen: false).isEdit =
+                false;
+            NavigatorWidget().push(
+                context,
+                SellProductPage(
+                  products: ProductModel(),
+                ));
           },
           child: IconsWidgets().IconButtonWidget(context, size,
               color: Colors.white, iconData: EneftyIcons.add_outline)),

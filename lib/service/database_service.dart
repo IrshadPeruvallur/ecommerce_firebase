@@ -69,6 +69,15 @@ class DatabaseService {
     return downloadURL;
   }
 
+  updateMyProudct(productId, ProductModel data) async {
+    try {
+      await collectionReference.doc(productId).update(data.toJson());
+      log('sdajfjkasfsaf');
+    } catch (e) {
+      log('Error : product is not updated $e');
+    }
+  }
+
   deleteMyProduct(productId) async {
     try {
       await collectionReference.doc(productId).delete();

@@ -55,7 +55,7 @@ class ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final getProvider =
         Provider.of<AuthenticationProvider>(context, listen: false);
-    final User user = getProvider.getCurrentUser();
+    final User? user = getProvider.getCurrentUser();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +96,7 @@ class ProfileTab extends StatelessWidget {
                     SizedBox(
                       width: size.width * .5,
                       child: Text(
-                        user.displayName ?? 'Uknown name',
+                        user!.displayName ?? 'Uknown name',
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
                           fontSize: size.width * .05,
