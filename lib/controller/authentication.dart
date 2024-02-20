@@ -52,7 +52,7 @@ class AuthenticationProvider extends ChangeNotifier {
   User? getCurrentUser() {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {}
-    notifyListeners();
+    // notifyListeners();
     return currentUser;
   }
 
