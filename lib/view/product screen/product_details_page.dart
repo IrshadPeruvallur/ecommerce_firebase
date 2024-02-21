@@ -9,18 +9,24 @@ import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final ProductModel? products;
   ProductDetailsPage({super.key, required this.products});
   String? user;
+
   @override
   Widget build(BuildContext context) {
+    String formattedDate =
+        DateFormat('yyyy MMMM dd').format(products!.timeStamp!);
+
     getUser();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -28,129 +34,120 @@ class ProductDetailsPage extends StatelessWidget {
           title: '',
           backgroundColor: Color.fromARGB(255, 37, 157, 192),
           foregroundColor: Colors.white),
-      body: SizedBox(
-        height: size.height * 1,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(products!.image.toString()),
+                      fit: BoxFit.contain,
+                    ),
+                    color: Colors.transparent,
+                  ),
+                  width: double.infinity,
+                  height: size.height * .4,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  products!.price != null
+                      ? "₹ ${products!.price.toString()}"
+                      : '₹ 0000',
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w600,
+                    fontSize: size.width * .055,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(products!.image.toString()),
-                              fit: BoxFit.contain),
-                          color: Colors.transparent),
-                      width: double.infinity,
-                      height: size.height * .4,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     Text(
                       products!.title ?? 'Lorem Ipsum',
                       style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width * .06),
+                        fontWeight: FontWeight.w500,
+                        fontSize: size.width * .05,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          products!.price != null
-                              ? "₹${products!.price.toString()}"
-                              : '₹19999',
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w700,
-                              fontSize: size.width * .06),
-                        ),
-                        Consumer<DatabaseProvider>(
-                          builder: (context, provider, child) {
-                            bool isFavorite = provider.wishListCheck(products!);
-                            return IconsWidgets().IconButtonWidget(
-                              context,
-                              size,
-                              iconData: isFavorite
-                                  ? EneftyIcons.heart_outline
-                                  : EneftyIcons.heart_bold,
-                              color: Colors.red,
-                              onPressed: () async {
-                                final value =
-                                    await provider.wishListCheck(products!);
-                                provider.IsWishLIstClick(products!.id, value);
-                              },
-                            );
+                    Consumer<DatabaseProvider>(
+                      builder: (context, provider, child) {
+                        bool isFavorite = provider.wishListCheck(products!);
+                        return IconsWidgets().IconButtonWidget(
+                          context,
+                          size,
+                          iconData: isFavorite
+                              ? EneftyIcons.heart_outline
+                              : EneftyIcons.heart_bold,
+                          color: Colors.red,
+                          onPressed: () async {
+                            final value =
+                                await provider.wishListCheck(products!);
+                            provider.IsWishLIstClick(products!.id, value);
                           },
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          EneftyIcons.star_bold,
-                          color: Colors.amber,
-                          size: size.width * .06,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '4.5',
-                          style: TextStyle(
-                              fontSize: size.width * .045,
-                              fontWeight: FontWeight.w800),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '(50 reviews)',
-                          style: TextStyle(
-                              fontSize: size.width * .035,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      products!.description ??
-                          '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.''',
-                      style: TextStyle(fontSize: size.width * .037),
+                        );
+                      },
+                    )
+                  ],
+                ),
+                TextWidgets().SubtitleText(context, text: formattedDate),
+                Divider(),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextWidgets().BodyTextBold(context, text: "Brand"),
+                    TextWidgets().BodyText(
+                      context,
+                      text: products!.brand.toString(),
                     ),
                   ],
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Container(
-                  color: Colors.transparent,
-                  child: ButtonWidgets().fullWidthElevatedButton(size,
-                      onPressed: () {
-                    if (products!.user != user) {
-                      NavigatorWidget()
-                          .push(context, ProductBuyingPage(product: products!));
-                    } else {
-                      Provider.of<DatabaseProvider>(context, listen: false)
-                          .isEdit = true;
-                      NavigatorWidget().push(
-                          context,
-                          SellProductPage(
-                            products: products,
-                          ));
-                    }
-                  }, label: products!.user != user ? 'Buy Product' : 'Update'),
+                const SizedBox(height: 10),
+                TextWidgets().BodyTextBold(
+                  context,
+                  text: "Description",
                 ),
-              )
-            ],
+                Text(
+                  products!.description ??
+                      '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.''',
+                  style: TextStyle(fontSize: size.width * .037),
+                ),
+                // const SizedBox(height: 20),
+              ],
+            ),
           ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          bottom: 10,
+          left: 10,
+          right: 10,
+        ),
+        child: Container(
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: ButtonWidgets().fullWidthElevatedButtonWithIcon(size,
+              onPressed: () {
+            if (products!.user != user) {
+              NavigatorWidget().push(context, ChatPage());
+            } else {
+              Provider.of<DatabaseProvider>(context, listen: false).isEdit =
+                  true;
+              NavigatorWidget().push(
+                context,
+                SellProductPage(
+                  products: products,
+                ),
+              );
+            }
+          },
+              label: products!.user != user ? 'Chat' : 'Update',
+              icon: products!.user != user
+                  ? EneftyIcons.message_2_outline
+                  : EneftyIcons.edit_2_outline),
         ),
       ),
     );

@@ -2,7 +2,6 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/view/pages/blank_page.dart';
-import 'package:ecommerce_app/view/pages/cart_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
 import 'package:ecommerce_app/view/product%20screen/my_product.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';

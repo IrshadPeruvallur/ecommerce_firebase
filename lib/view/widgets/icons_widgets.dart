@@ -17,9 +17,13 @@ class IconsWidgets {
   }
 
   Widget IconWidget(Size size, {required IconData iconData, Color? color}) {
-    return Icon(
-      iconData,
-      size: size.width * 0.06,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Icon(
+        iconData,
+        color: color,
+        size: size.width * 0.06,
+      ),
     );
   }
 }

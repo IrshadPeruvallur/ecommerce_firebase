@@ -86,6 +86,21 @@ class TextWidgets {
     );
   }
 
+  Widget BodyTextBold(BuildContext context,
+      {required String text, Color? color}) {
+    return Text(
+      text,
+      textAlign: TextAlign.start,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.montserrat(
+        color: color ?? Colors.black,
+        fontSize: MediaQuery.of(context).size.width * 0.035,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
   Widget titleText2(BuildContext context,
       {required String text, Color? color}) {
     return Text(

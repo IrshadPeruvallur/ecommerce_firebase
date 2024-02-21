@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,24 +44,69 @@ class ButtonWidgets {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: size.width * .14,
-        width: double.infinity,
-        child: ElevatedButton(
+          height: size.width * .14,
+          width: double.infinity,
+          child: ElevatedButton(
             style: ButtonStyle(
-                // elevation: MaterialStatePropertyAll(size.width * .07),
-                backgroundColor: const MaterialStatePropertyAll(
-                    Color.fromARGB(255, 37, 157, 192))),
-            onPressed: () {
-              onPressed!();
-            },
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                Color.fromARGB(255, 0, 0, 0),
+                // Color.fromARGB(255, 37, 157, 192),
+              ),
+            ),
+            onPressed: onPressed,
             child: Text(
               label,
               style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w700,
-                  fontSize: size.width * .045,
-                  color: const Color.fromARGB(255, 255, 255, 255)),
-            )),
-      ),
+                fontWeight: FontWeight.w700,
+                fontSize: size.width * .045,
+                color: Colors.white,
+              ),
+            ),
+          )),
+    );
+  }
+
+  Widget fullWidthElevatedButtonWithIcon(size,
+      {required label, VoidCallback? onPressed, IconData? icon}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+          height: size.width * .14,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                Color.fromARGB(255, 0, 0, 0),
+                // Color.fromARGB(255, 37, 157, 192),
+              ),
+            ),
+            onPressed: onPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconsWidgets()
+                    .IconWidget(size, iconData: icon!, color: Colors.white),
+                Text(
+                  label,
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w700,
+                    fontSize: size.width * .045,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

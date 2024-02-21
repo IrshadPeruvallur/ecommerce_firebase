@@ -1,77 +1,75 @@
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:flutter/material.dart';
+// import 'package:your_app/models/message_model.dart'; // Replace with your actual MessageModel class
 
-class ProductBuyingPage extends StatelessWidget {
-  final ProductModel product;
+class ChatPage extends StatefulWidget {
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
 
-  const ProductBuyingPage({Key? key, required this.product}) : super(key: key);
+class _ChatPageState extends State<ChatPage> {
+  final List<ProductModel> _messages = []; // List to store chat messages
+  final TextEditingController _textController =
+      TextEditingController(); // Controller for the input field
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Buy Product'),
+        title: Text('Chat'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        height: 200,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: NetworkImage(product.image ?? ''),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      product.title ?? '',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Price: ${product.price != null ? '₹${product.price}' : 'Price not available'}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      product.description ?? '',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Place your buy now logic here
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return ListTile(
+                  title: Text(message.title.toString()),
+                  // subtitle: Text(message.sender),
+                );
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  'Buy Now',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
             ),
-          ],
-        ),
+          ),
+          Divider(height: 1),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textController,
+                    decoration: InputDecoration(
+                      hintText: 'Type your message...',
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    _sendMessage(_textController.text);
+                    _textController.clear();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  void _sendMessage(String text) {
+    if (text.isEmpty) return; // Do not send empty messages
+
+    final newMessage = ProductModel(
+        title: text,
+        timeStamp: DateTime.now() // Assuming current time for the timestamp
+        );
+
+    setState(() {
+      _messages.add(newMessage); // Add the new message to the list
+    });
   }
 }
