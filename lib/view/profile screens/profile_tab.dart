@@ -18,27 +18,24 @@ class ProfileTab extends StatelessWidget {
 
   final List listTitles = [
     'my Products',
-    'shipping adress',
     'Wishlist',
-    'cart',
+    'shipping adress',
     'settings',
   ];
 
   final List listSubTitles = [
     'Already have 10 orders',
-    '03 Addresses',
     'You have 2 cards',
-    'You have 2 carts',
+    '03 Addresses',
     'Notification, Password, FAQ, Contact',
   ];
 
   final List<Widget> listTabs = [
-    MyProductPage(),
+    MyProductPage(), WishlistPage(),
     const BlankPage(
       name: 'SHIPPING ADRESS',
     ),
-    WishlistPage(),
-    CartPage(),
+
     const BlankPage(
       name: 'SHIPPING ADRESS',
     ),
@@ -152,7 +149,7 @@ class ProfileTab extends StatelessWidget {
                 separatorBuilder: (context, index) => SizedBox(
                   height: size.width * .05,
                 ),
-                itemCount: 5,
+                itemCount: listTabs.length,
               ),
             )
           ],
