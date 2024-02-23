@@ -26,7 +26,7 @@ class PopupWidgets {
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 
-  Future<void> showLoadingIndicator(context) async {
+  Future<void> showLoadingIndicator(BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) => Container(
@@ -68,6 +68,33 @@ class PopupWidgets {
     Navigator.pop(context);
   }
 
+  showConfirmationDialog(BuildContext context,
+      {String? title, required String content, required String label}) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: Text(title ?? '')),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Return false when canceled
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Return true when confirmed
+              },
+              child: Text(label),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> showWarningDialog(BuildContext context,
       {required String label,
       required VoidCallback onPressed,
@@ -95,13 +122,14 @@ class PopupWidgets {
               Navigator.pop(context);
             },
           ),
-          ButtonWidgets().textButtonWidget(
-            size,
-            context,
-            color: Colors.red,
-            label: label,
-            onPressed: onPressed,
-          ),
+          // ButtonWidgets().textButtonWidget(
+          //   size,
+          //   context,
+          //   color: Colors.red,
+          //   label: label,
+          //   onPressed: onPressed,
+          // ),
+          TextButton(onPressed: () => onPressed, child: Text(label))
         ],
       ),
     );

@@ -10,7 +10,11 @@ class NavigatorWidget {
   }
 
   pushReplacement(context, Widget location) {
-    Navigator.pushReplacement(context, MaterialPageRoute(
+    newMethod(context, location);
+  }
+
+  Future<dynamic> newMethod(context, Widget location) {
+    return Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (context) {
         return location;
       },

@@ -242,7 +242,7 @@ class _SellProductPageState extends State<SellProductPage> {
       timeStamp: DateTime.now(),
     );
     getProvider.addProduct(product);
-    getwidgetProvider.file = null;
+    // getwidgetProvider.file = null;
     Navigator.pop(context);
     PopupWidgets()
         .showSuccessSnackbar(context, 'Product uploaded successfully');

@@ -61,13 +61,13 @@ class DatabaseProvider extends ChangeNotifier {
 
   addProduct(ProductModel data) async {
     await databaseService.addProduct(data);
-    clearControllers();
+    // clearControllers();
     getAllProducts();
   }
 
   updateMyProduct(productId, ProductModel data) async {
     await databaseService.updateMyProudct(productId, data);
-    clearControllers();
+    // clearControllers();
     notifyListeners();
   }
 
@@ -101,11 +101,11 @@ class DatabaseProvider extends ChangeNotifier {
     }
   }
 
-  clearControllers() {
-    titleController.clear();
-    brandController.clear();
-    priceController.clear();
-    descriptionController.clear();
-    notifyListeners();
-  }
+  // clearControllers() {
+  //   titleController.clear();
+  //   brandController.clear();
+  //   priceController.clear();
+  //   descriptionController.clear();
+  //   notifyListeners();
+  // }
 }

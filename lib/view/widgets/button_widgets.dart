@@ -31,7 +31,7 @@ class ButtonWidgets {
     return TextButton(
         style: const ButtonStyle(
             overlayColor: MaterialStatePropertyAll(Colors.transparent)),
-        onPressed: () => onPressed!(),
+        onPressed: onPressed!,
         child: Text(
           label,
           style: TextStyle(
@@ -58,7 +58,7 @@ class ButtonWidgets {
                 // Color.fromARGB(255, 37, 157, 192),
               ),
             ),
-            onPressed: onPressed,
+            onPressed: () => onPressed!(),
             child: Text(
               label,
               style: GoogleFonts.montserrat(

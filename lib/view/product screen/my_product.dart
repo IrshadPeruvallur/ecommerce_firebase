@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
@@ -48,24 +50,21 @@ class MyProductPage extends StatelessWidget {
                                 SlidableAction(
                                   borderRadius: BorderRadius.circular(20),
                                   onPressed: (context) async {
-                                    PopupWidgets().showWarningDialog(
-                                      context,
-                                      label: 'Delete',
-                                      onPressed: () async {
-                                        PopupWidgets()
-                                            .showLoadingIndicator(context);
-                                        await provider
-                                            .deleteMyProduct(product.id);
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                        PopupWidgets().showSuccessSnackbar(
-                                            context,
-                                            'Item Deleted successfully');
-                                      },
-                                      title: 'Delete',
-                                      text:
-                                          'Are you sure you want to delete this item?',
-                                    );
+                                    bool confirmDelete = await PopupWidgets()
+                                        .showConfirmationDialog(context,
+                                            title: 'Delete Product',
+                                            content:
+                                                '"Are you sure you want to delete this product?"',
+                                            label: 'Delete');
+                                    if (confirmDelete) {
+                                      PopupWidgets()
+                                          .showLoadingIndicator(context);
+                                      await provider
+                                          .deleteMyProduct(product.id);
+
+                                      PopupWidgets().showSuccessSnackbar(
+                                          context, 'Item Deleted successfully');
+                                    }
                                   },
                                   backgroundColor:
                                       Color.fromARGB(255, 162, 2, 2),
@@ -97,8 +96,21 @@ class MyProductPage extends StatelessWidget {
                                   SlidableAction(
                                     borderRadius: BorderRadius.circular(20),
                                     flex: 2,
-                                    onPressed: (context) {
-                                      provider.idSold(product.id!);
+                                    onPressed: (context) async {
+                                      bool confirmDelete = await PopupWidgets()
+                                          .showConfirmationDialog(context,
+                                              title: 'Mark as sold',
+                                              content:
+                                                  '"Are you sure you want to enable  this product is sold?"',
+                                              label: 'Sure');
+                                      if (confirmDelete) {
+                                        PopupWidgets()
+                                            .showLoadingIndicator(context);
+                                        await provider.idSold(product.id!);
+
+                                        PopupWidgets().showSuccessSnackbar(
+                                            context, 'Product marked as sold');
+                                      }
                                     },
                                     backgroundColor: Color(0xFF7BC043),
                                     foregroundColor: Colors.white,
