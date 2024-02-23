@@ -7,6 +7,7 @@ class ProductModel {
   String? brand;
   String? description;
   String? category;
+  bool? isSold;
   List<String>? wishList;
   DateTime? timeStamp;
   String? image;
@@ -15,6 +16,7 @@ class ProductModel {
       {this.category,
       this.user,
       this.id,
+      this.isSold,
       this.image,
       this.price,
       this.description,
@@ -33,6 +35,7 @@ class ProductModel {
       image: json['image'],
       price: json['price'],
       brand: json['brand'],
+      isSold: json['isSold'],
       description: json['description'],
       title: json['title'],
       wishList: List<String>.from(json["wishList"] ?? []),
@@ -46,6 +49,7 @@ class ProductModel {
       'user': user,
       'image': image,
       'price': price,
+      'isSold': isSold,
       'brand': brand,
       'description': description,
       'timeStamp': timeStamp,

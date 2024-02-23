@@ -97,7 +97,9 @@ class MyProductPage extends StatelessWidget {
                                   SlidableAction(
                                     borderRadius: BorderRadius.circular(20),
                                     flex: 2,
-                                    onPressed: (context) {},
+                                    onPressed: (context) {
+                                      provider.idSold(product.id!);
+                                    },
                                     backgroundColor: Color(0xFF7BC043),
                                     foregroundColor: Colors.white,
                                     icon: EneftyIcons.bag_2_outline,

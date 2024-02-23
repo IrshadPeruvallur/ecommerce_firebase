@@ -237,6 +237,7 @@ class _SellProductPageState extends State<SellProductPage> {
       price: int.parse(getProvider.priceController.text),
       image: getProvider.downloadURL,
       wishList: [],
+      isSold: false,
       category: selectedCategory,
       timeStamp: DateTime.now(),
     );

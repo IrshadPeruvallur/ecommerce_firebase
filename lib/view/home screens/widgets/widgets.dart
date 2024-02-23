@@ -77,6 +77,8 @@ class HomeWidgets {
 
   Widget buildProductItem(Size size, DatabaseProvider provider,
       {List<ProductModel>? products}) {
+    final filterProduct =
+        products!.where((product) => product.isSold == false).toList();
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -87,7 +89,7 @@ class HomeWidgets {
         childAspectRatio: size.width / (size.width * 1.5),
       ),
       itemBuilder: (context, index) {
-        final product = products[index];
+        final product = filterProduct[index];
         return Stack(
           children: [
             GestureDetector(
@@ -153,7 +155,7 @@ class HomeWidgets {
           ],
         );
       },
-      itemCount: products!.length,
+      itemCount: filterProduct.length,
     );
   }
 

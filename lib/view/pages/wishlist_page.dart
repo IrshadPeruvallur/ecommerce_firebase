@@ -123,7 +123,8 @@ class WishlistPage extends StatelessWidget {
     final user = currentUser.email ?? currentUser.phoneNumber;
 
     List<ProductModel> myProducts = provider.allProduct
-        .where((product) => product.wishList!.contains(user))
+        .where((product) =>
+            product.wishList!.contains(user) && product.isSold == false)
         .toList();
 
     return myProducts;

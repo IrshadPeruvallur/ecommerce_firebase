@@ -19,19 +19,6 @@ class DatabaseProvider extends ChangeNotifier {
   bool? isEdit;
   String imageName = DateTime.now().millisecondsSinceEpoch.toString();
 
-// add edit
-  addProduct(ProductModel data) async {
-    await databaseService.addProduct(data);
-    clearControllers();
-    getAllProducts();
-  }
-
-  updateMyProduct(productId, ProductModel data) async {
-    await databaseService.updateMyProudct(productId, data);
-    clearControllers();
-    notifyListeners();
-  }
-
   void loadDatasForEdit(ProductModel product) {
     titleController = TextEditingController(text: product.title);
     brandController = TextEditingController(text: product.brand);
@@ -69,6 +56,23 @@ class DatabaseProvider extends ChangeNotifier {
   Future<void> deleteMyProduct(productId) async {
     await databaseService.deleteMyProduct(productId);
     notifyListeners();
+    getAllProducts();
+  }
+
+  addProduct(ProductModel data) async {
+    await databaseService.addProduct(data);
+    clearControllers();
+    getAllProducts();
+  }
+
+  updateMyProduct(productId, ProductModel data) async {
+    await databaseService.updateMyProudct(productId, data);
+    clearControllers();
+    notifyListeners();
+  }
+
+  idSold(String id) async {
+    await databaseService.IsSold(id);
     getAllProducts();
   }
 

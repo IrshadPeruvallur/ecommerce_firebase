@@ -37,6 +37,10 @@ class DatabaseService {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
+  IsSold(String id) async {
+    await collectionReference.doc(id).update({'isSold': true});
+  }
+
   Future<void> IsWishListClick(String id, bool wishListStatus) async {
     try {
       if (wishListStatus == true) {
