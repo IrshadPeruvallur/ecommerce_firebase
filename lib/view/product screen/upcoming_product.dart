@@ -48,35 +48,7 @@ class UpComingPage extends StatelessWidget {
                               startActionPane:
                                   ActionPane(motion: ScrollMotion(), children: [
                                 SlidableAction(
-                                  borderRadius: BorderRadius.circular(20),
-                                  onPressed: (context) async {
-                                    bool confirmDelete = await PopupWidgets()
-                                        .showConfirmationDialog(context,
-                                            title: 'Delete Product',
-                                            content:
-                                                '"Are you sure you want to delete this product?"',
-                                            label: 'Delete');
-                                    if (confirmDelete) {
-                                      PopupWidgets()
-                                          .showLoadingIndicator(context);
-                                      await provider
-                                          .deleteMyProduct(product.id);
-
-                                      PopupWidgets().showSuccessSnackbar(
-                                          context, 'Item Deleted successfully');
-                                    }
-                                  },
-                                  backgroundColor:
-                                      Color.fromARGB(255, 162, 2, 2),
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                ),
-                                SizedBox(
-                                  width: size.width * .02,
-                                ),
-                                SlidableAction(
-                                  borderRadius: BorderRadius.circular(20),
+                                  // borderRadius: BorderRadius.circular(20),
                                   onPressed: (context) async {
                                     NavigatorWidget().push(
                                         context,
@@ -84,7 +56,8 @@ class UpComingPage extends StatelessWidget {
                                           products: product,
                                         ));
                                   },
-                                  backgroundColor: Color.fromARGB(255, 0, 0, 0),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 192, 161, 37),
                                   foregroundColor: Colors.white,
                                   icon: Icons.delete,
                                   label: 'Edit',
@@ -94,7 +67,7 @@ class UpComingPage extends StatelessWidget {
                                 motion: ScrollMotion(),
                                 children: [
                                   SlidableAction(
-                                    borderRadius: BorderRadius.circular(20),
+                                    // borderRadius: BorderRadius.circular(20),
                                     flex: 2,
                                     onPressed: (context) async {
                                       bool confirmDelete = await PopupWidgets()
@@ -158,22 +131,9 @@ class UpComingPage extends StatelessWidget {
                                                   context,
                                                   text: product.category
                                                       .toString()),
-                                              Row(
-                                                children: [
-                                                  TextWidgets().titleText2(
-                                                      context,
-                                                      text: product.price
-                                                          .toString()),
-                                                  SizedBox(
-                                                    width: size.width * .04,
-                                                  ),
-                                                  TextWidgets().SubtitleText(
-                                                      context,
-                                                      text: '/Sold',
-                                                      color: Color.fromARGB(
-                                                          255, 0, 0, 0)),
-                                                ],
-                                              ),
+                                              TextWidgets().titleText2(context,
+                                                  text:
+                                                      product.price.toString()),
                                             ],
                                           ),
                                           // Consumer<WidgetProviders>(

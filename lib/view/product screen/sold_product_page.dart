@@ -44,60 +44,96 @@ class SoldProductPage extends StatelessWidget {
                           separatorBuilder: (context, index) => const Divider(),
                           itemBuilder: (context, index) {
                             final product = myProducts[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: GestureDetector(
-                                onTap: () => NavigatorWidget().push(context,
-                                    ProductDetailsPage(products: product)),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: size.width * .2,
-                                      width: size.width * .2,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  product.image.toString()),
-                                              fit: BoxFit.cover),
-                                          color: Colors.grey,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15))),
-                                    ),
-                                    SizedBox(
-                                      width: size.width * .02,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            TextWidgets().titleText2(context,
-                                                text: product.title.toString()),
-                                            TextWidgets().SubtitleText(context,
-                                                text: product.category
-                                                    .toString()),
-                                            Row(
-                                              children: [
-                                                TextWidgets().titleText2(
-                                                    context,
-                                                    text: product.price
-                                                        .toString()),
-                                                SizedBox(
-                                                  width: size.width * .04,
-                                                ),
-                                                TextWidgets().SubtitleText(
-                                                    context,
-                                                    text: '/Sold',
-                                                    color: Colors.green),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                            return Slidable(
+                              startActionPane:
+                                  ActionPane(motion: ScrollMotion(), children: [
+                                SlidableAction(
+                                  // borderRadius: BorderRadius.circular(20),
+                                  onPressed: (context) async {
+                                    bool confirmDelete = await PopupWidgets()
+                                        .showConfirmationDialog(context,
+                                            title: 'Delete Product',
+                                            content:
+                                                '"Are you sure you want to delete this product?"',
+                                            label: 'Delete');
+                                    if (confirmDelete) {
+                                      PopupWidgets()
+                                          .showLoadingIndicator(context);
+                                      await provider
+                                          .deleteMyProduct(product.id);
+
+                                      PopupWidgets().showSuccessSnackbar(
+                                          context, 'Item Deleted successfully');
+                                    }
+                                  },
+                                  backgroundColor:
+                                      Color.fromARGB(255, 162, 2, 2),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                                SizedBox(
+                                  width: size.width * .02,
+                                ),
+                              ]),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: GestureDetector(
+                                  onTap: () => NavigatorWidget().push(context,
+                                      ProductDetailsPage(products: product)),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: size.width * .2,
+                                        width: size.width * .2,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    product.image.toString()),
+                                                fit: BoxFit.cover),
+                                            color: Colors.grey,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                      ),
+                                      SizedBox(
+                                        width: size.width * .02,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              TextWidgets().titleText2(context,
+                                                  text:
+                                                      product.title.toString()),
+                                              TextWidgets().SubtitleText(
+                                                  context,
+                                                  text: product.category
+                                                      .toString()),
+                                              Row(
+                                                children: [
+                                                  TextWidgets().titleText2(
+                                                      context,
+                                                      text: product.price
+                                                          .toString()),
+                                                  SizedBox(
+                                                    width: size.width * .04,
+                                                  ),
+                                                  TextWidgets().SubtitleText(
+                                                      context,
+                                                      text: '/Sold',
+                                                      color: Colors.green),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
