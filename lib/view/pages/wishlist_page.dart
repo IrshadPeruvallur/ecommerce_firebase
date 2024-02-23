@@ -18,99 +18,105 @@ class WishlistPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Wishlist'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Consumer<DatabaseProvider>(builder: (context, provider, child) {
-            final List<ProductModel> myProducts = filteringMyProduct(provider);
-            return myProducts.isNotEmpty
-                ? Expanded(
-                    child: ListView.separated(
-                      itemCount: myProducts.length,
-                      separatorBuilder: (context, index) => const Divider(),
-                      itemBuilder: (context, index) {
-                        final product = myProducts[index];
-                        return Slidable(
-                            startActionPane:
-                                ActionPane(motion: ScrollMotion(), children: [
-                              SlidableAction(
-                                onPressed: (context) async {
-                                  await provider.IsWishLIstClick(
-                                      product.id, false);
-                                },
-                                backgroundColor: Color(0xFFFE4A49),
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete,
-                                label: 'Delete',
-                              )
-                            ]),
-                            endActionPane: ActionPane(
-                              motion: ScrollMotion(),
-                              children: [
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Consumer<DatabaseProvider>(builder: (context, provider, child) {
+              final List<ProductModel> myProducts =
+                  filteringMyProduct(provider);
+              return myProducts.isNotEmpty
+                  ? Expanded(
+                      child: ListView.separated(
+                        itemCount: myProducts.length,
+                        separatorBuilder: (context, index) => const Divider(),
+                        itemBuilder: (context, index) {
+                          final product = myProducts[index];
+                          return Slidable(
+                              startActionPane:
+                                  ActionPane(motion: ScrollMotion(), children: [
                                 SlidableAction(
-                                  flex: 2,
-                                  onPressed: (context) {},
-                                  backgroundColor: Color(0xFF7BC043),
+                                  onPressed: (context) async {
+                                    await provider.IsWishLIstClick(
+                                        product.id, false);
+                                  },
+                                  backgroundColor: Color(0xFFFE4A49),
                                   foregroundColor: Colors.white,
-                                  icon: EneftyIcons.bag_2_outline,
-                                  label: 'Buy Now',
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: GestureDetector(
-                                onTap: () => NavigatorWidget().push(
-                                    context,
-                                    ProductDetailsPage(
-                                      products: product,
-                                    )),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: size.width * .2,
-                                      width: size.width * .2,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  product.image.toString()),
-                                              fit: BoxFit.cover),
-                                          color: Colors.grey,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15))),
-                                    ),
-                                    SizedBox(
-                                      width: size.width * .02,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TextWidgets().titleText2(context,
-                                            text: product.title.toString()),
-                                        TextWidgets().SubtitleText(context,
-                                            text: product.category.toString()),
-                                        TextWidgets().titleText2(context,
-                                            text:
-                                                "₹${product.price.toString()}"),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                )
+                              ]),
+                              endActionPane: ActionPane(
+                                motion: ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    flex: 2,
+                                    onPressed: (context) {},
+                                    backgroundColor: Color(0xFF7BC043),
+                                    foregroundColor: Colors.white,
+                                    icon: EneftyIcons.bag_2_outline,
+                                    label: 'Buy Now',
+                                  ),
+                                ],
                               ),
-                            ));
-                      },
-                    ),
-                  )
-                : Center(
-                    child: Lottie.asset(
-                        width: size.width * .20,
-                        height: size.width * .20,
-                        'assets/lottie/sellX logo.json'),
-                  );
-          }),
-        ],
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: GestureDetector(
+                                  onTap: () => NavigatorWidget().push(
+                                      context,
+                                      ProductDetailsPage(
+                                        products: product,
+                                      )),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: size.width * .2,
+                                        width: size.width * .2,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    product.image.toString()),
+                                                fit: BoxFit.cover),
+                                            color: Colors.grey,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                      ),
+                                      SizedBox(
+                                        width: size.width * .02,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TextWidgets().titleText2(context,
+                                              text: product.title.toString()),
+                                          TextWidgets().SubtitleText(context,
+                                              text:
+                                                  product.category.toString()),
+                                          TextWidgets().titleText2(context,
+                                              text:
+                                                  "₹${product.price.toString()}"),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ));
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: Lottie.asset(
+                          width: size.width * .20,
+                          height: size.width * .20,
+                          'assets/lottie/sellX logo.json'),
+                    );
+            }),
+          ],
+        ),
       ),
     );
   }

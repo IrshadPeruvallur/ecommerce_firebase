@@ -76,8 +76,8 @@ class TextWidgets {
     return Text(
       text,
       textAlign: TextAlign.start,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
+      // maxLines: 2,
+      overflow: TextOverflow.visible,
       style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
         fontSize: MediaQuery.of(context).size.width * 0.035,

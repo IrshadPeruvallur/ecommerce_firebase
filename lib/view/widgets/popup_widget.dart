@@ -74,7 +74,13 @@ class PopupWidgets {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: Text(title ?? '')),
+          title: Center(
+            child: TextWidgets().titleText2(
+              context,
+              text: title ?? '',
+              color: Colors.red,
+            ),
+          ),
           content: Text(content),
           actions: <Widget>[
             TextButton(

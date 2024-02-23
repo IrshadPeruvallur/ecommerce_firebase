@@ -39,7 +39,7 @@ class DatabaseProvider extends ChangeNotifier {
     final currentUser = FirebaseAuth.instance.currentUser;
     final user = currentUser!.email ?? currentUser.phoneNumber;
     if (product.wishList!.contains(user)) {
-      notifyListeners();
+      // notifyListeners();
       return false;
     } else {
       // notifyListeners();

@@ -25,4 +25,13 @@ class WidgetProviders extends ChangeNotifier {
     file = img != null ? File(img.path) : null;
     notifyListeners();
   }
+
+  //Switch
+  final isSwitched = ValueNotifier<bool>(false);
+
+  // Function to toggle the switch state
+  void toggleSwitch(bool newState) {
+    isSwitched.value = newState;
+    notifyListeners();
+  }
 }

@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:ecommerce_app/controller/product_provider.dart';
+import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
@@ -12,22 +11,23 @@ import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-class MyProductPage extends StatelessWidget {
-  const MyProductPage({Key? key});
+class UpComingPage extends StatelessWidget {
+  const UpComingPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBarWidgets().appBar(
-        title: 'My Products',
-        context,
-      ),
+      // appBar: AppBarWidgets().appBar(
+      //   title: 'My Products',
+      //   context,
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -143,29 +143,50 @@ class MyProductPage extends StatelessWidget {
                                       SizedBox(
                                         width: size.width * .02,
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          TextWidgets().titleText2(context,
-                                              text: product.title.toString()),
-                                          TextWidgets().SubtitleText(context,
-                                              text:
-                                                  product.category.toString()),
-                                          Row(
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               TextWidgets().titleText2(context,
                                                   text:
-                                                      product.price.toString()),
-                                              SizedBox(
-                                                width: size.width * .04,
-                                              ),
+                                                      product.title.toString()),
                                               TextWidgets().SubtitleText(
                                                   context,
-                                                  text: '/Sold',
-                                                  color: Colors.green),
+                                                  text: product.category
+                                                      .toString()),
+                                              Row(
+                                                children: [
+                                                  TextWidgets().titleText2(
+                                                      context,
+                                                      text: product.price
+                                                          .toString()),
+                                                  SizedBox(
+                                                    width: size.width * .04,
+                                                  ),
+                                                  TextWidgets().SubtitleText(
+                                                      context,
+                                                      text: '/Sold',
+                                                      color: Color.fromARGB(
+                                                          255, 0, 0, 0)),
+                                                ],
+                                              ),
                                             ],
                                           ),
+                                          // Consumer<WidgetProviders>(
+                                          //     builder: (context, value, child) {
+                                          //   return AdvancedSwitch(
+                                          //     inactiveChild: Text('Sold'),
+                                          //     controller: value.isSwitched,
+                                          //     activeColor: Colors.green,
+                                          //     inactiveColor: Colors.red,
+
+                                          //     width: size.width * .15,
+                                          //   );
+                                          // })
                                         ],
                                       ),
                                     ],
@@ -187,26 +208,6 @@ class MyProductPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(255, 37, 157, 192),
-          onPressed: () {
-            // showModalBottomSheet(
-            //   context: context,
-            //   builder: (context) => SellProductPage(),
-            // );
-
-            Provider.of<DatabaseProvider>(context, listen: false).isEdit =
-                false;
-            NavigatorWidget().push(
-                context,
-                SellProductPage(
-                  products: ProductModel(),
-                ));
-          },
-          child: IconsWidgets().IconButtonWidget(context, size,
-              color: Colors.white, iconData: EneftyIcons.add_outline)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -219,8 +220,9 @@ class MyProductPage extends StatelessWidget {
 
     final user = currentUser.email ?? currentUser.phoneNumber;
 
-    List<ProductModel> myProducts =
-        provider.allProduct.where((product) => product.user == user).toList();
+    List<ProductModel> myProducts = provider.allProduct
+        .where((product) => product.user == user && product.isSold == false)
+        .toList();
     return myProducts;
   }
 }

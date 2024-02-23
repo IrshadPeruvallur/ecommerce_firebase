@@ -1,75 +1,83 @@
-import 'package:ecommerce_app/model/product_model.dart';
+// ignore_for_file: prefer_const_constructors_in_immutables
+
+import 'dart:io';
+
+import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
-// import 'package:your_app/models/message_model.dart'; // Replace with your actual MessageModel class
+import 'package:provider/provider.dart';
 
-class ChatPage extends StatefulWidget {
-  @override
-  _ChatPageState createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
-  final List<ProductModel> _messages = []; // List to store chat messages
-  final TextEditingController _textController =
-      TextEditingController(); // Controller for the input field
+class ContactDetailsPage extends StatelessWidget {
+  ContactDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // final getProvider = Provider.of<DBProfile>(
+    //   context,
+    // );
+
+    // getProvider.getAllUser();
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat'),
+        title: const Text("Contact"),
+        centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final message = _messages[index];
-                return ListTile(
-                  title: Text(message.title.toString()),
-                  // subtitle: Text(message.sender),
-                );
-              },
-            ),
-          ),
-          Divider(height: 1),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      hintText: 'Type your message...',
+      body: Padding(
+          padding: const EdgeInsets.all(15),
+          child: ListView.builder(
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              // final data = getProvider.profileList[index];
+              return Column(
+                children: [
+                  CircleAvatar(
+                    radius: screenSize.width * 0.15,
+                    backgroundColor: Colors.white,
+                    backgroundImage: /* data.image != null
+                              ? FileImage(File(data.image))
+                              : */
+                        const AssetImage('assets/icons/profile icons.png'),
+                  ),
+                  TextWidgets().BodyTextBold(context, text: 'Username'),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(screenSize.width * 0.04))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          doubleText(context,
+                              text1: 'Phone', text2: '+91 9876 543 210'),
+                          doubleText(context,
+                              text1: 'Email', text2: 'user@gmail.com'),
+                          TextWidgets().BodyTextBold(context, text: 'Address'),
+                          TextWidgets().BodyText(context,
+                              text:
+                                  'Address........................................................'),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    _sendMessage(_textController.text);
-                    _textController.clear();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                ],
+              );
+            },
+          )),
     );
   }
 
-  void _sendMessage(String text) {
-    if (text.isEmpty) return; // Do not send empty messages
-
-    final newMessage = ProductModel(
-        title: text,
-        timeStamp: DateTime.now() // Assuming current time for the timestamp
-        );
-
-    setState(() {
-      _messages.add(newMessage); // Add the new message to the list
-    });
+  doubleText(context, {text1, text2}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.width * 0.02),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TextWidgets().BodyTextBold(context, text: text1),
+          TextWidgets().BodyText(context, text: text2),
+        ],
+      ),
+    );
   }
 }

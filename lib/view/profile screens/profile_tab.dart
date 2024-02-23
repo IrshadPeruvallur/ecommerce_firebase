@@ -3,7 +3,10 @@ import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
-import 'package:ecommerce_app/view/product%20screen/my_product.dart';
+import 'package:ecommerce_app/view/product%20screen/my_product_tab.dart';
+import 'package:ecommerce_app/view/product%20screen/upcoming_product.dart';
+import 'package:ecommerce_app/view/profile%20screens/about_page.dart';
+import 'package:ecommerce_app/view/profile%20screens/tems_condition.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:enefty_icons/enefty_icons.dart';
@@ -18,8 +21,8 @@ class ProfileTab extends StatelessWidget {
   final List listTitles = [
     'my Products',
     'Wishlist',
-    'shipping adress',
-    'settings',
+    'Terms&Condition',
+    'About',
   ];
 
   final List listSubTitles = [
@@ -30,14 +33,10 @@ class ProfileTab extends StatelessWidget {
   ];
 
   final List<Widget> listTabs = [
-    MyProductPage(), WishlistPage(),
-    const BlankPage(
-      name: 'SHIPPING ADRESS',
-    ),
+    MyProductTab(), WishlistPage(),
+    const TermsAndConditionsPage(),
 
-    const BlankPage(
-      name: 'SHIPPING ADRESS',
-    ),
+    const AboutPage(),
     // const WishListTab(),
     // const CartPage(),
     // const SettingsPage(),
@@ -59,13 +58,15 @@ class ProfileTab extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () async {
-                PopupWidgets().showWarningDialog(context,
+                bool value = await PopupWidgets().showConfirmationDialog(
+                    context,
                     label: 'Log out',
-                    onPressed: () => logOut(context),
-                    text:
+                    content:
                         'Are you sure you want to log out? Any unsaved work may be lost.',
                     title: 'Warning');
-                // logOut(context);
+                if (value == true) {
+                  logOut(context);
+                }
               },
               icon: const Icon(
                 EneftyIcons.logout_outline,

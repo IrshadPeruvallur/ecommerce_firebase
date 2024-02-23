@@ -132,7 +132,7 @@ class ProductDetailsPage extends StatelessWidget {
           child: ButtonWidgets().fullWidthElevatedButtonWithIcon(size,
               onPressed: () {
             if (products!.user != user) {
-              NavigatorWidget().push(context, ChatPage());
+              NavigatorWidget().push(context, ContactDetailsPage());
             } else {
               Provider.of<DatabaseProvider>(context, listen: false).isEdit =
                   true;
@@ -144,9 +144,9 @@ class ProductDetailsPage extends StatelessWidget {
               );
             }
           },
-              label: products!.user != user ? 'Chat' : 'Update',
+              label: products!.user != user ? 'Contact' : 'Update',
               icon: products!.user != user
-                  ? EneftyIcons.message_2_outline
+                  ? EneftyIcons.call_calling_outline
                   : EneftyIcons.edit_2_outline),
         ),
       ),
