@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 class TextWidgets {
   Widget TitleText(BuildContext context, {required String text, Color? color}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
         style: GoogleFonts.montserrat(
@@ -62,7 +62,7 @@ class TextWidgets {
     return Text(
       text,
       textAlign: TextAlign.center,
-      maxLines: 2,
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: GoogleFonts.montserrat(
         color: color ?? Colors.black,
@@ -107,7 +107,7 @@ class TextWidgets {
       softWrap: true,
       text,
       textAlign: TextAlign.start,
-      maxLines: 2,
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: GoogleFonts.montserrat(
         color: color ?? Colors.black,

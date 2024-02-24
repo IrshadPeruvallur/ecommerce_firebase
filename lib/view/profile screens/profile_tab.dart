@@ -3,15 +3,21 @@ import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
+import 'package:ecommerce_app/view/product%20screen/buy_product_page.dart';
 import 'package:ecommerce_app/view/product%20screen/my_product_tab.dart';
 import 'package:ecommerce_app/view/product%20screen/upcoming_product.dart';
 import 'package:ecommerce_app/view/profile%20screens/about_page.dart';
+import 'package:ecommerce_app/view/profile%20screens/settings.dart';
 import 'package:ecommerce_app/view/profile%20screens/tems_condition.dart';
+import 'package:ecommerce_app/view/profile%20screens/user_detail_page.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
+import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
+import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -19,24 +25,27 @@ class ProfileTab extends StatelessWidget {
   ProfileTab({super.key});
 
   final List listTitles = [
+    'my Profile',
     'my Products',
     'Wishlist',
-    'Terms&Condition',
-    'About',
+    'Location',
+    'Help Center',
   ];
 
   final List listSubTitles = [
-    'Already have 10 orders',
+    'Make Your Profile',
+    'Active Ads & InActive Ads',
     'You have 2 cards',
     '03 Addresses',
-    'Notification, Password, FAQ, Contact',
+    'FAQ, Contact, Privacy & Terms',
   ];
 
   final List<Widget> listTabs = [
-    MyProductTab(), WishlistPage(),
-    const TermsAndConditionsPage(),
+    UserDetailsPage(),
+    MyProductTab(),
+    WishlistPage(), const AboutPage(),
+    SettingsPage(),
 
-    const AboutPage(),
     // const WishListTab(),
     // const CartPage(),
     // const SettingsPage(),
@@ -91,7 +100,7 @@ class ProfileTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: size.width * .5,
+                      width: size.width * .45,
                       child: Text(
                         user!.displayName ?? 'Uknown name',
                         style: GoogleFonts.montserrat(
@@ -100,18 +109,12 @@ class ProfileTab extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: size.width * .5,
-                      child: Text(
-                        user.email ?? 'email not registerd',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: size.width * .035,
-                        ),
-                      ),
-                    )
                   ],
                 ),
+                IconsWidgets().IconButtonWidget(context, size,
+                    onPressed: () =>
+                        NavigatorWidget().push(context, UserDetailsPage()),
+                    iconData: EneftyIcons.edit_2_outline)
               ],
             ),
             SizedBox(

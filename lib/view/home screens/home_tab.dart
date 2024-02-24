@@ -121,24 +121,24 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ),
                 ),
-                TextWidgets().mainHeadingText(context, text: 'Sponsered  '),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      specialProduct.length,
-                      (index) => Padding(
-                        padding: EdgeInsets.only(
-                          right: 8,
-                        ),
-                        child: HomeWidgets().specialProduct(
-                          size,
-                          imagePath: specialProduct[index],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // TextWidgets().mainHeadingText(context, text: 'Sponsered  '),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: List.generate(
+                //       specialProduct.length,
+                //       (index) => Padding(
+                //         padding: EdgeInsets.only(
+                //           right: 8,
+                //         ),
+                //         child: HomeWidgets().specialProduct(
+                //           size,
+                //           imagePath: specialProduct[index],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 TextWidgets().mainHeadingText(context, text: 'Products  '),
                 Consumer<DatabaseProvider>(builder: (context, provider, child) {
                   return provider.allProduct.isNotEmpty

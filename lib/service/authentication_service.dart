@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_app/model/auth_model.dart';
+import 'package:ecommerce_app/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -62,7 +62,7 @@ class AuthService {
       final User? guser = userCredential.user;
       log("${guser?.displayName}");
 
-      final authenticationModel = AuthenticationModel(
+      final authenticationModel = UserModel(
         email: guser?.email,
         name: guser?.displayName,
         phoneNumber: guser?.phoneNumber,
@@ -87,7 +87,7 @@ class AuthService {
       UserCredential user =
           await firebaseAuth.signInWithProvider(githubAuthProvider);
       User gituser = user.user!;
-      final AuthenticationModel userData = AuthenticationModel(
+      final UserModel userData = UserModel(
           email: gituser.email, name: gituser.displayName, uId: gituser.uid);
       firestore.collection(collection).doc(gituser.uid).set(userData.toJson());
       return user;
@@ -115,7 +115,7 @@ class AuthService {
           codeAutoRetrievalTimeout: (verificationId) {
             _verificationId = verificationId;
           },
-          timeout: Duration(seconds: 60));
+          timeout: Duration(seconds: -60));
     } catch (e) {
       log("phoneSignIn error: $e");
     }

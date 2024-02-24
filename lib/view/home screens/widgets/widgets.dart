@@ -119,11 +119,7 @@ class HomeWidgets {
                           : Lottie.asset('assets/lottie/sellX logo.json'),
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      height: size.width * .1,
-                      child: TextWidgets()
-                          .titleText2(context, text: product.title!),
-                    ),
+                    TextWidgets().titleText2(context, text: product.title!),
                     TextWidgets().SubtitleText(context, text: product.brand!),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,12 +138,12 @@ class HomeWidgets {
               child: IconsWidgets().IconButtonWidget(
                 context,
                 size,
-                iconData: wishListCheck(product)
+                iconData: provider.wishListCheck(product)
                     ? EneftyIcons.heart_outline
                     : EneftyIcons.heart_bold,
                 color: Colors.red,
                 onPressed: () async {
-                  final value = await wishListCheck(product);
+                  final value = await provider.wishListCheck(product);
                   provider.IsWishLIstClick(product.id, value);
                 },
               ),
@@ -159,16 +155,16 @@ class HomeWidgets {
     );
   }
 
-  bool wishListCheck(ProductModel product) {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userEmail = user.email ?? user.phoneNumber;
-      if (product.wishList!.contains(userEmail)) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-    return true;
-  }
+  // bool wishListCheck(ProductModel product) {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     final userEmail = user.email ?? user.phoneNumber;
+  //     if (product.wishList!.contains(userEmail)) {
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  //   }
+  //   return true;
+  // }
 }

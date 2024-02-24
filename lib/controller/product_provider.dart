@@ -40,9 +40,10 @@ class DatabaseProvider extends ChangeNotifier {
     final user = currentUser!.email ?? currentUser.phoneNumber;
     if (product.wishList!.contains(user)) {
       // notifyListeners();
+      getAllProducts();
       return false;
     } else {
-      // notifyListeners();
+      getAllProducts();
       return true;
     }
   }

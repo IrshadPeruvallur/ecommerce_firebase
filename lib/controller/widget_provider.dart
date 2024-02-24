@@ -34,4 +34,18 @@ class WidgetProviders extends ChangeNotifier {
     isSwitched.value = newState;
     notifyListeners();
   }
+
+  // settings page
+  bool isUsernameEdit = true;
+  bool isPasswordEdit = true;
+
+  void userNameClicked() {
+    isUsernameEdit = !isUsernameEdit;
+    notifyListeners();
+  }
+
+  void passwordClicked() {
+    isPasswordEdit = !isPasswordEdit;
+    notifyListeners();
+  }
 }

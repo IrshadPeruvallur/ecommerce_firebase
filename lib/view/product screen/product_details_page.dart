@@ -13,7 +13,6 @@ import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -53,23 +52,21 @@ class ProductDetailsPage extends StatelessWidget {
                   height: size.height * .4,
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  products!.price != null
+                TextWidgets().TitleText(
+                  context,
+                  text: products!.price != null
                       ? "₹ ${products!.price.toString()}"
                       : '₹ 0000',
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w600,
-                    fontSize: size.width * .055,
-                  ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      products!.title ?? 'Lorem Ipsum',
-                      style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w500,
-                        fontSize: size.width * .05,
+                    SizedBox(
+                      width: size.width * .7,
+                      child: TextWidgets().TitleText(
+                        context,
+                        text: products!.title ?? 'Lorem Ipsum',
                       ),
                     ),
                     Consumer<DatabaseProvider>(

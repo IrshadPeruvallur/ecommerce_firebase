@@ -30,10 +30,10 @@ class _MyProductTabState extends State<MyProductTab> {
             unselectedLabelColor: Colors.white,
             tabs: [
               Tab(
-                text: 'Upcoming',
+                text: 'Active Ads',
               ),
               Tab(
-                text: 'Sold',
+                text: 'Inactive Ads',
               ),
             ],
           ),

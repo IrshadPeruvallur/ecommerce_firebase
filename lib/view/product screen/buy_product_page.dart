@@ -1,10 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 
-import 'dart:io';
-
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ContactDetailsPage extends StatelessWidget {
   ContactDetailsPage({super.key});
