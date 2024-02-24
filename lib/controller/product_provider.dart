@@ -10,6 +10,7 @@ class DatabaseProvider extends ChangeNotifier {
   TextEditingController titleController = TextEditingController();
   TextEditingController brandController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   final DatabaseService databaseService = DatabaseService();
   final WidgetProviders widgetProviders = WidgetProviders();
@@ -62,13 +63,13 @@ class DatabaseProvider extends ChangeNotifier {
 
   addProduct(ProductModel data) async {
     await databaseService.addProduct(data);
-    // clearControllers();
+    clearControllers();
     getAllProducts();
   }
 
   updateMyProduct(productId, ProductModel data) async {
     await databaseService.updateMyProudct(productId, data);
-    // clearControllers();
+    clearControllers();
     notifyListeners();
   }
 
@@ -102,11 +103,11 @@ class DatabaseProvider extends ChangeNotifier {
     }
   }
 
-  // clearControllers() {
-  //   titleController.clear();
-  //   brandController.clear();
-  //   priceController.clear();
-  //   descriptionController.clear();
-  //   notifyListeners();
-  // }
+  clearControllers() {
+    titleController.clear();
+    brandController.clear();
+    priceController.clear();
+    descriptionController.clear();
+    notifyListeners();
+  }
 }

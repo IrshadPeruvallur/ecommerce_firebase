@@ -10,6 +10,7 @@ import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -179,13 +180,28 @@ class _SellProductPageState extends State<SellProductPage> {
                         // maxLines: 2,
                         controller: getProvider.descriptionController,
                       ),
-                      TextFieldWidgets().textFormField(size,
-                          label: "Price",
-                          prefixText: '₹',
-                          keyboardType: TextInputType.number,
-                          inputFormatter:
-                              FilteringTextInputFormatter.digitsOnly,
-                          controller: getProvider.priceController),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFieldWidgets().textFormField(size,
+                                label: "Location",
+                                keyboardType: TextInputType.text,
+                                hitText: 'City,State',
+                                // inputFormatter:
+                                //     FilteringTextInputFormatter.t,
+                                controller: getProvider.locationController),
+                          ),
+                          Expanded(
+                            child: TextFieldWidgets().textFormField(size,
+                                label: "Price",
+                                prefixText: '₹',
+                                keyboardType: TextInputType.number,
+                                inputFormatter:
+                                    FilteringTextInputFormatter.digitsOnly,
+                                controller: getProvider.priceController),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: size.width * 0.05),
                       Consumer<DatabaseProvider>(
                           builder: (context, value, child) {
@@ -232,6 +248,7 @@ class _SellProductPageState extends State<SellProductPage> {
     final product = ProductModel(
       user: user!.email ?? user.phoneNumber,
       title: getProvider.titleController.text,
+      location: getProvider.locationController.text,
       brand: getProvider.brandController.text,
       description: getProvider.descriptionController.text,
       price: int.parse(getProvider.priceController.text),
@@ -242,7 +259,7 @@ class _SellProductPageState extends State<SellProductPage> {
       timeStamp: DateTime.now(),
     );
     getProvider.addProduct(product);
-    // getwidgetProvider.file = null;
+    getwidgetProvider.file = null;
     Navigator.pop(context);
     PopupWidgets()
         .showSuccessSnackbar(context, 'Product uploaded successfully');

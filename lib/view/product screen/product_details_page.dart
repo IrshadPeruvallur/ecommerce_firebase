@@ -89,7 +89,14 @@ class ProductDetailsPage extends StatelessWidget {
                     )
                   ],
                 ),
-                TextWidgets().SubtitleText(context, text: formattedDate),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextWidgets().SubtitleText(context, text: formattedDate),
+                    TextWidgets().SubtitleText(context,
+                        text: products!.location ?? 'Uknown Location'),
+                  ],
+                ),
                 Divider(),
                 const SizedBox(height: 10),
                 Row(

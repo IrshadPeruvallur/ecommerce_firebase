@@ -10,12 +10,14 @@ class ProductModel {
   bool? isSold;
   List<String>? wishList;
   DateTime? timeStamp;
+  String? location;
   String? image;
   int? price;
   ProductModel(
       {this.category,
       this.user,
       this.id,
+      this.location,
       this.isSold,
       this.image,
       this.price,
@@ -28,6 +30,7 @@ class ProductModel {
     return ProductModel(
       user: json['user'],
       id: id,
+      location: json['location'],
       timeStamp: json['timeStamp'] != null
           ? (json['timeStamp'] as Timestamp).toDate()
           : null,
@@ -47,6 +50,7 @@ class ProductModel {
       'id': id,
       'category': category,
       'user': user,
+      'location': location,
       'image': image,
       'price': price,
       'isSold': isSold,
