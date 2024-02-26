@@ -18,7 +18,8 @@ class CategoryPage extends StatelessWidget {
       body: Consumer<DatabaseProvider>(
         builder: (context, value, child) {
           final filteredProducts = value.allProduct
-              .where((product) => product.category == category)
+              .where((product) =>
+                  product.category == category && product.isSold == false)
               .toList();
 
           return filteredProducts.isNotEmpty

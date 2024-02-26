@@ -83,7 +83,9 @@ class ProfileTab extends StatelessWidget {
         child: Column(
           children: [
             Consumer<UserProvider>(builder: (context, userProvide, child) {
-              UserModel? userData = userProvide.getCurrentUserData();
+              final currentUser = FirebaseAuth.instance.currentUser;
+              final uId = currentUser?.uid;
+              UserModel? userData = userProvide.getCurrentUserData(uId);
               return Row(
                 children: [
                   CircleAvatar(
@@ -103,7 +105,9 @@ class ProfileTab extends StatelessWidget {
                       SizedBox(
                         width: size.width * .45,
                         child: Text(
-                          userData.name ?? 'Uknown name',
+                          userData.name!.isEmpty
+                              ? 'Uknown name'
+                              : userData.name.toString(),
                           style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.bold,
                             fontSize: size.width * .05,

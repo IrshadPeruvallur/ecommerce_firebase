@@ -1,6 +1,4 @@
-import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/product_provider.dart';
-import 'package:ecommerce_app/view/pages/cart_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';

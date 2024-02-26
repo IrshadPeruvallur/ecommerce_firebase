@@ -3,7 +3,7 @@ import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/pages/blank_page.dart';
-import 'package:ecommerce_app/view/product%20screen/buy_product_page.dart';
+import 'package:ecommerce_app/view/product%20screen/contact_page.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
@@ -135,8 +135,12 @@ class ProductDetailsPage extends StatelessWidget {
           color: Color.fromARGB(255, 255, 255, 255),
           child: ButtonWidgets().fullWidthElevatedButtonWithIcon(size,
               onPressed: () {
-            if (products!.user != user) {
-              NavigatorWidget().push(context, ContactDetailsPage());
+            if (products!.userName != user) {
+              NavigatorWidget().push(
+                  context,
+                  ContactDetailsPage(
+                    uId: products!.uId.toString(),
+                  ));
             } else {
               Provider.of<DatabaseProvider>(context, listen: false).isEdit =
                   true;
@@ -148,8 +152,8 @@ class ProductDetailsPage extends StatelessWidget {
               );
             }
           },
-              label: products!.user != user ? 'Contact' : 'Update',
-              icon: products!.user != user
+              label: products!.userName != user ? 'Contact' : 'Update',
+              icon: products!.userName != user
                   ? EneftyIcons.call_calling_outline
                   : EneftyIcons.edit_2_outline),
         ),

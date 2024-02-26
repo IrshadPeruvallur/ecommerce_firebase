@@ -24,9 +24,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  UserModel? getCurrentUserData() {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final uId = currentUser?.uid;
+  UserModel? getCurrentUserData(uId) {
     if (uId != null) {
       final userData = allUserDatas.firstWhere(
         (user) => user.uId == uId,
@@ -35,7 +33,7 @@ class UserProvider extends ChangeNotifier {
           name: '',
           phoneNumber: '',
           address: '',
-          profilePic: '',
+          profilePic: null,
           uId: uId,
         ),
       );
@@ -46,7 +44,7 @@ class UserProvider extends ChangeNotifier {
 
   addProduct(UserModel data) async {
     await UserService().addProduct(data);
-
+    clearControllers();
     getUserData();
   }
 
@@ -63,6 +61,15 @@ class UserProvider extends ChangeNotifier {
       log("$e");
       throw e;
     }
+  }
+
+  clearControllers() {
+    nameController.clear();
+    emailController.clear();
+    phoneNumberController.clear();
+    addressController.clear();
+
+    notifyListeners();
   }
 
   void loadDatasForEdit(UserModel product) {

@@ -1,11 +1,13 @@
 import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/profile%20screens/widgets/user_details_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactDetailsPage extends StatelessWidget {
-  ContactDetailsPage({Key? key}) : super(key: key);
+  String uId;
+  ContactDetailsPage({required this.uId, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class ContactDetailsPage extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: Consumer<UserProvider>(
           builder: (context, userProvide, child) {
-            UserModel? userData = userProvide.getCurrentUserData();
+            UserModel? userData = userProvide.getCurrentUserData(uId);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -225,7 +225,8 @@ class _SellProductPageState extends State<SellProductPage> {
 
     final user = FirebaseAuth.instance.currentUser;
     final product = ProductModel(
-      user: user!.email ?? user.phoneNumber,
+      userName: user!.email ?? user.phoneNumber,
+      uId: user.uid,
       title: getProvider.titleController.text,
       location: getProvider.locationController.text,
       brand: getProvider.brandController.text,

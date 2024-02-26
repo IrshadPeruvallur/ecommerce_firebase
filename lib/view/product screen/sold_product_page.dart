@@ -164,7 +164,7 @@ class SoldProductPage extends StatelessWidget {
     final user = currentUser.email ?? currentUser.phoneNumber;
 
     List<ProductModel> myProducts = provider.allProduct
-        .where((product) => product.user == user && product.isSold == true)
+        .where((product) => product.userName == user && product.isSold == true)
         .toList();
     return myProducts;
   }

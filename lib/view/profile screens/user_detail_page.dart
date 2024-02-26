@@ -25,7 +25,9 @@ class UserDetailsPage extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: Consumer<UserProvider>(
           builder: (context, userProvide, child) {
-            UserModel? userData = userProvide.getCurrentUserData();
+            final currentUser = FirebaseAuth.instance.currentUser;
+            final uId = currentUser?.uid;
+            UserModel? userData = userProvide.getCurrentUserData(uId);
 
             return userData!.name!.isNotEmpty
                 ? Column(
@@ -45,7 +47,7 @@ class UserDetailsPage extends StatelessWidget {
                         height: size.width * .04,
                       ),
                       Text(
-                        "Personal Information",
+                        "Contact Information",
                         style: TextStyle(
                           color: Colors.grey.shade800,
                           fontWeight: FontWeight.w600,

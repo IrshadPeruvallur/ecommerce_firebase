@@ -181,7 +181,7 @@ class UpComingPage extends StatelessWidget {
     final user = currentUser.email ?? currentUser.phoneNumber;
 
     List<ProductModel> myProducts = provider.allProduct
-        .where((product) => product.user == user && product.isSold == false)
+        .where((product) => product.userName == user && product.isSold == false)
         .toList();
     return myProducts;
   }
