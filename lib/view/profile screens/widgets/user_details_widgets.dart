@@ -14,7 +14,7 @@ class ProfileWidgets {
     TextInputType? keyboardType,
   }) {
     return Material(
-      elevation: 20,
+      elevation: 10,
       shadowColor: const Color.fromARGB(77, 0, 0, 0),
       child: clickBool == true
           ? ListTile(
@@ -31,28 +31,31 @@ class ProfileWidgets {
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   color: Colors.black,
-                  fontSize: size.width * .04,
+                  fontSize: size.width * .035,
                 ),
               ),
             )
-          : TextFormField(
-              inputFormatters: inputFormatter != null ? [inputFormatter] : [],
-              keyboardType: keyboardType ?? TextInputType.text,
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return " Please enter $label";
-              //   } else {
-              //     return null;
-              //   }
-              // },
-              controller: controller,
-              decoration: InputDecoration(
-                border: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent)),
-                labelText: label,
-                labelStyle: const TextStyle(color: Colors.black),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
+          : Padding(
+              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+              child: TextFormField(
+                inputFormatters: inputFormatter != null ? [inputFormatter] : [],
+                keyboardType: keyboardType ?? TextInputType.text,
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return " Please enter $label";
+                //   } else {
+                //     return null;
+                //   }
+                // },
+                controller: controller,
+                decoration: InputDecoration(
+                  border: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent)),
+                  labelText: label,
+                  labelStyle: const TextStyle(color: Colors.black),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                  ),
                 ),
               ),
             ),

@@ -107,6 +107,7 @@ class DatabaseProvider extends ChangeNotifier {
     titleController.clear();
     brandController.clear();
     priceController.clear();
+    locationController.clear();
     descriptionController.clear();
     notifyListeners();
   }

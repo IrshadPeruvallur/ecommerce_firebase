@@ -1,23 +1,16 @@
 // ignore_for_file: must_be_immutable
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
-import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
-import 'package:ecommerce_app/view/product%20screen/buy_product_page.dart';
 import 'package:ecommerce_app/view/product%20screen/my_product_tab.dart';
-import 'package:ecommerce_app/view/product%20screen/upcoming_product.dart';
 import 'package:ecommerce_app/view/profile%20screens/about_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/settings.dart';
-import 'package:ecommerce_app/view/profile%20screens/tems_condition.dart';
 import 'package:ecommerce_app/view/profile%20screens/user_detail_page.dart';
 import 'package:ecommerce_app/view/welcome%20screens/welcome_page.dart';
-import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
-import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -111,10 +104,10 @@ class ProfileTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconsWidgets().IconButtonWidget(context, size,
-                    onPressed: () =>
-                        NavigatorWidget().push(context, UserDetailsPage()),
-                    iconData: EneftyIcons.edit_2_outline)
+                // IconsWidgets().IconButtonWidget(context, size,
+                //     onPressed: () =>
+                //         NavigatorWidget().push(context, UserDetailsPage()),
+                //     iconData: EneftyIcons.edit_2_outline)
               ],
             ),
             SizedBox(
