@@ -4,14 +4,14 @@ class UserModel {
   String? email;
   String? phoneNumber;
   String? address;
-  String? userProfile;
+  String? profilePic;
 
   UserModel({
     required this.email,
     required this.name,
-    this.phoneNumber,
-    this.address,
-    this.userProfile,
+    required this.phoneNumber,
+    required this.address,
+    required this.profilePic,
     required this.uId,
   });
 
@@ -21,7 +21,7 @@ class UserModel {
       name: json['name'],
       phoneNumber: json['phoneNumber'],
       address: json['address'],
-      userProfile: json['userProfile'],
+      profilePic: json['profilePic'],
       uId: json['userId'],
     );
   }
@@ -32,7 +32,7 @@ class UserModel {
       'email': email,
       'phoneNumber': phoneNumber,
       'address': address,
-      'userProfile': userProfile,
+      'profilePic': profilePic,
       'userId': uId,
     };
   }

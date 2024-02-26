@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 import 'package:ecommerce_app/controller/authentication.dart';
+import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
+import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
 import 'package:ecommerce_app/view/product%20screen/my_product_tab.dart';
 import 'package:ecommerce_app/view/profile%20screens/about_page.dart';
@@ -52,7 +54,8 @@ class ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final getProvider =
         Provider.of<AuthenticationProvider>(context, listen: false);
-    final User? user = getProvider.getCurrentUser();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -79,37 +82,50 @@ class ProfileTab extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
         child: Column(
           children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/icons/profile icons.png'),
-                  radius: 50,
-                  backgroundColor: Colors.white,
-                ),
-                SizedBox(
-                  width: size.width * .03,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: size.width * .45,
-                      child: Text(
-                        user!.displayName ?? 'Uknown name',
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width * .05,
+            Consumer<UserProvider>(builder: (context, userProvide, child) {
+              UserModel? userData = userProvide.getCurrentUserData();
+              return Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: userData!.profilePic != null
+                        ? NetworkImage(userData.profilePic.toString())
+                        : AssetImage('assets/icons/profile icons.png')
+                            as ImageProvider,
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                  ),
+                  SizedBox(
+                    width: size.width * .03,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: size.width * .45,
+                        child: Text(
+                          userData.name ?? 'Uknown name',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width * .05,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                // IconsWidgets().IconButtonWidget(context, size,
-                //     onPressed: () =>
-                //         NavigatorWidget().push(context, UserDetailsPage()),
-                //     iconData: EneftyIcons.edit_2_outline)
-              ],
-            ),
+                      Text(
+                        userData.phoneNumber ?? '',
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          fontSize: size.width * .03,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // IconsWidgets().IconButtonWidget(context, size,
+                  //     onPressed: () =>
+                  //         NavigatorWidget().push(context, UserDetailsPage()),
+                  //     iconData: EneftyIcons.edit_2_outline)
+                ],
+              );
+            }),
             SizedBox(
               height: size.width * .1,
             ),

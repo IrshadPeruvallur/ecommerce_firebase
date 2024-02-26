@@ -1,8 +1,18 @@
+import 'dart:developer';
+
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/service/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  String downloadURL = '';
+  // bool? isEdit;
+  String imageName = DateTime.now().millisecondsSinceEpoch.toString();
   List<UserModel> allUserDatas = [];
 
   Future<void> getUserData() async {
@@ -12,5 +22,53 @@ class UserProvider extends ChangeNotifier {
       print("Error fetching user data: $e");
     }
     notifyListeners();
+  }
+
+  UserModel? getCurrentUserData() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final uId = currentUser?.uid;
+    if (uId != null) {
+      final userData = allUserDatas.firstWhere(
+        (user) => user.uId == uId,
+        orElse: () => UserModel(
+          email: '',
+          name: '',
+          phoneNumber: '',
+          address: '',
+          profilePic: '',
+          uId: uId,
+        ),
+      );
+      return userData;
+    }
+    return null;
+  }
+
+  addProduct(UserModel data) async {
+    await UserService().addProduct(data);
+
+    getUserData();
+  }
+
+  uploadImage(image) async {
+    try {
+      if (image != null) {
+        downloadURL = await UserService().uploadImage(imageName, image);
+
+        notifyListeners();
+      } else {
+        log('image is null');
+      }
+    } catch (e) {
+      log("$e");
+      throw e;
+    }
+  }
+
+  void loadDatasForEdit(UserModel product) {
+    nameController = TextEditingController(text: product.name);
+    emailController = TextEditingController(text: product.email);
+    phoneNumberController = TextEditingController(text: product.phoneNumber);
+    addressController = TextEditingController(text: product.address);
   }
 }

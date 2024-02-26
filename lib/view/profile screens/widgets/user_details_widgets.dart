@@ -61,4 +61,33 @@ class ProfileWidgets {
             ),
     );
   }
+
+  Widget textdBox(
+    Size size,
+    value,
+    String label,
+  ) {
+    return Material(
+      elevation: 10,
+      shadowColor: const Color.fromARGB(77, 0, 0, 0),
+      child: ListTile(
+        title: Text(
+          label,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: const Color.fromARGB(255, 53, 53, 53),
+            fontSize: size.width * .03,
+          ),
+        ),
+        subtitle: Text(
+          value,
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Colors.black,
+            fontSize: size.width * .035,
+          ),
+        ),
+      ),
+    );
+  }
 }

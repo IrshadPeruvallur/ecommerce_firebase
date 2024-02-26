@@ -1,79 +1,68 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
-import 'package:ecommerce_app/view/widgets/text_widgets.dart';
+import 'package:ecommerce_app/controller/user_provider.dart';
+import 'package:ecommerce_app/model/user_model.dart';
+import 'package:ecommerce_app/view/profile%20screens/widgets/user_details_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactDetailsPage extends StatelessWidget {
-  ContactDetailsPage({super.key});
+  ContactDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final getProvider = Provider.of<DBProfile>(
-    //   context,
-    // );
+    final getuserProvider = Provider.of<UserProvider>(context, listen: false);
+    Size size = MediaQuery.of(context).size;
+    getuserProvider.getUserData();
 
-    // getProvider.getAllUser();
-    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contact"),
+        title: const Text("Contact  "),
         centerTitle: true,
       ),
       body: Padding(
-          padding: const EdgeInsets.all(15),
-          child: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (context, index) {
-              // final data = getProvider.profileList[index];
-              return Column(
-                children: [
-                  CircleAvatar(
-                    radius: screenSize.width * 0.15,
-                    backgroundColor: Colors.white,
-                    backgroundImage: /* data.image != null
-                              ? FileImage(File(data.image))
-                              : */
-                        const AssetImage('assets/icons/profile icons.png'),
-                  ),
-                  TextWidgets().BodyTextBold(context, text: 'Username'),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(screenSize.width * 0.04))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          doubleText(context,
-                              text1: 'Phone', text2: '+91 9876 543 210'),
-                          doubleText(context,
-                              text1: 'Email', text2: 'user@gmail.com'),
-                          TextWidgets().BodyTextBold(context, text: 'Address'),
-                          TextWidgets().BodyText(context,
-                              text:
-                                  'Address........................................................'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          )),
-    );
-  }
+        padding: const EdgeInsets.all(15),
+        child: Consumer<UserProvider>(
+          builder: (context, userProvide, child) {
+            UserModel? userData = userProvide.getCurrentUserData();
 
-  doubleText(context, {text1, text2}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: MediaQuery.of(context).size.width * 0.02),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextWidgets().BodyTextBold(context, text: text1),
-          TextWidgets().BodyText(context, text: text2),
-        ],
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: CircleAvatar(
+                    backgroundImage: userData!.profilePic != null
+                        ? NetworkImage(userData.profilePic.toString())
+                        : AssetImage('assets/icons/profile icons.png')
+                            as ImageProvider,
+                    radius: 70,
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: size.width * .04,
+                ),
+                Text(
+                  "Personal Information",
+                  style: TextStyle(
+                    color: Colors.grey.shade800,
+                    fontWeight: FontWeight.w600,
+                    fontSize: size.width * .035,
+                  ),
+                ),
+                SizedBox(
+                  height: size.width * .04,
+                ),
+                ProfileWidgets().textdBox(
+                  size,
+                  userData.name,
+                  'Name',
+                ),
+                ProfileWidgets().textdBox(size, userData.phoneNumber, 'Phone'),
+                ProfileWidgets().textdBox(size, userData.email, 'Email'),
+                ProfileWidgets().textdBox(size, userData.address, 'Address'),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

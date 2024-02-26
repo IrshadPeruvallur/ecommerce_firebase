@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/controller/user_provider.dart';
-import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/model/user_model.dart';
+import 'package:ecommerce_app/view/profile%20screens/create_user.dart';
 import 'package:ecommerce_app/view/profile%20screens/widgets/user_details_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,91 +12,109 @@ class UserDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final getProvider = Provider.of<WidgetProviders>(context, listen: false);
     final getuserProvider = Provider.of<UserProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     getuserProvider.getUserData();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contact"),
+        title: const Text("My Profile"),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Consumer2<WidgetProviders, UserProvider>(
-          builder: (context, value, userProvide, child) {
-            UserModel userData = getCurrentUserData(userProvide);
-            return Column(
-              children: [
-                CircleAvatar(
-                  backgroundImage: userData.userProfile != null
-                      ? NetworkImage(userData.userProfile!)
-                      : AssetImage('assets/icons/profile icons.png')
-                          as ImageProvider,
-                  radius: 70,
-                  backgroundColor: Colors.white,
-                ),
-                SizedBox(
-                  height: size.width * .04,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Personal Information",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.w600,
-                        fontSize: size.width * .035,
+        child: Consumer<UserProvider>(
+          builder: (context, userProvide, child) {
+            UserModel? userData = userProvide.getCurrentUserData();
+
+            return userData!.name!.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: CircleAvatar(
+                          backgroundImage: userData.profilePic != null
+                              ? NetworkImage(userData.profilePic.toString())
+                              : AssetImage('assets/icons/profile icons.png')
+                                  as ImageProvider,
+                          radius: 70,
+                          backgroundColor: Colors.white,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        getProvider.userNameClicked();
-                      },
-                      icon: const Icon(EneftyIcons.edit_2_outline),
-                      iconSize: size.width * .05,
-                    )
-                  ],
-                ),
-                ProfileWidgets().textFormFieldBox(
-                  value.isUsernameEdit,
-                  size,
-                  userData.name ?? '',
-                  'Name',
-                ),
-                ProfileWidgets().textFormFieldBox(
-                  value.isUsernameEdit,
-                  size,
-                  userData.email ?? '',
-                  'Email',
-                ),
-                ProfileWidgets().textFormFieldBox(
-                  value.isUsernameEdit,
-                  size,
-                  userData.phoneNumber ?? '',
-                  'Phone',
-                ),
-                ProfileWidgets().textFormFieldBox(
-                  value.isUsernameEdit,
-                  size,
-                  userData.address ?? '',
-                  'Address',
-                ),
-              ],
-            );
+                      SizedBox(
+                        height: size.width * .04,
+                      ),
+                      Text(
+                        "Personal Information",
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontWeight: FontWeight.w600,
+                          fontSize: size.width * .035,
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.width * .04,
+                      ),
+                      ProfileWidgets().textdBox(
+                        size,
+                        userData.name,
+                        'Name',
+                      ),
+                      ProfileWidgets()
+                          .textdBox(size, userData.phoneNumber, 'Phone'),
+                      ProfileWidgets().textdBox(size, userData.email, 'Email'),
+                      ProfileWidgets()
+                          .textdBox(size, userData.address, 'Address'),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person_add,
+                        size: size.width * .2,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Welcome! Create your profile to get started.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateUserDetails(),
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 40,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          'Create Your Profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
           },
         ),
       ),
     );
-  }
-
-  UserModel getCurrentUserData(UserProvider provider) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final uId = currentUser!.uid;
-    final userData =
-        provider.allUserDatas.firstWhere((user) => user.uId == uId);
-    return userData;
   }
 }

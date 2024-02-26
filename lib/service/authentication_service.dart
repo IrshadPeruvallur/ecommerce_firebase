@@ -62,15 +62,15 @@ class AuthService {
       final User? guser = userCredential.user;
       log("${guser?.displayName}");
 
-      final authenticationModel = UserModel(
-        email: guser?.email,
-        name: guser?.displayName,
-        phoneNumber: guser?.phoneNumber,
-        uId: guser?.uid,
-      );
-      await firestore.collection(collection).doc(guser?.uid).set(
-            authenticationModel.toJson(),
-          );
+      // final authenticationModel = UserModel(
+      //   email: guser?.email,
+      //   name: guser?.displayName,
+      //   phoneNumber: guser?.phoneNumber,
+      //   uId: guser?.uid,
+      // );
+      // await firestore.collection(collection).doc(guser?.uid).set(
+      //       authenticationModel.toJson(),
+      //     );
     } catch (e) {
       print('Google Sign-In Error: $e');
       throw e;
@@ -86,10 +86,10 @@ class AuthService {
     try {
       UserCredential user =
           await firebaseAuth.signInWithProvider(githubAuthProvider);
-      User gituser = user.user!;
-      final UserModel userData = UserModel(
-          email: gituser.email, name: gituser.displayName, uId: gituser.uid);
-      firestore.collection(collection).doc(gituser.uid).set(userData.toJson());
+      // User gituser = user.user!;
+      // final UserModel userData = UserModel(
+      //     email: gituser.email, name: gituser.displayName, uId: gituser.uid);
+      // firestore.collection(collection).doc(gituser.uid).set(userData.toJson());
       return user;
     } catch (e) {
       rethrow;
