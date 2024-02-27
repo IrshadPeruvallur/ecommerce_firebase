@@ -23,6 +23,7 @@ class DatabaseProvider extends ChangeNotifier {
   void loadDatasForEdit(ProductModel product) {
     titleController = TextEditingController(text: product.title);
     brandController = TextEditingController(text: product.brand);
+    locationController = TextEditingController(text: product.location);
     descriptionController = TextEditingController(text: product.description);
     priceController = TextEditingController(
       text: product.price != null ? product.price.toString() : '',

@@ -57,15 +57,17 @@ class UserDetailsPage extends StatelessWidget {
                         height: size.width * .04,
                       ),
                       ProfileWidgets().textdBox(
+                        context,
                         size,
                         userData.name,
                         'Name',
                       ),
+                      ProfileWidgets().textdBox(
+                          context, size, userData.phoneNumber, 'Phone'),
                       ProfileWidgets()
-                          .textdBox(size, userData.phoneNumber, 'Phone'),
-                      ProfileWidgets().textdBox(size, userData.email, 'Email'),
+                          .textdBox(context, size, userData.email, 'Email'),
                       ProfileWidgets()
-                          .textdBox(size, userData.address, 'Address'),
+                          .textdBox(context, size, userData.address, 'Address'),
                     ],
                   )
                 : Column(

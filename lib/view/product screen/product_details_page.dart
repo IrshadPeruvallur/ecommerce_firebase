@@ -100,7 +100,8 @@ class ProductDetailsPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextWidgets().BodyTextBold(context, text: "Brand"),
+                    TextWidgets()
+                        .BodyTextBold(context, text: "Brand".toUpperCase()),
                     TextWidgets().BodyText(
                       context,
                       text: products!.brand.toString(),
@@ -136,7 +137,7 @@ class ProductDetailsPage extends StatelessWidget {
             if (products!.userName != user) {
               NavigatorWidget().push(
                   context,
-                  ContactDetailsPage(
+                  ContactSellerPage(
                     uId: products!.uId.toString(),
                   ));
             } else {

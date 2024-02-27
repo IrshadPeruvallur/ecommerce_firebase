@@ -1,14 +1,16 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/profile%20screens/widgets/user_details_widgets.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class ContactDetailsPage extends StatelessWidget {
+class ContactSellerPage extends StatelessWidget {
   String uId;
-  ContactDetailsPage({required this.uId, Key? key}) : super(key: key);
+  ContactSellerPage({required this.uId, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class ContactDetailsPage extends StatelessWidget {
                   height: size.width * .04,
                 ),
                 Text(
-                  "Personal Information",
+                  "Contact Information",
                   style: TextStyle(
                     color: Colors.grey.shade800,
                     fontWeight: FontWeight.w600,
@@ -55,18 +57,63 @@ class ContactDetailsPage extends StatelessWidget {
                   height: size.width * .04,
                 ),
                 ProfileWidgets().textdBox(
+                  context,
                   size,
                   userData.name,
                   'Name',
                 ),
-                ProfileWidgets().textdBox(size, userData.phoneNumber, 'Phone'),
-                ProfileWidgets().textdBox(size, userData.email, 'Email'),
-                ProfileWidgets().textdBox(size, userData.address, 'Address'),
+                ProfileWidgets().textdBox(
+                  context,
+                  size,
+                  userData.phoneNumber,
+                  'Phone',
+                  iconData: EneftyIcons.call_outline,
+                  onTap: () => launchPhone(userData.phoneNumber.toString()),
+                ),
+                ProfileWidgets().textdBox(
+                  context,
+                  size,
+                  userData.email,
+                  'Email',
+                  iconData: Icons.email_outlined,
+                  onTap: () {
+                    launchEmail(userData.email.toString());
+                  },
+                ),
+                ProfileWidgets()
+                    .textdBox(context, size, userData.address, 'Address'),
+                SizedBox(height: 10),
               ],
             );
           },
         ),
       ),
     );
+  }
+
+  void launchEmail(String email) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+
+    if (await canLaunch(emailLaunchUri.toString())) {
+      await launch(emailLaunchUri.toString());
+    } else {
+      throw 'Could not launch $emailLaunchUri';
+    }
+  }
+
+  void launchPhone(String phoneNumber) async {
+    final Uri phoneLaunchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+
+    if (await canLaunch(phoneLaunchUri.toString())) {
+      await launch(phoneLaunchUri.toString());
+    } else {
+      throw 'Could not launch $phoneLaunchUri';
+    }
   }
 }

@@ -23,7 +23,6 @@ class ProfileTab extends StatelessWidget {
     'my Profile',
     'my Products',
     'Wishlist',
-    'Location',
     'Help Center',
   ];
 
@@ -31,14 +30,13 @@ class ProfileTab extends StatelessWidget {
     'Make Your Profile',
     'Active Ads & InActive Ads',
     'You have 2 cards',
-    '03 Addresses',
     'FAQ, Contact, Privacy & Terms',
   ];
 
   final List<Widget> listTabs = [
     UserDetailsPage(),
     MyProductTab(),
-    WishlistPage(), const AboutPage(),
+    WishlistPage(),
     SettingsPage(),
 
     // const WishListTab(),

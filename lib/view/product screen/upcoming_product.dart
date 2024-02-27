@@ -46,6 +46,9 @@ class UpComingPage extends StatelessWidget {
                                 SlidableAction(
                                   // borderRadius: BorderRadius.circular(20),
                                   onPressed: (context) async {
+                                    Provider.of<DatabaseProvider>(context,
+                                            listen: false)
+                                        .isEdit = true;
                                     NavigatorWidget().push(
                                         context,
                                         SellProductPage(

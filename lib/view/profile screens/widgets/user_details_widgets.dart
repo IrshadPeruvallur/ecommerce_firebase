@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -61,14 +62,21 @@ class ProfileWidgets {
   }
 
   Widget textdBox(
+    context,
     Size size,
     value,
-    String label,
-  ) {
+    String label, {
+    IconData? iconData,
+    VoidCallback? onTap,
+  }) {
     return Material(
       elevation: 10,
       shadowColor: const Color.fromARGB(77, 0, 0, 0),
       child: ListTile(
+        trailing: iconData != null
+            ? IconsWidgets().IconButtonWidget(context, size, iconData: iconData)
+            : null,
+        onTap: onTap,
         title: Text(
           label,
           style: TextStyle(
@@ -78,7 +86,7 @@ class ProfileWidgets {
           ),
         ),
         subtitle: Text(
-          value,
+          value ?? '',
           style: TextStyle(
             fontWeight: FontWeight.w800,
             color: Colors.black,

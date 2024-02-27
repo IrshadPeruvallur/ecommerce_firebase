@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/view/pages/blank_page.dart';
+import 'package:ecommerce_app/view/profile%20screens/about_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/help_center/contact_us_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/help_center/faq_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/help_center/tems_condition.dart';
@@ -7,15 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
-  final List listTitles = [
-    'FAQ',
-    'Terms & Conditions',
-    'Contact Us',
-  ];
+  final List listTitles = ['FAQ', 'Terms & Conditions', 'Contact Us', "About"];
   final List<Widget> listTabs = [
     FAQPage(),
     TermsAndConditionsPage(),
     const ContactUsPage(),
+    const AboutPage()
   ];
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,7 @@ class SettingsPage extends StatelessWidget {
                 separatorBuilder: (context, index) => SizedBox(
                   height: size.width * .05,
                 ),
-                itemCount: 3,
+                itemCount: 4,
               )
             ],
           ),
