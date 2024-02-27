@@ -1,17 +1,13 @@
 import 'package:ecommerce_app/controller/product_provider.dart';
-import 'package:ecommerce_app/controller/widget_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
 import 'package:ecommerce_app/view/product%20screen/product_details_page.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
-import 'package:ecommerce_app/view/widgets/appbar_widget.dart';
-import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';

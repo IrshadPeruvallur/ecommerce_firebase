@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_app/model/user_model.dart';
+import 'package:ecommerce_app/view/authentication%20screens/widgets/login_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -61,16 +61,6 @@ class AuthService {
 
       final User? guser = userCredential.user;
       log("${guser?.displayName}");
-
-      // final authenticationModel = UserModel(
-      //   email: guser?.email,
-      //   name: guser?.displayName,
-      //   phoneNumber: guser?.phoneNumber,
-      //   uId: guser?.uid,
-      // );
-      // await firestore.collection(collection).doc(guser?.uid).set(
-      //       authenticationModel.toJson(),
-      //     );
     } catch (e) {
       print('Google Sign-In Error: $e');
       throw e;
@@ -86,10 +76,7 @@ class AuthService {
     try {
       UserCredential user =
           await firebaseAuth.signInWithProvider(githubAuthProvider);
-      // User gituser = user.user!;
-      // final UserModel userData = UserModel(
-      //     email: gituser.email, name: gituser.displayName, uId: gituser.uid);
-      // firestore.collection(collection).doc(gituser.uid).set(userData.toJson());
+
       return user;
     } catch (e) {
       rethrow;
@@ -115,22 +102,29 @@ class AuthService {
           codeAutoRetrievalTimeout: (verificationId) {
             _verificationId = verificationId;
           },
-          timeout: Duration(seconds: -60));
+          timeout: Duration(seconds: 60));
     } catch (e) {
       log("phoneSignIn error: $e");
     }
   }
 
-  Future<PhoneAuthCredential?> verifyOTP(String otp) async {
+  Future<void> verifyOTP(context, String otp) async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId!,
         smsCode: otp,
       );
-      return credential;
+
+      await firebaseAuth.signInWithCredential(credential);
+      AuthPagesWidget().otpVerified(context);
     } catch (e) {
-      log("verifyOTP error: $e");
-      return null;
+      if (e is FirebaseAuthException) {
+        AuthPagesWidget().otpNotVerified(context, e.code);
+        log("verifyOTP error: $e");
+      } else {
+        log("verifyOTP error: $e");
+        rethrow;
+      }
     }
   }
 }

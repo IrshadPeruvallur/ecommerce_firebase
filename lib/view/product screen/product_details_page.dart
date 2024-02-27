@@ -1,8 +1,6 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-import 'package:ecommerce_app/controller/authentication.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables, must_be_immutable
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/model/product_model.dart';
-import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/product%20screen/contact_page.dart';
 import 'package:ecommerce_app/view/product%20screen/sell_product.dart';
 import 'package:ecommerce_app/view/widgets/appbar_widget.dart';

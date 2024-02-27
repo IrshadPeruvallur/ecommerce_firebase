@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/service/user_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {

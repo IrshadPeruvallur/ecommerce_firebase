@@ -1,11 +1,6 @@
-import 'dart:developer';
-
-import 'package:ecommerce_app/view/widgets/popup_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:ecommerce_app/service/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ecommerce_app/view/home screens/bottom_bar.dart';
-import 'package:ecommerce_app/view/widgets/navigator.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
@@ -46,26 +41,13 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> getOTP(phoneNumber) async {
     await emailAuthService.getOTP(phoneNumber);
+
     notifyListeners();
   }
 
-  User? getCurrentUser() {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) {}
-    // notifyListeners();
-    return currentUser;
-  }
-
-  Future<void> verifyOTP(otp, context) async {
-    final credential = await emailAuthService.verifyOTP(otp);
-    log(credential.toString());
-    if (credential != null) {
-      NavigatorWidget().pushReplacement(context, BottomBarScreen());
-      PopupWidgets().showSuccessSnackbar(context, 'You are logged In');
-    } else {
-      print('OTP verification failed');
-      PopupWidgets().showErrorSnackbar(context, 'Please enter the correct Otp');
-    }
+  Future<void> verifyOTP(context, otp) async {
+    await emailAuthService.verifyOTP(context, otp);
+    // clearControllers();
     notifyListeners();
   }
 

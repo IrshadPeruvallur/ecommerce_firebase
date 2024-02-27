@@ -1,8 +1,5 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
-import 'package:ecommerce_app/view/widgets/navigator.dart';
-import 'package:ecommerce_app/view/widgets/popup_widget.dart';
 import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,6 +68,11 @@ class VerifyOtpPage extends StatelessWidget {
                             }
                           },
                         ),
+                        ButtonWidgets().textButtonWidget(size, context,
+                            label: 'Resend OTP', onPressed: () async {
+                          await getProvider
+                              .getOTP('+91${getProvider.phoneController.text}');
+                        })
                       ],
                     ),
                   ),

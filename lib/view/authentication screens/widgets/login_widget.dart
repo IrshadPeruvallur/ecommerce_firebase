@@ -7,6 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthPagesWidget {
+  otpVerified(
+    context,
+  ) {
+    NavigatorWidget().pushReplacement(context, BottomBarScreen());
+    PopupWidgets().showSuccessSnackbar(context, 'Otp verified');
+  }
+
+  otpNotVerified(context, message) {
+    PopupWidgets().showErrorSnackbar(context, message);
+  }
+
   loginIcons(context) {
     Size size = MediaQuery.of(context).size;
     final getProvider =

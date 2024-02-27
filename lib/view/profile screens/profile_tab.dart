@@ -52,10 +52,6 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final getProvider =
-        Provider.of<AuthenticationProvider>(context, listen: false);
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(

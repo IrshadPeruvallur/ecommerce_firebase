@@ -2,7 +2,6 @@ import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/profile%20screens/create_user.dart';
 import 'package:ecommerce_app/view/profile%20screens/widgets/user_details_widgets.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

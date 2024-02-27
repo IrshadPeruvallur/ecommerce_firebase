@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
-import 'package:ecommerce_app/view/widgets/icons_widgets.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/profile%20screens/widgets/user_details_widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

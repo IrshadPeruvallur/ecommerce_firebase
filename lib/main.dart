@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/controller/authentication.dart';
-import 'package:ecommerce_app/controller/connectivity_provider.dart';
 import 'package:ecommerce_app/controller/product_provider.dart';
 import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/controller/widget_provider.dart';
@@ -30,9 +29,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DatabaseProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ConnectivityProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => WidgetProviders(),
