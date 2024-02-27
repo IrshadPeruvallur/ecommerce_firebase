@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controller/product_provider.dart';
+import 'package:ecommerce_app/controller/user_provider.dart';
 import 'package:ecommerce_app/view/pages/wishlist_page.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/text_widgets.dart';
@@ -20,6 +21,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     Provider.of<DatabaseProvider>(context, listen: false).getAllProducts();
+    Provider.of<UserProvider>(context, listen: false).getUserData();
   }
 
   final List<String> specialProduct = [
@@ -51,6 +53,7 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final getAuthPrv = Provider.of<DatabaseProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: size.width * .2,

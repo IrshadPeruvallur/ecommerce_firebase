@@ -1,4 +1,7 @@
 import 'package:ecommerce_app/view/pages/blank_page.dart';
+import 'package:ecommerce_app/view/profile%20screens/help_center/contact_us_page.dart';
+import 'package:ecommerce_app/view/profile%20screens/help_center/faq_page.dart';
+import 'package:ecommerce_app/view/profile%20screens/help_center/tems_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,13 +9,13 @@ class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
   final List listTitles = [
     'FAQ',
+    'Terms & Conditions',
     'Contact Us',
-    'Privacy & Terms',
   ];
   final List<Widget> listTabs = [
-    const BlankPage(name: 'FAQ'),
-    const BlankPage(name: 'Contact Us'),
-    const BlankPage(name: 'Privacy & Terms'),
+    FAQPage(),
+    TermsAndConditionsPage(),
+    const ContactUsPage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Settings"),
+        title: const Text("Help Center"),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
