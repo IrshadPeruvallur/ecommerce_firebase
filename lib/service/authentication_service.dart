@@ -85,18 +85,21 @@ class AuthService {
 
   String? _verificationId;
 
-  Future<void> getOTP(String phoneNumber) async {
+  Future<void> getOTP(context, String phoneNumber) async {
     try {
       await firebaseAuth.verifyPhoneNumber(
           phoneNumber: phoneNumber,
           verificationCompleted: (PhoneAuthCredential credential) async {
             await firebaseAuth.signInWithCredential(credential);
+            AuthPagesWidget().otpSended(context);
           },
           verificationFailed: (error) {
+            AuthPagesWidget().otpNotSend(context, error.code);
             log("verificationFailed ${error.message}");
           },
-          codeSent: (String verificationId, int? forceResendingToken) {
+          codeSent: (String verificationId, int? forceResendingToken) async {
             _verificationId = verificationId;
+
             log(verificationId);
           },
           codeAutoRetrievalTimeout: (verificationId) {
@@ -104,7 +107,13 @@ class AuthService {
           },
           timeout: Duration(seconds: 60));
     } catch (e) {
-      log("phoneSignIn error: $e");
+      if (e is FirebaseAuthException) {
+        AuthPagesWidget().otpNotSend(context, e.code);
+        log("phoneSignIn error: $e");
+      } else {
+        log("phoneSignIn error: $e");
+        rethrow;
+      }
     }
   }
 

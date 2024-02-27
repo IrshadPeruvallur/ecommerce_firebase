@@ -11,6 +11,7 @@ class TextFieldWidgets {
     TextEditingController? cnfController,
     String? label,
     String? hitText,
+    int? maxLine,
     String? prefixText,
     // int? maxLines,
     TextInputFormatter? inputFormatter,
@@ -42,6 +43,7 @@ class TextFieldWidgets {
         obscureText:
             type == "Password" || type == "Confirm Password" ? true : false,
         controller: controller,
+        maxLength: maxLine,
         // maxLines: maxLines,
         decoration: InputDecoration(
           labelText: label,

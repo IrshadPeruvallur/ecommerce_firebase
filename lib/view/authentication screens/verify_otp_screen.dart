@@ -48,6 +48,7 @@ class VerifyOtpPage extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFieldWidgets().textFormField(size,
+                            maxLine: 6,
                             inputFormatter:
                                 FilteringTextInputFormatter.digitsOnly,
                             label: 'Enter OTP',
@@ -70,8 +71,8 @@ class VerifyOtpPage extends StatelessWidget {
                         ),
                         ButtonWidgets().textButtonWidget(size, context,
                             label: 'Resend OTP', onPressed: () async {
-                          await getProvider
-                              .getOTP('+91${getProvider.phoneController.text}');
+                          await getProvider.getOTP(context,
+                              '+91${getProvider.phoneController.text}');
                         })
                       ],
                     ),

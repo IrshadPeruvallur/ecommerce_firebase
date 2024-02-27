@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/authentication%20screens/get_otp_screen.dart';
+import 'package:ecommerce_app/view/authentication%20screens/verify_otp_screen.dart';
 import 'package:ecommerce_app/view/home%20screens/bottom_bar.dart';
 import 'package:ecommerce_app/view/widgets/navigator.dart';
 import 'package:ecommerce_app/view/widgets/popup_widget.dart';
@@ -7,6 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthPagesWidget {
+  otpSended(
+    context,
+  ) {
+    NavigatorWidget().pushReplacement(context, VerifyOtpPage());
+    PopupWidgets().showSuccessSnackbar(context, 'OTP has Sended');
+  }
+
+  otpNotSend(context, message) {
+    PopupWidgets().showErrorSnackbar(context, message);
+  }
+
   otpVerified(
     context,
   ) {
