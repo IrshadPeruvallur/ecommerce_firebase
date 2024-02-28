@@ -1,8 +1,8 @@
 import 'package:ecommerce_app/controller/authentication.dart';
 import 'package:ecommerce_app/view/widgets/button_widgets.dart';
-import 'package:ecommerce_app/view/widgets/text_fields_widgets.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class VerifyOtpPage extends StatelessWidget {
@@ -47,13 +47,31 @@ class VerifyOtpPage extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        TextFieldWidgets().textFormField(size,
-                            maxLine: 6,
-                            inputFormatter:
-                                FilteringTextInputFormatter.digitsOnly,
-                            label: 'Enter OTP',
-                            keyboardType: TextInputType.phone,
-                            controller: getProvider.otpController),
+                        OtpTextField(
+                          fieldWidth: size.width * .1,
+                          numberOfFields: 6,
+                          showFieldAsBox: true,
+                          keyboardType: TextInputType.number,
+                          onSubmit: (String verificationCode) async {
+                            await getProvider.otpValue(verificationCode);
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Verification Code"),
+                                    content: Text(
+                                        'Code entered is $verificationCode'),
+                                  );
+                                });
+                          },
+                        ),
+                        // TextFieldWidgets().textFormField(size,
+                        //     maxLine: 6,
+                        //     inputFormatter:
+                        //         FilteringTextInputFormatter.digitsOnly,
+                        //     label: 'Enter OTP',
+                        //     keyboardType: TextInputType.phone,
+                        //     controller: getProvider.otpController),
                         SizedBox(
                           height: size.width * .1,
                         ),
@@ -63,7 +81,7 @@ class VerifyOtpPage extends StatelessWidget {
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               await getProvider.verifyOTP(
-                                  context, getProvider.otpController.text);
+                                  context, getProvider.otp);
 
                               ;
                             }

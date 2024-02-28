@@ -39,13 +39,17 @@ class DatabaseProvider extends ChangeNotifier {
 
   bool wishListCheck(ProductModel product) {
     final currentUser = FirebaseAuth.instance.currentUser;
-    final user = currentUser!.email ?? currentUser.phoneNumber;
-    if (product.wishList!.contains(user)) {
-      // notifyListeners();
-      getAllProducts();
-      return false;
+    if (currentUser != null) {
+      final user = currentUser.email ?? currentUser.phoneNumber;
+      if (product.wishList!.contains(user)) {
+        // notifyListeners();
+        getAllProducts();
+        return false;
+      } else {
+        getAllProducts();
+        return true;
+      }
     } else {
-      getAllProducts();
       return true;
     }
   }

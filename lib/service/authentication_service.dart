@@ -91,7 +91,6 @@ class AuthService {
           phoneNumber: phoneNumber,
           verificationCompleted: (PhoneAuthCredential credential) async {
             await firebaseAuth.signInWithCredential(credential);
-            AuthPagesWidget().otpSended(context);
           },
           verificationFailed: (error) {
             AuthPagesWidget().otpNotSend(context, error.code);
@@ -99,7 +98,7 @@ class AuthService {
           },
           codeSent: (String verificationId, int? forceResendingToken) async {
             _verificationId = verificationId;
-
+            AuthPagesWidget().otpSended(context);
             log(verificationId);
           },
           codeAutoRetrievalTimeout: (verificationId) {

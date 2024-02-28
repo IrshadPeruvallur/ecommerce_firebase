@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/view/pages/blank_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/about_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/help_center/contact_us_page.dart';
 import 'package:ecommerce_app/view/profile%20screens/help_center/faq_page.dart';

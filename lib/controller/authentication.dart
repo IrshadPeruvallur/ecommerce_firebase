@@ -10,7 +10,7 @@ class AuthenticationProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
+  String? otp;
   Future<UserCredential> signUpWithEmail(String email, String password) async {
     return await emailAuthService.signUpWithEmail(email, password);
   }
@@ -42,6 +42,11 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<void> getOTP(context, phoneNumber) async {
     await emailAuthService.getOTP(context, phoneNumber);
 
+    notifyListeners();
+  }
+
+  otpValue(value) {
+    otp = value;
     notifyListeners();
   }
 

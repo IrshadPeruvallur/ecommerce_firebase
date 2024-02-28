@@ -81,6 +81,8 @@ class SignUpPage extends StatelessWidget {
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               try {
+                                await PopupWidgets()
+                                    .showLoadingIndicator(context);
                                 getProvider.signUpWithEmail(
                                     getProvider.emailController.text,
                                     getProvider.passwordController.text);
