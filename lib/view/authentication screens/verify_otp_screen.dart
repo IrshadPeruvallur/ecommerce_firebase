@@ -54,24 +54,10 @@ class VerifyOtpPage extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           onSubmit: (String verificationCode) async {
                             await getProvider.otpValue(verificationCode);
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Verification Code"),
-                                    content: Text(
-                                        'Code entered is $verificationCode'),
-                                  );
-                                });
+                         
                           },
                         ),
-                        // TextFieldWidgets().textFormField(size,
-                        //     maxLine: 6,
-                        //     inputFormatter:
-                        //         FilteringTextInputFormatter.digitsOnly,
-                        //     label: 'Enter OTP',
-                        //     keyboardType: TextInputType.phone,
-                        //     controller: getProvider.otpController),
+                       
                         SizedBox(
                           height: size.width * .1,
                         ),
