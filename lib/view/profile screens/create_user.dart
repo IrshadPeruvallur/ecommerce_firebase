@@ -64,6 +64,7 @@ class CreateUserDetails extends StatelessWidget {
                     label: 'Phone',
                     inputFormatter: FilteringTextInputFormatter.digitsOnly,
                     prefixText: '+91',
+                    maxLine: 10,
                     controller: userProvider.phoneNumberController),
                 TextFieldWidgets().textFormField(size,
                     keyboardType: TextInputType.streetAddress,

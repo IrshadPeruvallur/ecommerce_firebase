@@ -65,7 +65,7 @@ class ContactSellerPage extends StatelessWidget {
                 ProfileWidgets().textdBox(
                   context,
                   size,
-                  userData.phoneNumber,
+                  "+91 ${userData.phoneNumber}",
                   'Phone',
                   iconData: EneftyIcons.call_outline,
                   onTap: () => launchPhone(userData.phoneNumber.toString()),

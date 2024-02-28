@@ -62,8 +62,8 @@ class UserDetailsPage extends StatelessWidget {
                         userData.name,
                         'Name',
                       ),
-                      ProfileWidgets().textdBox(
-                          context, size, userData.phoneNumber, 'Phone'),
+                      ProfileWidgets().textdBox(context, size,
+                          "+91 ${userData.phoneNumber}", 'Phone'),
                       ProfileWidgets()
                           .textdBox(context, size, userData.email, 'Email'),
                       ProfileWidgets()
