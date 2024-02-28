@@ -64,8 +64,8 @@ class _MyProductTabState extends State<MyProductTab> {
                 bool value = await PopupWidgets().showConfirmationDialog(
                     context,
                     content:
-                        'You have no account. If you want to sell any product, please create your profile.',
-                    label: 'Go To Profile Tab');
+                        '"You do not have a profile. If you wish to sell any products, please complete your profile."',
+                    label: 'Go To Profile');
 
                 if (value) {
                   NavigatorWidget().push(context, CreateUserDetails());
